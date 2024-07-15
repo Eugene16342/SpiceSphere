@@ -7,7 +7,7 @@ const ejs = require("ejs");
 const app = express();
 const path = require("path");
 
-app.set("views", __dirname);
+app.set("views", path.join(__dirname, "views"));
 
 app.listen(3000, function () {
   console.log("port 3000!");
@@ -28,11 +28,7 @@ db.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  let sql = "SELECT * FROM recipe";
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.render("index", { recipes: result });
-  });
+  res.render("index");
 });
 
 app.get("/recipe", (req, res) => {
@@ -43,11 +39,19 @@ app.get("/recipe", (req, res) => {
   });
 });
 
+app.get("/recipe/sort/recipe_uid", (req, res) => {
+  let sql = "SELECT * FROM recipe ORDER BY recipe_uid DESC";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.render("recipe", { items: result });
+  });
+});
+
 app.get("/recipe/:id", (req, res) => {
   let sql = "SELECT * FROM recipe WHERE recipe_uid = ?";
   db.query(sql, [req.params.id], (err, result) => {
     if (err) throw err;
-    res.render("recipe_detail", { recipe: result[0] });
+    res.render("recipe_detail", { items: result[0] });
   });
 });
 
@@ -59,11 +63,19 @@ app.get("/product", (req, res) => {
   });
 });
 
+app.get("/product/sort/product_uid", (req, res) => {
+  let sql = "SELECT * FROM product ORDER BY product_uid DESC";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.render("product", { items: result });
+  });
+});
+
 app.get("/product/:id", (req, res) => {
   let sql = "SELECT * FROM product WHERE product_uid = ?";
   db.query(sql, [req.params.id], (err, result) => {
     if (err) throw err;
-    res.render("product_detail", { product: result[0] });
+    res.render("product_detail", { items: result[0] });
   });
 });
 

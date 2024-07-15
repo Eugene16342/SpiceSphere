@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>後台</title>
+    <link rel="stylesheet" href="/backstage.css" />
+    <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
+  </head>
+
+  <script>
+// $(document).ready(function() {
+//   let targetUrl;
+//   if (window.location.href.endsWith('/recipe?')) {
+//     targetUrl = '/recipe/sort/recipe_uid';
+//   $('#sortButton').text('依倒序排行');
+//   } else {
+//     targetUrl = '/recipe?';
+//     $('#sortButton').text('依正序排行');   
+//   }
+
+//   $('#sortButton').click(function(e) {
+//     e.preventDefault();
+//     window.location.href = targetUrl;
+//   });
+// });
+
+$(document).ready(function() {
+  let targetUrl;
+  let is_recipe_route = $('#is_recipe_route').val() === 'true';
+  let is_product_route = $('#is_product_route').val() === 'true';
+
+  if (is_recipe_route) {
+    if (window.location.href.endsWith('/recipe?')) {
+      targetUrl = '/recipe/sort/recipe_uid';
+      $('#sortButton').text('依倒序排行');
+    } else {
+      targetUrl = '/recipe?';
+      $('#sortButton').text('依正序排行');
+    }
+  } else if (is_product_route) {
+    if (window.location.href.endsWith('/product?')) {
+      targetUrl = '/product/sort/product_uid';
+      $('#sortButton').text('依倒序排行');
+    } else {
+      targetUrl = '/product?';
+      $('#sortButton').text('依正序排行');
+    }
+  }
+
+  $('#sortButton').click(function(e) {
+    e.preventDefault();
+    window.location.href = targetUrl;
+  });
+});
+  </script>
+
+<body>
+<% if (typeof items !== 'undefined' && items.length > 0) { %>
+  <% var is_recipe_route = (typeof items[0].recipe_uid !== 'undefined'); %>
+  <% var is_product_route = (typeof items[0].product_uid !== 'undefined'); %>
+<% } else { %>
+  <% var is_recipe_route = false; %>
+  <% var is_product_route = false; %>
+<% } %>
+<input type="hidden" id="is_recipe_route" value="<%= is_recipe_route %>">
+<input type="hidden" id="is_product_route" value="<%= is_product_route %>">
+
+<nav>我是導覽列東西都放在</nav>
+
+<div id="btn_group">
+  <div class="btn_group_row">
+    <form action="/recipe" method="get">
+      <button type="submit">全部食譜</button>
+    </form>
+
+    <form action="/product" method="get">
+      <button type="submit">全部商品</button>
+    </form>
+
+    <form>
+      <select name="style" <%= is_product_route ? 'disabled' : '' %>>
+        <option value="" selected disabled>食譜風格</option>
+        <option value="">所有</option>
+        <option value="1">日式</option>
+        <option value="2">義式</option>
+        <option value="3">法式</option>
+        <option value="4">韓式</option>
+        <option value="5">泰式</option>
+      </select>
+    </form>
+
+    <form>
+      <select name="related" <%= is_recipe_route ? 'disabled' : '' %>>
+        <option value="" selected disabled>商品分類</option>
+        <option value="">所有</option>
+        <option value="1">食材</option>
+        <option value="2">調味料</option>
+        <option value="3">調理包</option>
+        <option value="4">碗具</option>
+        <option value="5">鍋具</option>
+      </select>
+    </form>
+
+    <form>
+      <input
+        type="text"
+        class="searchTerm"
+        name="search"
+        placeholder="食譜/商品名稱"
+      />
+      <button type="button" class="searchButton">搜尋</button>
+    </form>
+  </div>
+
+  <div class="btn_group_row">
+
+    <button id="sortButton">依倒序排行</button>
+
+    <form>
+      <button  type="button" value="click">依點閱排行</button>
+    </form>
+
+    <form>
+      <button  type="button" value="sales_amount" <%= is_recipe_route ? 'disabled' : '' %> >依銷量排行</button>
+    </form>
+
+    <form>
+      <button  type="button" value="sales_ratio" <%= is_recipe_route ? 'disabled' : '' %> >依銷售比率排行</button>
+    </form>
+
+    <form>
+      <button name="feature" value="add">新增項目</button>
+      <button name="feature" value="del">批量刪除</button>
+    </form>
+  </div>
+</div>
+<hr />
+</body>
+
