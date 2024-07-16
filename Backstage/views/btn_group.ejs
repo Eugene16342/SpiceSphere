@@ -10,48 +10,82 @@
 
   <script>
 // $(document).ready(function() {
-//   let targetUrl;
+//   let target_url_id;
 //   if (window.location.href.endsWith('/recipe?')) {
-//     targetUrl = '/recipe/sort/recipe_uid';
-//   $('#sortButton').text('依倒序排行');
+//     target_url_id = '/recipe/sort/recipe_uid';
+//   $('#sort_btn').text('依倒序排行');
 //   } else {
-//     targetUrl = '/recipe?';
-//     $('#sortButton').text('依正序排行');   
+//     target_url_id = '/recipe?';
+//     $('#sort_btn').text('依正序排行');   
 //   }
 
-//   $('#sortButton').click(function(e) {
+//   $('#sort_btn').click(function(e) {
 //     e.preventDefault();
-//     window.location.href = targetUrl;
+//     window.location.href = target_url_id;
 //   });
 // });
 
 $(document).ready(function() {
-  let targetUrl;
+  let target_url_id;
+  let target_url_click
   let is_recipe_route = $('#is_recipe_route').val() === 'true';
   let is_product_route = $('#is_product_route').val() === 'true';
 
   if (is_recipe_route) {
-    if (window.location.href.endsWith('/recipe?')) {
-      targetUrl = '/recipe/sort/recipe_uid';
-      $('#sortButton').text('依倒序排行');
+    if (window.location.href.endsWith('/recipe')) {
+      target_url_id = '/recipe/sort/recipe_uid';
+      $('#sort_btn').text('依倒序排行');
+
     } else {
-      targetUrl = '/recipe?';
-      $('#sortButton').text('依正序排行');
+      target_url_id = '/recipe';
+      $('#sort_btn').text('依正序排行');
+ 
     }
   } else if (is_product_route) {
-    if (window.location.href.endsWith('/product?')) {
-      targetUrl = '/product/sort/product_uid';
-      $('#sortButton').text('依倒序排行');
+    if (window.location.href.endsWith('/product')) {
+      target_url_id = '/product/sort/product_uid';
+      $('#sort_btn').text('依倒序排行');
+
     } else {
-      targetUrl = '/product?';
-      $('#sortButton').text('依正序排行');
+      target_url_id = '/product'; 
+      $('#sort_btn').text('依正序排行');
+
     }
   }
 
-  $('#sortButton').click(function(e) {
+  $('#sort_btn').click(function(e) {
     e.preventDefault();
-    window.location.href = targetUrl;
+    window.location.href = target_url_id;
   });
+
+
+
+  if (is_recipe_route) {
+    if (window.location.href.endsWith('/click_desc')) {
+      target_url_click = '/recipe/sort/click';  
+
+    } else {
+      target_url_click = '/recipe/sort/click_desc';  
+ 
+    }
+  } else if (is_product_route) {
+    if (window.location.href.endsWith('/product')) {
+      target_url_click = '/product/sort/click';  
+
+    } else {
+      target_url_click = '/product/sort/click_desc';  
+
+    }
+  }
+
+
+
+  // 為新的按鈕添加事件處理器
+  $('#click_btn').click(function(e) {
+    e.preventDefault();
+    window.location.href = target_url_click;
+  });
+
 });
   </script>
 
@@ -70,14 +104,10 @@ $(document).ready(function() {
 
 <div id="btn_group">
   <div class="btn_group_row">
-    <form action="/recipe" method="get">
-      <button type="submit">全部食譜</button>
-    </form>
 
-    <form action="/product" method="get">
-      <button type="submit">全部商品</button>
-    </form>
+      <a class="btn" href="/recipe">全部食譜</a>
 
+      <a class="btn" href="/product">全部商品</a>
     <form>
       <select name="style" <%= is_product_route ? 'disabled' : '' %>>
         <option value="" selected disabled>食譜風格</option>
@@ -115,11 +145,10 @@ $(document).ready(function() {
 
   <div class="btn_group_row">
 
-    <button id="sortButton">依倒序排行</button>
+    <button id="sort_btn">依倒序排行</button>
 
-    <form>
-      <button  type="button" value="click">依點閱排行</button>
-    </form>
+
+    <button id="click_btn">依點閱排行</button>
 
     <form>
       <button  type="button" value="sales_amount" <%= is_recipe_route ? 'disabled' : '' %> >依銷量排行</button>
