@@ -108,31 +108,36 @@ $(document).ready(function() {
       <a class="btn" href="/recipe">全部食譜</a>
 
       <a class="btn" href="/product">全部商品</a>
-    <form>
-      <select name="style" <%= is_product_route ? 'disabled' : '' %>>
-        <option value="" selected disabled>食譜風格</option>
-        <option value="">所有</option>
-        <option value="1">日式</option>
-        <option value="2">義式</option>
-        <option value="3">法式</option>
-        <option value="4">韓式</option>
-        <option value="5">泰式</option>
-      </select>
-    </form>
+      <form>
+        <select name="style" <%= is_product_route ? 'disabled' : '' %>
+          onchange="window.location.href='/recipe/sort?style=' + this.value">
+          <option value="" selected hidden>食譜風格</option>
+          <option value="1">日式</option>
+          <option value="2">義式</option>
+          <option value="3">法式</option>
+          <option value="4">韓式</option>
+          <option value="5">泰式</option>
+        </select>
+      </form>
 
-    <form>
-      <select name="related" <%= is_recipe_route ? 'disabled' : '' %>>
-        <option value="" selected disabled>商品分類</option>
-        <option value="">所有</option>
-        <option value="1">食材</option>
-        <option value="2">調味料</option>
-        <option value="3">調理包</option>
-        <option value="4">碗具</option>
-        <option value="5">鍋具</option>
-      </select>
-    </form>
+      <form>
+        <select name="related" <%= is_recipe_route ? 'disabled' : '' %>
+          onchange="window.location.href='/product/sort?related=' + this.value">
+          <option value="" selected hidden>商品分類</option>
+          <option value="1">食材</option>
+          <option value="2">調味料</option>
+          <option value="3">調理包</option>
+          <option value="4">碗具</option>
+          <option value="5">鍋具</option>
+        </select>
+      </form>
 
-    <form>
+    <form class="search_form">
+      <select class="search_form_selected" name="search">
+        <option value="" selected hidden>選擇</option>
+        <option value="recipe">食譜</option>
+        <option value="product">商品</option>
+      </select>
       <input
         type="text"
         class="searchTerm"

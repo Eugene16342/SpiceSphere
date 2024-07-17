@@ -69,6 +69,15 @@ app.get("/recipe/sort/click_desc", (req, res) => {
   });
 });
 
+app.get("/recipe/sort", (req, res) => {
+  let style = req.query.style;
+  let sql = recipe_common +  " WHERE style = ?";
+  db.query(sql, [style], (err, result) => {
+    if (err) throw err;
+    res.render("recipe", { items: result });
+  });
+});
+
 app.get("/recipe/:id", (req, res) => {
   let sql = "SELECT * FROM recipe WHERE recipe_uid = ?";
   db.query(sql, [req.params.id], (err, result) => {
@@ -107,6 +116,15 @@ app.get("/product/sort/click", (req, res) => {
 app.get("/product/sort/click_desc", (req, res) => {
   let sql = product_common + " ORDER BY click";
   db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.render("product", { items: result });
+  });
+});
+
+app.get("/product/sort", (req, res) => {
+  let related = req.query.related;
+  let sql = product_common +  " WHERE related = ?";
+  db.query(sql, [related], (err, result) => {
     if (err) throw err;
     res.render("product", { items: result });
   });

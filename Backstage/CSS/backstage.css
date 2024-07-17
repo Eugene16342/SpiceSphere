@@ -13,14 +13,17 @@ body {
   display: inline-block;
 }
 #btn_group .btn_group_row select {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: 100px;
   height: 32px;
   padding: 6px 8px;
   font-size: 14px;
   line-height: 1.5;
   border: 1px solid rgb(204, 204, 204);
   border-radius: 4px;
+}
+#btn_group .btn_group_row .search_form_selected {
+  width: 80px;
 }
 #btn_group .btn_group_row .searchTerm {
   width: 200px;
@@ -97,7 +100,8 @@ button:disabled,
   overflow: auto;
 }
 .table_setting table {
-  width: 1500px;
+  table-layout: fixed;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
