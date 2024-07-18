@@ -173,6 +173,33 @@ app.get("/product/:id", (req, res) => {
   });
 });
 
+//搜尋系統
+app.get("/search", (req, res) => {
+  let table = req.query.search; // 從查詢參數中獲取要搜尋的表名
+  let keyword = req.query.keyword; // 從查詢參數中獲取搜尋關鍵字
+
+  // 根據表名決定要搜尋的欄位和 SQL 查詢
+  let column, sql;
+  if (table === 'recipe') {
+    column = 'recipe_title';
+    sql = "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid WHERE recipe_title LIKE ?";
+  } else {
+    column = 'product_title';
+    sql = "SELECT product.*, related.related_name AS related_name FROM product LEFT JOIN related ON product.related = related.related_uid WHERE product_title LIKE ?";
+  }
+
+  // 執行 SQL 查詢
+  db.query(sql, [`%${keyword}%`], (err, result) => {
+    if (err) throw err;
+
+    // 根據表名決定要渲染的模板
+    let template = table === 'recipe' ? 'recipe' : 'product';
+
+    // 渲染模板並傳遞搜尋結果
+    res.render(template, { items: result });
+  });
+});
+
 app.use(express.static("../"));
 app.use(express.static("jquery"));
 app.use(express.static("CSS"));

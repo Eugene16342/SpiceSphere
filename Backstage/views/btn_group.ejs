@@ -9,22 +9,6 @@
   </head>
 
   <script>
-// $(document).ready(function() {
-//   let target_url_id;
-//   if (window.location.href.endsWith('/recipe?')) {
-//     target_url_id = '/recipe/sort/recipe_uid';
-//   $('#sort_btn').text('依倒序排行');
-//   } else {
-//     target_url_id = '/recipe?';
-//     $('#sort_btn').text('依正序排行');   
-//   }
-
-//   $('#sort_btn').click(function(e) {
-//     e.preventDefault();
-//     window.location.href = target_url_id;
-//   });
-// });
-
 $(document).ready(function() {
   let style;
   let target_url_id;
@@ -113,6 +97,13 @@ $('#sales_ratio_btn').click(function(e) {
   }
 });
 
+$('.search_form').submit(function(e) {
+  e.preventDefault();
+  let table = $('.search_form_selected').val();
+  let keyword = $('.searchTerm').val();
+  window.location.href = `/search?search=${table}&keyword=${keyword}`;
+});
+
 });
   </script>
 
@@ -171,7 +162,7 @@ $('#sales_ratio_btn').click(function(e) {
         name="search"
         placeholder="食譜/商品名稱"
       />
-      <button type="button" class="searchButton">搜尋</button>
+      <button type="submit" class="searchButton">搜尋</button>
     </form>
   </div>
 
