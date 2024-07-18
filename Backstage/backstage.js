@@ -74,9 +74,11 @@ app.get("/recipe/sort", (req, res) => {
   let sql = recipe_common +  " WHERE style = ?";
   db.query(sql, [style], (err, result) => {
     if (err) throw err;
-    res.render("recipe", { items: result });
+    res.render("recipe", { items: result, style: style });
   });
 });
+
+
 
 app.get("/recipe/:id", (req, res) => {
   let sql = "SELECT * FROM recipe WHERE recipe_uid = ?";
@@ -125,6 +127,39 @@ app.get("/product/sort", (req, res) => {
   let related = req.query.related;
   let sql = product_common +  " WHERE related = ?";
   db.query(sql, [related], (err, result) => {
+    if (err) throw err;
+    res.render("product", { items: result });
+  });
+});
+
+app.get("/product/sort/sales_desc", (req, res) => {
+  let sql = product_common + " ORDER BY sales_amount";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.render("product", { items: result });
+  });
+});
+
+app.get("/product/sort/sales", (req, res) => {
+  let sql = product_common + " ORDER BY sales_amount DESC";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.render("product", { items: result });
+  });
+});
+
+
+app.get("/product/sort/sales_ratio", (req, res) => {
+  let sql = "SELECT product.*, related.related_name AS related_name, IFNULL((product.sales_amount / product.click) * 100, 0) AS sales_ratio FROM product LEFT JOIN related ON product.related = related.related_uid ORDER BY sales_ratio DESC";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.render("product", { items: result });
+  });
+});
+
+app.get("/product/sort/sales_ratio_desc", (req, res) => {
+  let sql = "SELECT product.*, related.related_name AS related_name, IFNULL((product.sales_amount / product.click) * 100, 0) AS sales_ratio FROM product LEFT JOIN related ON product.related = related.related_uid ORDER BY sales_ratio";
+  db.query(sql, (err, result) => {
     if (err) throw err;
     res.render("product", { items: result });
   });
