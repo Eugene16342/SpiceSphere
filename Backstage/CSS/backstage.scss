@@ -1,4 +1,8 @@
 body {
+  display: flex;
+  flex-direction: column;
+  min-width: 1200px;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -97,8 +101,9 @@ button,
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  max-height: 82vh;
+  max-height: 83.5vh;
   overflow: auto;
+  flex: 1 0 auto;
   table {
     table-layout: fixed;
     width: 100%;
@@ -150,8 +155,8 @@ button,
 }
 
 .footer {
-  bottom: 0;
   width: 100%;
   background-color: tomato;
   text-align: center;
+  flex-shrink: 0;
 }

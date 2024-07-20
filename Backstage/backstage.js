@@ -34,6 +34,11 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+//新增項目
+app.get("/addItem", (req, res) => {
+  res.render("add_item");
+});
+
 //recipe路由  recipe_common為SQL指令，讓recipe表連接style和related
 const recipe_common =
   "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid";
@@ -71,14 +76,12 @@ app.get("/recipe/sort/click_desc", (req, res) => {
 
 app.get("/recipe/sort", (req, res) => {
   let style = req.query.style;
-  let sql = recipe_common +  " WHERE style = ?";
+  let sql = recipe_common + " WHERE style = ?";
   db.query(sql, [style], (err, result) => {
     if (err) throw err;
     res.render("recipe", { items: result, style: style });
   });
 });
-
-
 
 app.get("/recipe/:id", (req, res) => {
   let sql = "SELECT * FROM recipe WHERE recipe_uid = ?";
@@ -125,7 +128,7 @@ app.get("/product/sort/click_desc", (req, res) => {
 
 app.get("/product/sort", (req, res) => {
   let related = req.query.related;
-  let sql = product_common +  " WHERE related = ?";
+  let sql = product_common + " WHERE related = ?";
   db.query(sql, [related], (err, result) => {
     if (err) throw err;
     res.render("product", { items: result });
@@ -148,9 +151,9 @@ app.get("/product/sort/sales", (req, res) => {
   });
 });
 
-
 app.get("/product/sort/sales_ratio", (req, res) => {
-  let sql = "SELECT product.*, related.related_name AS related_name, IFNULL((product.sales_amount / product.click) * 100, 0) AS sales_ratio FROM product LEFT JOIN related ON product.related = related.related_uid ORDER BY sales_ratio DESC";
+  let sql =
+    "SELECT product.*, related.related_name AS related_name, IFNULL((product.sales_amount / product.click) * 100, 0) AS sales_ratio FROM product LEFT JOIN related ON product.related = related.related_uid ORDER BY sales_ratio DESC";
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.render("product", { items: result });
@@ -158,7 +161,8 @@ app.get("/product/sort/sales_ratio", (req, res) => {
 });
 
 app.get("/product/sort/sales_ratio_desc", (req, res) => {
-  let sql = "SELECT product.*, related.related_name AS related_name, IFNULL((product.sales_amount / product.click) * 100, 0) AS sales_ratio FROM product LEFT JOIN related ON product.related = related.related_uid ORDER BY sales_ratio";
+  let sql =
+    "SELECT product.*, related.related_name AS related_name, IFNULL((product.sales_amount / product.click) * 100, 0) AS sales_ratio FROM product LEFT JOIN related ON product.related = related.related_uid ORDER BY sales_ratio";
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.render("product", { items: result });
@@ -180,24 +184,30 @@ app.get("/search", (req, res) => {
 
   // 根據表名決定要搜尋的欄位和 SQL 查詢
   let column, sql;
-  if (table === 'recipe') {
-    column = 'recipe_title';
-    sql = "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid WHERE recipe_title LIKE ?";
+  if (table === "recipe") {
+    column = "recipe_title";
+    sql =
+      "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid WHERE recipe_title LIKE ? OR recipe_uid LIKE ? OR style_name LIKE ? OR related_name LIKE ?";
   } else {
-    column = 'product_title';
-    sql = "SELECT product.*, related.related_name AS related_name FROM product LEFT JOIN related ON product.related = related.related_uid WHERE product_title LIKE ?";
+    column = "product_title";
+    sql =
+      "SELECT product.*, related.related_name AS related_name FROM product LEFT JOIN related ON product.related = related.related_uid WHERE product_title LIKE ? OR product_uid LIKE ? OR related_name LIKE ?";
   }
 
   // 執行 SQL 查詢
-  db.query(sql, [`%${keyword}%`], (err, result) => {
-    if (err) throw err;
+  db.query(
+    sql,
+    [`%${keyword}%`, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`],
+    (err, result) => {
+      if (err) throw err;
 
-    // 根據表名決定要渲染的模板
-    let template = table === 'recipe' ? 'recipe' : 'product';
+      // 根據表名決定要渲染的模板
+      let template = table === "recipe" ? "recipe" : "product";
 
-    // 渲染模板並傳遞搜尋結果
-    res.render(template, { items: result });
-  });
+      // 渲染模板並傳遞搜尋結果
+      res.render(template, { items: result });
+    }
+  );
 });
 
 app.use(express.static("../"));

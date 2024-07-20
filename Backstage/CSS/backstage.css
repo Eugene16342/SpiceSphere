@@ -1,4 +1,8 @@
 body {
+  display: flex;
+  flex-direction: column;
+  min-width: 1200px;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -96,8 +100,9 @@ button:disabled,
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  max-height: 82vh;
+  max-height: 83.5vh;
   overflow: auto;
+  flex: 1 0 auto;
 }
 .table_setting table {
   table-layout: fixed;
@@ -139,8 +144,8 @@ button:disabled,
 }
 
 .footer {
-  bottom: 0;
   width: 100%;
   background-color: tomato;
   text-align: center;
+  flex-shrink: 0;
 }/*# sourceMappingURL=backstage.css.map */

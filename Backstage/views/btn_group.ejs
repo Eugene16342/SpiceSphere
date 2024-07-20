@@ -12,7 +12,7 @@
 $(document).ready(function() {
   let style;
   let target_url_id;
-  let target_url_click
+  let target_url_click;
   let is_recipe_route = $('#is_recipe_route').val() === 'true';
   let is_product_route = $('#is_product_route').val() === 'true';
 
@@ -126,6 +126,7 @@ $('.search_form').submit(function(e) {
       <a class="btn" href="/recipe">全部食譜</a>
 
       <a class="btn" href="/product">全部商品</a>
+
       <form>
         <select name="style" <%= is_product_route ? 'disabled' : '' %>
           onchange="window.location.href='/recipe/sort?style=' + this.value">
@@ -181,10 +182,11 @@ $('.search_form').submit(function(e) {
       <button  id="sales_ratio_btn" <%= is_recipe_route ? 'disabled' : '' %> >依銷售比率排行</button>
 
 
-    <form>
-      <button name="feature" value="add">新增項目</button>
-      <button name="feature" value="del">批量刪除</button>
-    </form>
+
+      <a class="btn" href="/addItem">新增項目</a>
+      <a class="btn" name="feature" value="del">批量刪除</a>
+
+
   </div>
 </div>
 <hr />
