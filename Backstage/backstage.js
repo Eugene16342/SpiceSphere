@@ -81,16 +81,16 @@ app.post("/uploadImage", upload.single("file"), function (req, res) {
   res.send("圖片已成功上傳！");
 });
 
-app.post("/addIngredients", function (req, res) {
-  var data = req.body; // 這裡的 req.body 包含了前端傳送過來的資料
+app.post("/addIngredient", function (req, res) {
+  var data = req.body;
 
   var sql = "INSERT INTO ingredients_for_recipe SET ?";
   db.query(sql, data, function (err, result) {
     if (err) {
-      console.error(err); // 將錯誤訊息輸出到伺服器的控制台
-      res.send("新增失敗，請檢查是否所有項目皆填寫!2"); // 將錯誤訊息回傳給前端
+      console.error(err);
+      res.send("新增食材失敗，請檢查是否所有項目皆填寫!");
     } else {
-      res.send("食材已成功新增！");
+      res.json({ message: "食材已成功新增！", uid: result.insertId });
     }
   });
 });

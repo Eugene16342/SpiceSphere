@@ -52,7 +52,21 @@
 
       // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
       $(".necessary button").click(function () {
-        addIngredientField(".necessary", "necessary_ingredients");
+        // 建立新的輸入欄位
+        var newIngredientField = $(
+          '<input class="ingredient" placeholder="食材名稱" type="text" maxlength="20" />'
+        );
+        var newQuantityField = $(
+          '<input class="quantity" placeholder="份量" type="text" maxlength="10" />'
+        );
+
+        // 建立一個新的 div 元素，並將兩個輸入欄位加入到這個 div 中
+        var newIngredientDiv = $('<div class="ingredientDiv"></div>');
+        newIngredientDiv.append(newIngredientField);
+        newIngredientDiv.append(newQuantityField);
+
+        // 將這個 div 加入到 .necessary_ingredients 中
+        $(".necessary_ingredients").append(newIngredientDiv);
       });
 
       $("#img_upload").change(function () {
@@ -103,6 +117,33 @@
               success: function (response) {
                 alert(response.message);
                 // 處理伺服器的回應
+                var ingredientNames = $(".ingredient");
+                var ingredientQuantities = $(".quantity");
+                var completedRequests = 0;
+                for (var i = 0; i < ingredientNames.length; i++) {
+                  var ingredient_name = $(ingredientNames[i]).val();
+                  var ingredient_quantity = $(ingredientQuantities[i]).val();
+
+                  var ingredientData = {
+                    recipe_uid: response.uid,
+                    ingredient_name: ingredient_name,
+                    ingredient_quantity: ingredient_quantity,
+                  };
+
+                  $.ajax({
+                    url: "/addIngredient", // 新增食材的路由
+                    method: "POST",
+                    data: ingredientData,
+                    success: function (response) {
+                      completedRequests++; // 每當一個 AJAX 請求完成時，計數器加 1
+
+                      // 如果所有的 AJAX 請求都已完成，則顯示一個訊息
+                      if (completedRequests === ingredientNames.length) {
+                        alert("所有食材已成功新增！");
+                      }
+                    },
+                  });
+                }
               },
             });
           },
@@ -250,8 +291,20 @@
               <button>增加食材欄位</button>
             </div>
             <div class="necessary_ingredients">
-              <input placeholder="必要食材名稱" type="text" maxlength="20" />
-              <input placeholder="份量" type="text" maxlength="10" />
+              <div class="ingredientDiv">
+                <input
+                  class="ingredient"
+                  placeholder="食材名稱"
+                  type="text"
+                  maxlength="20"
+                />
+                <input
+                  class="quantity"
+                  placeholder="份量"
+                  type="text"
+                  maxlength="10"
+                />
+              </div>
             </div>
           </div>
         </div>
