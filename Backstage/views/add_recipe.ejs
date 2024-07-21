@@ -79,12 +79,10 @@
         }
       });
 
+      let currentUid;
       //將資料傳回資料庫
       $("#submmit button").click(function (e) {
         e.preventDefault();
-
-        var formData = new FormData();
-        formData.append("file", $("#img_upload")[0].files[0]); // 加入圖片的資料
 
         var data = {
           recipe_title: $("#title").val(),
@@ -102,21 +100,26 @@
         };
 
         $.ajax({
-          url: "/uploadImage",
+          url: "/addRecipe",
           method: "POST",
-          data: formData,
-          processData: false, // 告訴 jQuery 不要處理資料
-          contentType: false, // 告訴 jQuery 不要設定 contentType
+          data: data,
           success: function (response) {
-            alert(response);
-            // 圖片上傳成功後，再上傳食譜的資料
+            alert(response.message);
+
+            currentUid = response.uid; // 將 uid 存儲到客戶端的變數中
+
+            var formData = new FormData();
+            formData.append("file", $("#img_upload")[0].files[0]); // 加入圖片的資料
+
             $.ajax({
-              url: "/addRecipe", // 伺服器端處理這個請求的路由
+              url: "/uploadImage",
               method: "POST",
-              data: data,
+              data: formData,
+              processData: false,
+              contentType: false,
               success: function (response) {
-                alert(response.message);
-                // 處理伺服器的回應
+                alert(response);
+
                 var ingredientNames = $(".ingredient");
                 var ingredientQuantities = $(".quantity");
                 var completedRequests = 0;
@@ -125,7 +128,7 @@
                   var ingredient_quantity = $(ingredientQuantities[i]).val();
 
                   var ingredientData = {
-                    recipe_uid: response.uid,
+                    recipe_uid: currentUid,
                     ingredient_name: ingredient_name,
                     ingredient_quantity: ingredient_quantity,
                   };

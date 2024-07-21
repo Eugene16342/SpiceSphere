@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-//新增項目
+////////////////新增項目
 app.get("/addRecipe", (req, res) => {
   res.render("add_recipe");
 });
@@ -48,17 +48,18 @@ app.get("/addProduct", (req, res) => {
   res.render("add_product");
 });
 
-let recipeCount = 50; // 設定初始值為 50
+let currentUid;
 
 app.post("/addRecipe", function (req, res) {
-  var data = req.body; // 這裡的 req.body 包含了前端傳送過來的資料
+  var data = req.body;
 
   var sql = "INSERT INTO recipe SET ?";
   db.query(sql, data, function (err, result) {
     if (err) {
-      console.error(err); // 將錯誤訊息輸出到伺服器的控制台
-      res.send("新增失敗，請檢查是否所有項目皆填寫!1"); // 將錯誤訊息回傳給前端
+      console.error(err);
+      res.send("新增失敗，請檢查是否所有項目皆填寫!");
     } else {
+      currentUid = result.insertId;
       res.json({ message: "食譜已成功新增！", uid: result.insertId });
     }
   });
@@ -69,15 +70,13 @@ const storage = multer.diskStorage({
     cb(null, "../img/recipe");
   },
   filename: function (req, file, cb) {
-    recipeCount++; // 每次上傳時，計數器加 1
-    cb(null, "recipe" + recipeCount + path.extname(file.originalname));
+    cb(null, "recipe" + currentUid + path.extname(file.originalname));
   },
 });
 
 const upload = multer({ storage: storage });
 
 app.post("/uploadImage", upload.single("file"), function (req, res) {
-  // 處理上傳的圖片...
   res.send("圖片已成功上傳！");
 });
 
@@ -88,14 +87,60 @@ app.post("/addIngredient", function (req, res) {
   db.query(sql, data, function (err, result) {
     if (err) {
       console.error(err);
-      res.send("新增食材失敗，請檢查是否所有項目皆填寫!");
+      res.send("新增食材失敗，請檢查食材是否重複!");
     } else {
       res.json({ message: "食材已成功新增！", uid: result.insertId });
     }
   });
 });
+/////////////////////刪除項目
+//單個刪除
+app.post("/deleteRecipe", function (req, res) {
+  var uid = req.body.uid;
 
-//recipe路由  recipe_common為SQL指令，讓recipe表連接style和related
+  var sql = "DELETE FROM ingredients_for_recipe WHERE recipe_uid = ?";
+  db.query(sql, [uid], function (err, result) {
+    if (err) {
+      console.error(err);
+      res.send("刪除失敗，請稍後再試！");
+    } else {
+      // 再刪除 recipe 表格中的資料
+      sql = "DELETE FROM recipe WHERE recipe_uid = ?";
+      db.query(sql, [uid], function (err, result) {
+        if (err) {
+          console.error(err);
+          res.send("刪除失敗，請稍後再試！");
+        } else {
+          res.json({ message: "資料已成功刪除！" });
+        }
+      });
+    }
+  });
+});
+//批量刪除
+app.post("/deleteRecipes", function (req, res) {
+  var uids = req.body.uids;
+
+  var sql = "DELETE FROM ingredients_for_recipe WHERE recipe_uid IN (?)";
+  db.query(sql, [uids], function (err, result) {
+    if (err) {
+      console.error(err);
+      res.send("刪除失敗，請稍後再試！");
+    } else {
+      sql = "DELETE FROM recipe WHERE recipe_uid IN (?)";
+      db.query(sql, [uids], function (err, result) {
+        if (err) {
+          console.error(err);
+          res.send("刪除失敗，請稍後再試！");
+        } else {
+          res.json({ message: "資料已成功刪除！" });
+        }
+      });
+    }
+  });
+});
+
+/////////////////////recipe路由  recipe_common為SQL指令，讓recipe表連接style和related
 const recipe_common =
   "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid";
 app.get("/recipe", (req, res) => {
