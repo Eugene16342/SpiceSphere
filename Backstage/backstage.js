@@ -6,6 +6,11 @@ const mysql = require("mysql");
 const ejs = require("ejs");
 const app = express();
 const path = require("path");
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
+const multer = require("multer");
+const uploadRecipe = multer({ dest: "../img/recipe" });
+const uploadProduct = multer({ dest: "../img/product" });
 
 app.set("views", path.join(__dirname, "views"));
 
@@ -27,7 +32,7 @@ db.connect((err) => {
   console.log("Connected to database");
 });
 
-//以上都是設定
+//以上都是模組設定
 
 //首頁
 app.get("/", (req, res) => {
@@ -35,8 +40,59 @@ app.get("/", (req, res) => {
 });
 
 //新增項目
-app.get("/addItem", (req, res) => {
-  res.render("add_item");
+app.get("/addRecipe", (req, res) => {
+  res.render("add_recipe");
+});
+
+app.get("/addProduct", (req, res) => {
+  res.render("add_product");
+});
+
+let recipeCount = 50; // 設定初始值為 50
+
+app.post("/addRecipe", function (req, res) {
+  var data = req.body; // 這裡的 req.body 包含了前端傳送過來的資料
+
+  var sql = "INSERT INTO recipe SET ?";
+  db.query(sql, data, function (err, result) {
+    if (err) {
+      console.error(err); // 將錯誤訊息輸出到伺服器的控制台
+      res.send("新增失敗，請檢查是否所有項目皆填寫!1"); // 將錯誤訊息回傳給前端
+    } else {
+      res.json({ message: "食譜已成功新增！", uid: result.insertId });
+    }
+  });
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../img/recipe");
+  },
+  filename: function (req, file, cb) {
+    recipeCount++; // 每次上傳時，計數器加 1
+    cb(null, "recipe" + recipeCount + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/uploadImage", upload.single("file"), function (req, res) {
+  // 處理上傳的圖片...
+  res.send("圖片已成功上傳！");
+});
+
+app.post("/addIngredients", function (req, res) {
+  var data = req.body; // 這裡的 req.body 包含了前端傳送過來的資料
+
+  var sql = "INSERT INTO ingredients_for_recipe SET ?";
+  db.query(sql, data, function (err, result) {
+    if (err) {
+      console.error(err); // 將錯誤訊息輸出到伺服器的控制台
+      res.send("新增失敗，請檢查是否所有項目皆填寫!2"); // 將錯誤訊息回傳給前端
+    } else {
+      res.send("食材已成功新增！");
+    }
+  });
 });
 
 //recipe路由  recipe_common為SQL指令，讓recipe表連接style和related

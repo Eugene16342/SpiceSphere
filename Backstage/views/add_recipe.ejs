@@ -11,6 +11,15 @@
 
   <script>
     $(document).ready(function () {
+      //跳轉事件
+      $("#page").change(function () {
+        var selectedOption = $(this).val();
+        if (selectedOption === "recipe") {
+          window.location.href = "/addRecipe"; // 導向食材路由
+        } else if (selectedOption === "product") {
+          window.location.href = "/addProduct"; // 導向商品路由
+        }
+      });
       // 更新剩餘字數的函數
       function updateCount() {
         const inputLength = $(this).val().length;
@@ -24,6 +33,12 @@
         counter.text(`剩餘字數：${remaining}`);
       }
 
+      // 為每個需要限制字數的欄位添加事件監聽器
+      $("#title, #short_describe, #full_describe, #step").on(
+        "input",
+        updateCount
+      );
+
       // 增加食材欄位的函數
       function addIngredientField(containerSelector, fieldClass) {
         const newField = `
@@ -35,79 +50,63 @@
         $(containerSelector).append(newField);
       }
 
-      // 為每個需要限制字數的欄位添加事件監聽器
-      $("#title, #short_describe, #full_describe, #step").on(
-        "input",
-        updateCount
-      );
-
       // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
       $(".necessary button").click(function () {
         addIngredientField(".necessary", "necessary_ingredients");
       });
 
-      // 為 "增加可選食材欄位" 按鈕添加點擊事件監聽器
-      $(".optional button").click(function () {
-        addIngredientField(".optional", "optional_ingredients");
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(function () {
-      $('select[name="related"]').change(function () {
-        var selected = $(this).val();
-        if (selected == "recipe") {
-          $("#item_info").html(`
-          <div class="item_container">
-              <div class="item_left">
-              <div>這裡是食材的相關資訊</div>
-              <div><label>食譜名稱 : <input type=text></label></input>
-              <div><label>短描述 : <textarea type=text></textarea></label></div>
-              <div><label>完整描述 : <textarea type=text></textarea></label></div>
-              <div><label>食譜步驟 : <textarea type=text></textarea></label></div>
-              <div><label>幾人份 : <input type="number" min="1"></label></div>
-              <div><label>備料時間 : <input type="number" min="1"></label></div>
-              <div><label>烹飪時間 : <input type="number" min="1"></label></div>
-              <div><label>時段分類 : <select name="related">
-                                              <option value="" selected hidden>新增項目</option>
-                                              <option value="recipe">食材</option>
-                                              <option value="product">商品</option>
-                                          </select>
-                                  </label>
-              <div><label>料理風格 : <select name="related">
-                                              <option value="" selected hidden>新增項目</option>
-                                              <option value="recipe">食材</option>
-                                              <option value="product">商品</option>
-                                          </select>
-                                  </label>
-              <div class=input_no_colum><label>素食 :
-                                          <label>是<input name="is_vage" type="radio" value="yes"></label>
-                                          <label>否<input name="is_vage" type="radio" value="no"></label>
-                                      </label></div>
-              <div class=input_no_colum><label>環境要求 :
-                                          <label>廚房<input name="is_kitchen" type="radio" value="yes"></label>
-                                          <label>無<input name="is_kitchen" type="radio" value="no"></label>
-                                      </label</div>
-              <div><label>商品關聯 : <select name="related">
-                                              <option value="" selected hidden>新增項目</option>
-                                              <option value="recipe">食材</option>
-                                              <option value="product">商品</option>
-                                          </select>
-                                      </label>
-                                      </div>
-              </div>
-              <div class="item_right">
-                  <button>增加食材欄位</button>
-                  <input type=text> <input type=text>
-              </div>
-          </div>
-          <hr>
-        `);
-        } else if (selected == "product") {
-          $("#item_info").html("<div>這裡是商品的相關資訊</div>");
+      $("#img_upload").change(function () {
+        if (this.files.length > 0) {
+          $("#is_upload")
+            .text("已選擇")
+            .css("background-color", "rgb(75, 181, 67)");
         } else {
-          $("#item_info").html("");
+          $("#is_upload").text("選擇上傳圖片").css("background-color", "");
         }
+      });
+
+      //將資料傳回資料庫
+      $("#submmit button").click(function (e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        formData.append("file", $("#img_upload")[0].files[0]); // 加入圖片的資料
+
+        var data = {
+          recipe_title: $("#title").val(),
+          part_describe: $("#short_describe").val(),
+          full_describe: $("#full_describe").val(),
+          step: $("#step").val(),
+          recipe_size: $("#size").val(),
+          preparation_time: $("#prepare_time").val(),
+          cook_time: $("#cooking_time").val(),
+          when: $('select[name="when"]').val(),
+          style: $('select[name="style"]').val(),
+          is_vege: $('input[name="is_vage"]:checked').val(),
+          isKitchen: $('input[name="is_kitchen"]:checked').val(),
+          related: $('select[name="related"]').val(),
+        };
+
+        $.ajax({
+          url: "/uploadImage",
+          method: "POST",
+          data: formData,
+          processData: false, // 告訴 jQuery 不要處理資料
+          contentType: false, // 告訴 jQuery 不要設定 contentType
+          success: function (response) {
+            alert(response);
+            // 圖片上傳成功後，再上傳食譜的資料
+            $.ajax({
+              url: "/addRecipe", // 伺服器端處理這個請求的路由
+              method: "POST",
+              data: data,
+              success: function (response) {
+                alert(response.message);
+                // 處理伺服器的回應
+              },
+            });
+          },
+        });
       });
     });
   </script>
@@ -115,9 +114,8 @@
   <body>
     <div>
       新增項目 :
-      <select name="related">
-        <option value="" selected hidden>新增項目</option>
-        <option value="recipe">食材</option>
+      <select id="page">
+        <option value="recipe" selected>食材</option>
         <option value="product">商品</option>
       </select>
       <hr />
@@ -149,8 +147,7 @@
                 <p>食譜的步驟無須標示第幾步，只須按照順序輸入</p>
                 <p>食譜的每個步驟請使用"@"隔開</p>
                 <p>份量/備料時間/烹飪時間不得為零或負數</p>
-                <p>如果料理風格/關聯性不存在所需的分類，請先新增分類</p>
-                <p>食譜必要的食材填寫至所需食材，可取捨的填至可選食材</p>
+                <p>食譜必要的食材正常填寫，可取捨的配料/調味請在前面加上"@"</p>
                 <p>食材的份量請盡量使用阿拉伯數字搭配中文</p>
                 <p>相同的食材/配料不得重複填寫</p>
               </div>
@@ -180,6 +177,15 @@
             <label for="step">食譜步驟 : </label
             ><textarea id="step" type="step" maxlength="1200"></textarea>
           </div>
+        </div>
+
+        <div class="item_mid">
+          <div>
+            <label for="img_upload">
+              <div class="btn" id="is_upload">選擇上傳圖片</div>
+            </label>
+            <input type="file" id="img_upload" accept=".png, .jpg" />
+          </div>
           <div>
             <label for="size">幾人份 : </label
             ><input id="size" type="number" min="1" />
@@ -195,38 +201,45 @@
 
           <div class="input_no_colum">
             <label>素食 : </label>
-            <label>是<input name="is_vage" type="radio" value="yes" /></label>
-            <label>否<input name="is_vage" type="radio" value="no" /></label>
+            <label>是<input name="is_vage" type="radio" value="1" /></label>
+            <label>否<input name="is_vage" type="radio" value="0" /></label>
           </div>
           <div class="input_no_colum">
             <label>環境要求 : </label>
             <label
-              >廚房<input name="is_kitchen" type="radio" value="yes"
+              >廚房<input name="is_kitchen" type="radio" value="1"
             /></label>
-            <label>無<input name="is_kitchen" type="radio" value="no" /></label>
+            <label>無<input name="is_kitchen" type="radio" value="0" /></label>
           </div>
           <div>
             <label>時段分類 : </label>
-            <select name="related">
+            <select name="when">
               <option value="" selected hidden>選擇時段</option>
-              <option value="recipe">食材</option>
-              <option value="product">商品</option>
+              <option value="1">早餐</option>
+              <option value="2">午餐</option>
+              <option value="3">晚餐</option>
             </select>
           </div>
           <div>
             <label>料理風格 : </label>
-            <select name="related">
+            <select name="style">
               <option value="" selected hidden>選擇風格</option>
-              <option value="recipe">食材</option>
-              <option value="product">商品</option>
+              <option value="1">日式</option>
+              <option value="2">義式</option>
+              <option value="3">法式</option>
+              <option value="4">韓式</option>
+              <option value="5">泰式</option>
             </select>
           </div>
           <div>
             <label>商品關聯 : </label>
             <select name="related">
-              <option value="" selected hidden>新增關聯</option>
-              <option value="recipe">食材</option>
-              <option value="product">商品</option>
+              <option value="" selected hidden>選擇關聯</option>
+              <option value="1">食材</option>
+              <option value="2">調味料</option>
+              <option value="3">調理包</option>
+              <option value="4">碗具</option>
+              <option value="5">鍋具</option>
             </select>
           </div>
         </div>
@@ -234,23 +247,17 @@
         <div class="item_right">
           <div class="item_right_sction necessary">
             <div>
-              <button>增加主要食材欄位</button>
+              <button>增加食材欄位</button>
             </div>
             <div class="necessary_ingredients">
               <input placeholder="必要食材名稱" type="text" maxlength="20" />
               <input placeholder="份量" type="text" maxlength="10" />
             </div>
           </div>
-
-          <div class="item_right_sction optional">
-            <div>
-              <button>增加可選食材欄位</button>
-            </div>
-            <div class="optional_ingredients"></div>
-          </div>
-
-          <button id="submmit">新增食譜</button>
         </div>
+      </div>
+      <div id="submmit">
+        <button id="submit_button">新增食譜</button>
       </div>
     </div>
   </body>
