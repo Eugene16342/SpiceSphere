@@ -137,4 +137,14 @@ select {
   width: 250px;
   height: 30px;
   font-size: 20px;
+}
+
+.container {
+  width: 200px;
+  height: 150px;
+  border: 3px solid rgb(204, 204, 204);
+}
+.container img {
+  width: 200px;
+  height: 150px;
 }/*# sourceMappingURL=add_item.css.map */

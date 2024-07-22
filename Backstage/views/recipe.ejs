@@ -93,11 +93,16 @@
               <a
                 class="btn"
                 href="/recipe/<%= recipe.recipe_uid %>"
-                class="button"
                 target="_blank"
                 >詳細資訊</a
               >
-              <button value="edit">編輯</button>
+              <a
+                class="btn"
+                target="_blank"
+                href="/recipe/edit/<%= recipe.recipe_uid %>"
+              >
+                編輯</a
+              >
               <button value="del">刪除</button>
             </td>
           </tr>

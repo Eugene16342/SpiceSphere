@@ -8,6 +8,7 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 const multer = require("multer");
 const uploadRecipe = multer({ dest: "../img/recipe" });
 const uploadProduct = multer({ dest: "../img/product" });
@@ -192,7 +193,85 @@ app.get("/recipe/:id", (req, res) => {
   });
 });
 
-//product路由  product_common和食譜的作用一樣
+////////////////////編輯食譜
+app.get("/recipe/edit/:id", (req, res) => {
+  let sql1 = "SELECT * FROM recipe WHERE recipe_uid = ?";
+  let sql2 = "SELECT * FROM ingredients_for_recipe WHERE recipe_uid = ?";
+
+  Promise.all([
+    new Promise((resolve, reject) => {
+      db.query(sql1, [req.params.id], (err, result) => {
+        if (err) reject(err);
+        else resolve(result[0]);
+      });
+    }),
+    new Promise((resolve, reject) => {
+      db.query(sql2, [req.params.id], (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    }),
+  ])
+    .then(([recipe, ingredients]) => {
+      res.render("edit_recipe", { items: recipe, ingredients: ingredients });
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+////////////////////編輯食譜
+const uploadForEdit = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "../img/recipe");
+    },
+    filename: function (req, file, cb) {
+      cb(null, "recipe" + req.params.id + path.extname(file.originalname));
+    },
+  }),
+});
+
+app.post("/recipe/edit/:id", uploadForEdit.single("file"), (req, res) => {
+  let sql1 =
+    "UPDATE recipe SET recipe_title = ?, part_describe = ?, full_describe = ? WHERE recipe_uid = ?";
+  let sql2 = "DELETE FROM ingredients_for_recipe WHERE recipe_uid = ?";
+  let sql3 =
+    "INSERT INTO ingredients_for_recipe (recipe_uid, ingredient_name, ingredient_quantity) VALUES ?";
+
+  // 更新食譜表
+  db.query(
+    sql1,
+    [
+      req.body.recipe_title,
+      req.body.part_describe,
+      req.body.full_describe,
+      req.params.id,
+    ],
+    (err, result) => {
+      if (err) throw err;
+
+      // 刪除舊的食材
+      db.query(sql2, [req.params.id], (err, result) => {
+        if (err) throw err;
+
+        // 插入新的食材
+        let ingredients = JSON.parse(req.body.ingredients).map((ingredient) => [
+          req.params.id,
+          ingredient.name,
+          ingredient.quantity,
+        ]);
+        db.query(sql3, [ingredients], (err, result) => {
+          if (err) throw err;
+
+          res.redirect("/recipe/" + req.params.id);
+        });
+      });
+    }
+  );
+});
+
+//////////////////////////////product路由  product_common和食譜的作用一樣
 const product_common =
   "SELECT product.*, related.related_name AS related_name FROM product LEFT JOIN related ON product.related = related.related_uid";
 app.get("/product", (req, res) => {
