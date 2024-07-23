@@ -7,6 +7,57 @@ body {
   padding: 0;
 }
 
+nav {
+  text-align: right;
+  background-color: tomato;
+  color: white;
+  font-weight: 900;
+  div{
+    margin-right: 50px;
+    a{
+      margin-left: 10px;
+    }
+  }
+}
+
+#login_section {
+  height: 93vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #login_container{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+    width: 500px;
+    height: 300px;
+    background-color:wheat;
+    div{
+      label {
+        display: inline-block;
+
+        width: 120px;
+      }
+      font-weight: 900;
+      font-size: 20px;
+      margin: 5px 0;
+    }
+    input {
+      height: 20px;
+    }
+    #login_btn{
+      margin-top: 40px;
+      button{
+        width: 70px;
+        height: 40px;
+        font-weight: 900;
+      }
+    }
+
+  }
+}
+
 #btn_group {
   margin: 10px 0 0 200px;
   form {
@@ -158,5 +209,6 @@ button,
   width: 100%;
   background-color: tomato;
   text-align: center;
-  flex-shrink: 0;
+  color: white;
+  font-weight: 900;
 }

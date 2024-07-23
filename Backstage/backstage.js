@@ -36,8 +36,8 @@ db.connect((err) => {
 //以上都是模組設定
 
 //首頁
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
 ////////////////新增項目
