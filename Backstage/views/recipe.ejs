@@ -9,21 +9,21 @@
   </head>
   <script>
     $(document).ready(function () {
-      $(".table_btn_group button[value='del']").on(function () {
-        var uid = $(this).closest("tr").find("input[name='recipe']").val(); // 將 uid 的定義移動到這裡
+      $(".del").on('click', function () {
+  var uid = $(this).closest("tr").find("input[name='recipe']").val();
 
-        if (confirm("確定要刪除這筆資料嗎？")) {
-          $.ajax({
-            url: "/deleteRecipe",
-            method: "POST",
-            data: { uid: uid },
-            success: function (response) {
-              alert(response.message);
-              location.reload(); // 重新載入頁面
-            },
-          });
-        }
-      });
+  if (confirm("確定要刪除這筆資料嗎？")) {
+    $.ajax({
+      url: "/deleteRecipe",
+      method: "POST",
+      data: { uid: uid },
+      success: function (response) {
+        alert(response.message);
+        location.reload();
+      },
+    });
+  }
+});
 
       $(document).on("click", "#batch_del_btn", function () {
         console.log("yy");
@@ -103,7 +103,7 @@
               >
                 編輯</a
               >
-              <button value="del">刪除</button>
+              <button class="del">刪除</button>
             </td>
           </tr>
           <% }); %>
