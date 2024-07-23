@@ -98,14 +98,22 @@
       formData.append('recipe_uid', $('#uid').val());
       formData.append('file', $('#img_upload')[0].files[0]);
 
+      var ingredients = [];
+  $('.ingredientDiv').each(function() {
+    var ingredient = $(this).find('.ingredient').val();
+    var quantity = $(this).find('.quantity').val();
+    ingredients.push({ingredient_name: ingredient, ingredient_quantity: quantity});
+  });
+  formData.append('ingredients', JSON.stringify(ingredients));
+
       $.ajax({
-  url: '/recipe/edit/' + recipeId, // 你需要替換這裡的recipeId
-  type: 'POST',
-  data: formData,
-  processData: false,  // 告訴jQuery不要處理發送的數據
-  contentType: false,  // 告訴jQuery不要設置Content-Type請求頭
-  success: function(data){
-    alert("更新成功!")
+    url: '/recipe/edit/' + recipeId, // 你需要替換這裡的recipeId
+    type: 'POST',
+    data: formData,
+    processData: false,  // 告訴jQuery不要處理發送的數據
+    contentType: false,  // 告訴jQuery不要設置Content-Type請求頭
+    success: function(data){
+    alert("食譜更新成功!")
     console.log('Upload successful!\n' + data);
   },
   error: function(jqXHR, textStatus, errorThrown){

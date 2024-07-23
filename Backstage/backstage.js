@@ -259,10 +259,24 @@ app.post("/recipe/edit/:id", uploadForEdit.single("file"), (req, res) => {
     ],
     (err, result) => {
       if (err) throw err;
-      res.send('更新成功!');  // 添加這行
+ // 刪除所有舊的食材
+ db.query(sql2, [req.body.recipe_uid], (err, result) => {
+  if (err) throw err;
+
+  // 插入新的食材
+  var ingredients = JSON.parse(req.body.ingredients);
+  var values = ingredients.map(ingredient => [req.body.recipe_uid, ingredient.ingredient_name, ingredient.ingredient_quantity]);
+  db.query(sql3, [values], (err, result) => {
+    if (err) throw err;
+    res.send('食譜更新成功!');
+  });
+});
     }
   );
+
+  
 });
+
 
 //////////////////////////////product路由  product_common和食譜的作用一樣
 const product_common =
