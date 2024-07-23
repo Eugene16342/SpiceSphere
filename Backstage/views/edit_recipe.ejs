@@ -75,11 +75,13 @@
       });
 
   
-      $(document).ready(function() {
+
     $('#edit_button').click(function(e) {
       e.preventDefault();
 
+
       // 收集表單數據
+      var recipeId = $('#uid').val();
       var formData = new FormData();
       formData.append('recipe_title', $('#title').val());
       formData.append('part_describe', $('#short_describe').val());
@@ -93,42 +95,33 @@
       formData.append('when', $('select[name="when"]').val());
       formData.append('style', $('select[name="style"]').val());
       formData.append('related', $('select[name="related"]').val());
+      formData.append('recipe_uid', $('#uid').val());
       formData.append('file', $('#img_upload')[0].files[0]);
 
-      // 收集食材數據
-      var ingredients = [];
-$('.ingredientDiv').each(function() {
-  var ingredient = $(this).find('.ingredient').val();
-  var quantity = $(this).find('.quantity').val();
-  ingredients.push({ name: ingredient, quantity: quantity });
-});
-formData.append('ingredients', JSON.stringify(ingredients));
-
-      // 發送 POST 請求
       $.ajax({
-  url: '/recipe/edit/<%= items.recipe_uid %>',
+  url: '/recipe/edit/' + recipeId, // 你需要替換這裡的recipeId
   type: 'POST',
-  data: JSON.stringify(formData),
-  processData: false,
-  contentType: 'application/json',
-      success: function(data) {
-        alert('食譜已成功更新！');
-        window.location.href = '/recipe/<%= items.recipe_uid %>';
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        alert('更新失敗，請檢查是否所有項目皆填寫!');
-      }
-    });
+  data: formData,
+  processData: false,  // 告訴jQuery不要處理發送的數據
+  contentType: false,  // 告訴jQuery不要設置Content-Type請求頭
+  success: function(data){
+    alert("更新成功!")
+    console.log('Upload successful!\n' + data);
+  },
+  error: function(jqXHR, textStatus, errorThrown){
+    console.log("AJAX 請求失敗: " + textStatus);
+  }
+});
   });
   });
     
-    });
   </script>
 
   <body>
     <div>
-      項目編號 : <%= items.recipe_uid %> 、 <%= items.recipe_title %>
+      項目編號 : <%= items.recipe_uid %> 、 <%= items.recipe_title %> 
       <hr />
+      <input type="text" id="uid" value="<%= items.recipe_uid %>" hidden>
     </div>
 
     <div id="item_info">
@@ -233,55 +226,51 @@ formData.append('ingredients', JSON.stringify(ingredients));
           <div class="input_no_colum">
             <label>素食 : </label>
             <label
-              >是<input name="is_vage" type="radio" value="1" <%= items.is_vege
+              >是<input name="is_vage" type="radio" value=1 <%= items.is_vege
               == 1 ? 'checked' : '' %> /></label
             >
             <label
-              >否<input name="is_vage" type="radio" value="0" <%= items.is_vege
+              >否<input name="is_vage" type="radio" value=0 <%= items.is_vege
               == 0 ? 'checked' : '' %> /></label
             >
           </div>
           <div class="input_no_colum">
             <label>環境要求 : </label>
             <label
-              >廚房<input name="is_kitchen" type="radio" value="1" <%=
+              >廚房<input name="is_kitchen" type="radio" value=1 <%=
               items.isKitchen == 1 ? 'checked' : '' %> /></label
             >
             <label
-              >無<input name="is_kitchen" type="radio" value="0" <%=
+              >無<input name="is_kitchen" type="radio" value=0 <%=
               items.isKitchen == 0 ? 'checked' : '' %> /></label
             >
           </div>
           <div>
             <label>時段分類 : </label>
-            <select name="when"  value="<%=
-            items.when  %>"">
-              <option value="" selected hidden>選擇時段</option>
-              <option value="1" <%= items.when == 1 ? 'selected' : '' %>>早餐</option>
-              <option value="2" <%= items.when == 2 ? 'selected' : '' %>>午餐</option>
-              <option value="3" <%= items.when == 3 ? 'selected' : '' %>>晚餐</option>
+            <select name="when">
+              <option value=1 <%= items.when == 1 ? 'selected' : '' %>>早餐</option>
+              <option value=2 <%= items.when == 2 ? 'selected' : '' %>>午餐</option>
+              <option value=3 <%= items.when == 3 ? 'selected' : '' %>>晚餐</option>
             </select>
           </div>
           <div>
             <label>料理風格 : </label>
             <select name="style">
-              <option value="" selected hidden>選擇風格</option>
-              <option <%= items.style == 1 ? 'selected' : '' %> value="1">日式</option>
-              <option <%= items.style == 2 ? 'selected' : '' %> value="2">義式</option>
-              <option <%= items.style == 3 ? 'selected' : '' %> value="3">法式</option>
-              <option <%= items.style == 4 ? 'selected' : '' %> value="4">韓式</option>
-              <option <%= items.style == 5 ? 'selected' : '' %> value="5">泰式</option>
+              <option <%= items.style == 1 ? 'selected' : '' %> value=1>日式</option>
+              <option <%= items.style == 2 ? 'selected' : '' %> value=2>義式</option>
+              <option <%= items.style == 3 ? 'selected' : '' %> value=3>法式</option>
+              <option <%= items.style == 4 ? 'selected' : '' %> value=4>韓式</option>
+              <option <%= items.style == 5 ? 'selected' : '' %> value=5>泰式</option>
             </select>
           </div>
           <div>
             <label>商品關聯 : </label>
             <select name="related">
-              <option value="" selected hidden>選擇關聯</option>
-              <option <%= items.related == 1 ? 'selected' : '' %> value="1">食材</option>
-              <option <%= items.related == 2 ? 'selected' : '' %> value="2">調味料</option>
-              <option <%= items.related == 3 ? 'selected' : '' %> value="3">調理包</option>
-              <option <%= items.related == 4 ? 'selected' : '' %> value="4">碗具</option>
-              <option <%= items.related == 5 ? 'selected' : '' %> value="5">鍋具</option>
+              <option <%= items.related == 1 ? 'selected' : '' %> value=1>食材</option>
+              <option <%= items.related == 2 ? 'selected' : '' %> value=2>調味料</option>
+              <option <%= items.related == 3 ? 'selected' : '' %> value=3>調理包</option>
+              <option <%= items.related == 4 ? 'selected' : '' %> value=4>碗具</option>
+              <option <%= items.related == 5 ? 'selected' : '' %> value=5>鍋具</option>
             </select>
           </div>
         </div>

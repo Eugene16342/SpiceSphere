@@ -193,7 +193,7 @@ app.get("/recipe/:id", (req, res) => {
   });
 });
 
-////////////////////編輯食譜
+////////////////////編輯食譜頁面
 app.get("/recipe/edit/:id", (req, res) => {
   let sql1 = "SELECT * FROM recipe WHERE recipe_uid = ?";
   let sql2 = "SELECT * FROM ingredients_for_recipe WHERE recipe_uid = ?";
@@ -220,7 +220,7 @@ app.get("/recipe/edit/:id", (req, res) => {
     });
 });
 
-////////////////////編輯食譜
+////////////////////編輯食譜功能
 const uploadForEdit = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
@@ -234,7 +234,7 @@ const uploadForEdit = multer({
 
 app.post("/recipe/edit/:id", uploadForEdit.single("file"), (req, res) => {
   let sql1 =
-    "UPDATE recipe SET recipe_title = ?, part_describe = ?, full_describe = ? WHERE recipe_uid = ?";
+    "UPDATE recipe SET recipe_title = ?, part_describe = ?, full_describe = ?,step = ?,recipe_size = ?, preparation_time = ?, cook_time =? ,`when` = ? , style = ?, is_vege = ?, isKitchen = ?, related = ? WHERE recipe_uid = ?";
   let sql2 = "DELETE FROM ingredients_for_recipe WHERE recipe_uid = ?";
   let sql3 =
     "INSERT INTO ingredients_for_recipe (recipe_uid, ingredient_name, ingredient_quantity) VALUES ?";
@@ -246,27 +246,20 @@ app.post("/recipe/edit/:id", uploadForEdit.single("file"), (req, res) => {
       req.body.recipe_title,
       req.body.part_describe,
       req.body.full_describe,
-      req.params.id,
+      req.body.step,
+      req.body.size,
+      req.body.prepare_time,
+      req.body.cooking_time,
+      req.body.when,
+      req.body.style,
+      req.body.is_vage,
+      req.body.is_kitchen,
+      req.body.related,
+      req.body.recipe_uid
     ],
     (err, result) => {
       if (err) throw err;
-
-      // 刪除舊的食材
-      db.query(sql2, [req.params.id], (err, result) => {
-        if (err) throw err;
-
-        // 插入新的食材
-        let ingredients = JSON.parse(req.body.ingredients).map((ingredient) => [
-          req.params.id,
-          ingredient.name,
-          ingredient.quantity,
-        ]);
-        db.query(sql3, [ingredients], (err, result) => {
-          if (err) throw err;
-
-          res.redirect("/recipe/" + req.params.id);
-        });
-      });
+      res.send('更新成功!');  // 添加這行
     }
   );
 });
