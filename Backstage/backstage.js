@@ -220,6 +220,21 @@ app.get("/recipe/edit/:id", (req, res) => {
     });
 });
 
+
+//////////////////////////////////////////編輯商品頁面
+app.get("/product/edit/:id", (req, res) => {
+  let sql1 = "SELECT * FROM product WHERE product_uid = ?";
+  db.query(sql1, [req.params.id], (err, result) => {
+    if (err) {
+      // 處理錯誤
+      console.log(err);
+    } else {
+      res.render("edit_product", { items: result[0] });
+    }
+  });
+});
+
+
 ////////////////////編輯食譜功能
 const uploadForEdit = multer({
   storage: multer.diskStorage({

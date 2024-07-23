@@ -42,7 +42,7 @@ select {
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.2;
-  top: 80px;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;
@@ -72,7 +72,7 @@ select {
 }
 .item_container .item_left {
   margin-left: 20px;
-  width: 700px;
+  width: 600px;
 }
 .item_container .item_left div {
   margin: 10px 0;
