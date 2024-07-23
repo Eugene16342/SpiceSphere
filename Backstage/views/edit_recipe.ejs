@@ -45,8 +45,14 @@
         $(containerSelector).append(newField);
       }
 
+
+               // 為刪除按鈕添加點擊事件監聽器
+               $(".necessary_ingredients").on("click", ".deleteButton", function() {
+  $(this).parent().remove();
+});
+
       // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
-      $(".necessary button").click(function () {
+      $("#add_field").click(function () {
         // 建立新的輸入欄位
         var newIngredientField = $(
           '<input class="ingredient" placeholder="食材名稱" type="text" maxlength="20" />'
@@ -55,10 +61,13 @@
           '<input class="quantity" placeholder="份量" type="text" maxlength="10" />'
         );
 
+        var deleteButton = $('<button class="deleteButton">X</button>');
+
         // 建立一個新的 div 元素，並將兩個輸入欄位加入到這個 div 中
         var newIngredientDiv = $('<div class="ingredientDiv"></div>');
         newIngredientDiv.append(newIngredientField);
         newIngredientDiv.append(newQuantityField);
+        newIngredientDiv.append(deleteButton);
 
         // 將這個 div 加入到 .necessary_ingredients 中
         $(".necessary_ingredients").append(newIngredientDiv);
@@ -286,26 +295,25 @@
         <div class="item_right">
           <div class="item_right_sction necessary">
             <div>
-              <button>增加食材欄位</button>
+              <button id="add_field">增加食材欄位</button>
             </div>
             <div class="necessary_ingredients">
               <% ingredients.forEach(function(ingredient) { %>
-              <div class="ingredientDiv">
-                <input
+              <div class="ingredientDiv"><input
                   class="ingredient"
                   placeholder="食材名稱"
                   type="text"
                   maxlength="20"
                   value="<%= ingredient.ingredient_name %>"
-                />
-                <input
+                /><input
                   class="quantity"
                   placeholder="份量"
                   type="text"
                   maxlength="10"
                   value="<%= ingredient.ingredient_quantity %>"
-                />
+                /><button class="deleteButton">X</button>
               </div>
+
               <% }); %>
             </div>
           </div>

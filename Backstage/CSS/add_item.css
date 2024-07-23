@@ -71,6 +71,7 @@ select {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.8);
 }
 .item_container .item_left {
+  margin-left: 20px;
   width: 700px;
 }
 .item_container .item_left div {
@@ -98,7 +99,7 @@ select {
   height: 225px;
 }
 .item_container .item_mid {
-  width: 600px;
+  width: 400px;
   margin-top: 20px;
   margin-left: 20px;
 }
