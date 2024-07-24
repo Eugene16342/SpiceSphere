@@ -12,6 +12,21 @@ app.use(bodyParser.json());
 const multer = require("multer");
 const uploadRecipe = multer({ dest: "../img/recipe" });
 const uploadProduct = multer({ dest: "../img/product" });
+const session = require("express-session");
+
+app.use(
+  session({
+    secret: "SpiceSphere20240827",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // 如果您的網站使用 HTTPS，請將此選項設為 true
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.username = req.session.username || "請先登入";
+  next();
+});
 
 app.set("views", path.join(__dirname, "views"));
 
@@ -35,10 +50,73 @@ db.connect((err) => {
 
 //以上都是模組設定
 
-//首頁
+// 萬用路由
+// app.get("*", (req, res, next) => {
+//   if (req.originalUrl === "/login") {
+//     next();
+//   } else {
+//     res.redirect("/login");
+//   }
+// });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.session.user) {
+    // 如果用戶已登入，則繼續處理請求
+    next();
+  } else {
+    // 如果用戶未登入，則重定向到登入頁面
+    res.redirect("/login");
+  }
+}
+
+/////登入畫面
+
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", { username: req.session.username || "請先登入" });
 });
+
+app.post("/login", (req, res) => {
+  const { staff_uid, password } = req.body;
+
+  db.query(
+    "SELECT * FROM staff WHERE staff_uid = ? AND password = ?",
+    [staff_uid, password],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
+      }
+
+      if (result.length > 0) {
+        // 登入成功，將用戶資訊存入 session，並重定向到首頁
+        req.session.user = result[0];
+        req.session.username = result[0].staff_name; // 假設用戶名稱儲存在 username 屬性中
+        res.redirect("/recipe");
+      } else {
+        // 登入失敗，重定向回登入頁面，並傳遞錯誤訊息
+        res.render("login", {
+          error: true,
+          username: req.session.username || "請先登入",
+        });
+      }
+    }
+  );
+});
+
+//////登出
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.redirect("/recipe");
+    }
+    res.clearCookie("sid");
+    res.redirect("/login");
+  });
+});
+app.use(express.static("../"));
+app.use(express.static("jquery"));
+app.use(express.static("CSS"));
+app.use(ensureAuthenticated);
 
 ////////////////新增項目
 app.get("/addRecipe", (req, res) => {
@@ -220,7 +298,6 @@ app.get("/recipe/edit/:id", (req, res) => {
     });
 });
 
-
 //////////////////////////////////////////編輯商品頁面
 app.get("/product/edit/:id", (req, res) => {
   let sql1 = "SELECT * FROM product WHERE product_uid = ?";
@@ -233,7 +310,6 @@ app.get("/product/edit/:id", (req, res) => {
     }
   });
 });
-
 
 ////////////////////編輯食譜功能
 const uploadForEdit = multer({
@@ -270,28 +346,29 @@ app.post("/recipe/edit/:id", uploadForEdit.single("file"), (req, res) => {
       req.body.is_vage,
       req.body.is_kitchen,
       req.body.related,
-      req.body.recipe_uid
+      req.body.recipe_uid,
     ],
     (err, result) => {
       if (err) throw err;
- // 刪除所有舊的食材
- db.query(sql2, [req.body.recipe_uid], (err, result) => {
-  if (err) throw err;
+      // 刪除所有舊的食材
+      db.query(sql2, [req.body.recipe_uid], (err, result) => {
+        if (err) throw err;
 
-  // 插入新的食材
-  var ingredients = JSON.parse(req.body.ingredients);
-  var values = ingredients.map(ingredient => [req.body.recipe_uid, ingredient.ingredient_name, ingredient.ingredient_quantity]);
-  db.query(sql3, [values], (err, result) => {
-    if (err) throw err;
-    res.send('食譜更新成功!');
-  });
-});
+        // 插入新的食材
+        var ingredients = JSON.parse(req.body.ingredients);
+        var values = ingredients.map((ingredient) => [
+          req.body.recipe_uid,
+          ingredient.ingredient_name,
+          ingredient.ingredient_quantity,
+        ]);
+        db.query(sql3, [values], (err, result) => {
+          if (err) throw err;
+          res.send("食譜更新成功!");
+        });
+      });
     }
   );
-
-  
 });
-
 
 //////////////////////////////product路由  product_common和食譜的作用一樣
 const product_common =
@@ -411,7 +488,6 @@ app.get("/search", (req, res) => {
     }
   );
 });
-
 app.use(express.static("../"));
 app.use(express.static("jquery"));
 app.use(express.static("CSS"));

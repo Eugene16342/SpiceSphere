@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="/backstage.css" />
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
-<body>
-
+  <body>
     <nav>
-    <div>
-        我是新的導覽列
-        <a class="btn" href="">登出</a>
-    </div>
-
-</nav>
-</body>
+      <div>
+        歡迎，<span><%= username %></span>
+        <a class="btn" href="/logout">登出</a>
+      </div>
+    </nav>
+  </body>
+</html>

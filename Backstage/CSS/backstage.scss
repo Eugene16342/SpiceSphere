@@ -12,49 +12,69 @@ nav {
   background-color: tomato;
   color: white;
   font-weight: 900;
-  div{
+  div {
     margin-right: 50px;
-    a{
+    a {
       margin-left: 10px;
     }
   }
 }
 
 #login_section {
-  height: 93vh;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  #login_container{
+  height: 95vh;
+
+  #background {
+    position: fixed;
+    top: 0;
+    right: -10px;
+    bottom: 0;
+    left: -10px;
+    background-image: url(../../img/common/login_bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(5px) brightness(0.7);
+    z-index: -10;
+  }
+  #login_container {
     display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 500px;
     height: 300px;
-    background-color:wheat;
-    div{
-      label {
-        display: inline-block;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
+    form {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      div {
+        label {
+          display: inline-block;
 
-        width: 120px;
-      }
-      font-weight: 900;
-      font-size: 20px;
-      margin: 5px 0;
-    }
-    input {
-      height: 20px;
-    }
-    #login_btn{
-      margin-top: 40px;
-      button{
-        width: 70px;
-        height: 40px;
+          width: 120px;
+        }
         font-weight: 900;
+        font-size: 20px;
+        margin: 5px 0;
+      }
+      input {
+        height: 20px;
+      }
+      #login_btn {
+        margin-top: 40px;
+        button {
+          width: 70px;
+          height: 40px;
+          font-weight: 900;
+        }
       }
     }
-
   }
 }
 
@@ -206,6 +226,8 @@ button,
 }
 
 .footer {
+  position: fixed;
+  bottom: 0;
   width: 100%;
   background-color: tomato;
   text-align: center;

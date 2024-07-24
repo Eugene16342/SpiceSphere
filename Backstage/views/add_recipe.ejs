@@ -51,11 +51,10 @@
         $(containerSelector).append(newField);
       }
 
-
-               // 為刪除按鈕添加點擊事件監聽器
-               $(".necessary_ingredients").on("click", ".deleteButton", function() {
-  $(this).parent().remove();
-});
+      // 為刪除按鈕添加點擊事件監聽器
+      $(".necessary_ingredients").on("click", ".deleteButton", function () {
+        $(this).parent().remove();
+      });
 
       // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
       $("#add_field").click(function () {
@@ -166,6 +165,7 @@
   </script>
 
   <body>
+    <%- include('nav_bar') %>
     <div>
       新增項目 :
       <select id="page">
@@ -325,5 +325,6 @@
         <button id="submit_button">新增食譜</button>
       </div>
     </div>
+    <%- include('footer') %>
   </body>
 </html>

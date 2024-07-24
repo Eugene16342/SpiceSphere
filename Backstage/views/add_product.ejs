@@ -40,70 +40,71 @@
         updateCount
       );
 
-    //   // 增加食材欄位的函數
-    //   function addIngredientField(containerSelector, fieldClass) {
-    //     const newField = `
-    //   <div class="${fieldClass}">
-    //     <input placeholder="食材名稱" type="text" maxlength="20" />
-    //     <input placeholder="份量" type="text" maxlength="10" />
-    //   </div>
-    // `;
-    //     $(containerSelector).append(newField);
-    //   }
+      //   // 增加食材欄位的函數
+      //   function addIngredientField(containerSelector, fieldClass) {
+      //     const newField = `
+      //   <div class="${fieldClass}">
+      //     <input placeholder="食材名稱" type="text" maxlength="20" />
+      //     <input placeholder="份量" type="text" maxlength="10" />
+      //   </div>
+      // `;
+      //     $(containerSelector).append(newField);
+      //   }
 
-    //   // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
-    //   $(".necessary button").click(function () {
-    //     addIngredientField(".necessary", "necessary_ingredients");
-    //   });
+      //   // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
+      //   $(".necessary button").click(function () {
+      //     addIngredientField(".necessary", "necessary_ingredients");
+      //   });
 
-    //   // 為 "增加可選食材欄位" 按鈕添加點擊事件監聽器
-    //   $(".optional button").click(function () {
-    //     addIngredientField(".optional", "optional_ingredients");
-    //   });
+      //   // 為 "增加可選食材欄位" 按鈕添加點擊事件監聽器
+      //   $(".optional button").click(function () {
+      //     addIngredientField(".optional", "optional_ingredients");
+      //   });
 
-    // //   $("#img_upload").change(function () {
-    //     if (this.files.length > 0) {
-    //       $("#is_upload")
-    //         .text("已選擇")
-    //         .css("background-color", "rgb(75, 181, 67)");
-    //     } else {
-    //       $("#is_upload").text("選擇上傳圖片").css("background-color", "");
-    //     }
-    //   });
+      // //   $("#img_upload").change(function () {
+      //     if (this.files.length > 0) {
+      //       $("#is_upload")
+      //         .text("已選擇")
+      //         .css("background-color", "rgb(75, 181, 67)");
+      //     } else {
+      //       $("#is_upload").text("選擇上傳圖片").css("background-color", "");
+      //     }
+      //   });
 
-    //   //將資料傳回資料庫
-    //   $("#submmit button").click(function (e) {
-    //     e.preventDefault();
+      //   //將資料傳回資料庫
+      //   $("#submmit button").click(function (e) {
+      //     e.preventDefault();
 
-    //     var data = {
-    //       recipe_title: $("#title").val(),
-    //       part_describe: $("#short_describe").val(),
-    //       full_describe: $("#full_describe").val(),
-    //       step: $("#step").val(),
-    //       recipe_size: $("#size").val(),
-    //       preparation_time: $("#prepare_time").val(),
-    //       cook_time: $("#cooking_time").val(),
-    //       when: $('select[name="when"]').val(),
-    //       style: $('select[name="style"]').val(),
-    //       is_vege: $('input[name="is_vage"]:checked').val(),
-    //       isKitchen: $('input[name="is_kitchen"]:checked').val(),
-    //       related: $('select[name="related"]').val(),
-    //       // 其他欄位...
-    //     };
+      //     var data = {
+      //       recipe_title: $("#title").val(),
+      //       part_describe: $("#short_describe").val(),
+      //       full_describe: $("#full_describe").val(),
+      //       step: $("#step").val(),
+      //       recipe_size: $("#size").val(),
+      //       preparation_time: $("#prepare_time").val(),
+      //       cook_time: $("#cooking_time").val(),
+      //       when: $('select[name="when"]').val(),
+      //       style: $('select[name="style"]').val(),
+      //       is_vege: $('input[name="is_vage"]:checked').val(),
+      //       isKitchen: $('input[name="is_kitchen"]:checked').val(),
+      //       related: $('select[name="related"]').val(),
+      //       // 其他欄位...
+      //     };
 
-    //     $.ajax({
-    //       url: "/addRecipe", // 伺服器端處理這個請求的路由
-    //       method: "POST",
-    //       data: data,
-    //       success: function (response) {
-    //         // 處理伺服器的回應
-    //       },
-    //     });
-    //   });
+      //     $.ajax({
+      //       url: "/addRecipe", // 伺服器端處理這個請求的路由
+      //       method: "POST",
+      //       data: data,
+      //       success: function (response) {
+      //         // 處理伺服器的回應
+      //       },
+      //     });
+      //   });
     });
   </script>
 
   <body>
+    <%- include('nav_bar') %>
     <div>
       新增項目 :
       <select id="page">
@@ -204,5 +205,6 @@
         <button>新增商品</button>
       </div>
     </div>
+    <%- include('footer') %>
   </body>
 </html>
