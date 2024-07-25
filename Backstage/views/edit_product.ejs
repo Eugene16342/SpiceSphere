@@ -44,15 +44,53 @@
         $("#title, #short_describe, #full_describe, #size").each(function () {
         updateCount.call(this);
       });
+
+      $("#img_upload").change(function () {
+        if (this.files.length > 0) {
+          $("#is_upload")
+            .text("已選擇")
+            .css("background-color", "rgb(75, 181, 67)");
+        } else {
+          $("#is_upload").text("選擇上傳圖片").css("background-color", "");
+        }
+      });
+
+
+      $("#submmit button").click(function (e) {
+  e.preventDefault();
+
+  var uid = $('#uid').val();
+  var data = new FormData();
+  data.append('product_title', $("#title").val());
+  data.append('part_describe', $("#short_describe").val());
+  data.append('full_describe', $("#full_describe").val());
+  data.append('size', $("#size").val());
+  data.append('price', $("#price").val());
+  data.append('inventory', $("#inventory").val());
+  data.append('sales_amount', $("#sales_amount").val());
+  data.append('related', $('select[name="related"]').val());
+  data.append('file', $("#img_upload")[0].files[0]); // 加入圖片的資料
+
+  $.ajax({
+    url: "/product/edit/" + uid, // 伺服器端處理這個請求的路由
+    method: "POST",
+    data: data,
+    processData: false,  // 告訴 jQuery 不要處理數據
+    contentType: false,  // 告訴 jQuery 不要設置 contentType
+    success: function (response) {
+      alert(response.message);
+    },
+  });
+});
     });
   </script>
 
   <body>
-    <div>
-      <%- include('nav_bar') %>
-        項目編號 : <%= items.product_uid %> 、 <%= items.product_title %> 
+    <%- include('nav_bar') %>
+    <div id="item_uid">
+        <span>項目編號 : <%= items.product_uid %> 、 <%= items.product_title %> </span>
         <hr />
-        <input type="text" id="uid" value="<%= items.recipe_uid %>" hidden>
+        <input type="text" id="uid" value="<%= items.product_uid %>" hidden>
       </div>
 
     <div id="item_info">

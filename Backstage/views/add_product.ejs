@@ -93,12 +93,14 @@
 
   <body>
     <%- include('nav_bar') %>
-    <div>
-      新增項目 :
-      <select id="page">
-        <option value="recipe">食材</option>
-        <option value="product" selected>商品</option>
-      </select>
+    <div id="item_uid">
+      <span>
+        新增項目 :
+        <select id="page">
+          <option value="recipe">食材</option>
+          <option value="product" selected>商品</option>
+        </select>
+      </span>
       <hr />
     </div>
 
@@ -165,8 +167,8 @@
             <input type="file" id="img_upload" accept=".png, .jpg" />
           </div>
           <div>
-            <label for="prcie">售價 : </label
-            ><input id="prcie" type="number" min="0" />
+            <label for="price">售價 : </label
+            ><input id="price" type="number" min="0" />
           </div>
           <div>
             <label for="inventory">存貨數量 : </label

@@ -46,8 +46,8 @@
       }
 
 
-               // 為刪除按鈕添加點擊事件監聽器
-               $(".necessary_ingredients").on("click", ".deleteButton", function() {
+// 為刪除按鈕添加點擊事件監聽器
+ $(".necessary_ingredients").on("click", ".deleteButton", function() {
   $(this).parent().remove();
 });
 
@@ -136,8 +136,8 @@
 
   <body>
     <%- include('nav_bar') %>
-    <div>
-      項目編號 : <%= items.recipe_uid %> 、 <%= items.recipe_title %> 
+    <div id="item_uid">
+      <span>項目編號 : <%= items.recipe_uid %> 、 <%= items.recipe_title %> </span>
       <hr />
       <input type="text" id="uid" value="<%= items.recipe_uid %>" hidden>
     </div>

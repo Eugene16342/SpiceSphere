@@ -29,6 +29,10 @@ select {
   border-radius: 4px;
 }
 
+#item_uid span {
+  margin-left: 30px;
+}
+
 .item_container {
   position: relative;
   width: 100%;
