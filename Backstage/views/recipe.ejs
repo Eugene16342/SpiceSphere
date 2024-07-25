@@ -9,24 +9,23 @@
   </head>
   <script>
     $(document).ready(function () {
-      $(".del").on('click', function () {
-  var uid = $(this).closest("tr").find("input[name='recipe']").val();
+      $(".del").on("click", function () {
+        var uid = $(this).closest("tr").find("input[name='recipe']").val();
 
-  if (confirm("確定要刪除這筆資料嗎？")) {
-    $.ajax({
-      url: "/deleteRecipe",
-      method: "POST",
-      data: { uid: uid },
-      success: function (response) {
-        alert(response.message);
-        location.reload();
-      },
-    });
-  }
-});
+        if (confirm("確定要刪除這筆資料嗎？")) {
+          $.ajax({
+            url: "/deleteRecipe",
+            method: "POST",
+            data: { uid: uid },
+            success: function (response) {
+              alert(response.message);
+              location.reload();
+            },
+          });
+        }
+      });
 
       $(document).on("click", "#batch_del_btn", function () {
-        console.log("yy");
         var uids = [];
         $("input[name='recipe']:checked").each(function () {
           uids.push($(this).val());

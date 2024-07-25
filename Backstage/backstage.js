@@ -201,7 +201,7 @@ app.post(
 );
 
 ///////////////////////////////////////////////////////////////////////刪除項目
-//單個刪除
+//////////////////////////////////////////////////////////////////////單個刪除
 app.post("/deleteRecipe", function (req, res) {
   var uid = req.body.uid;
 
@@ -224,7 +224,21 @@ app.post("/deleteRecipe", function (req, res) {
     }
   });
 });
-//批量刪除
+
+app.post("/deleteProduct", function (req, res) {
+  var uid = req.body.uid;
+
+  var sql = "DELETE FROM product WHERE product_uid = ?";
+  db.query(sql, [uid], function (err, result) {
+    if (err) {
+      console.error(err);
+      res.send("刪除失敗，請稍後再試！");
+    } else {
+      res.json({ message: "資料已成功刪除！" });
+    }
+  });
+});
+//////////////////////////////////////////////////////////////////////////批量刪除
 app.post("/deleteRecipes", function (req, res) {
   var uids = req.body.uids;
 
@@ -247,6 +261,19 @@ app.post("/deleteRecipes", function (req, res) {
   });
 });
 
+app.post("/deleteProducts", function (req, res) {
+  var uids = req.body.uids;
+
+  var sql = "DELETE FROM product WHERE product_uid IN (?)";
+  db.query(sql, [uids], function (err, result) {
+    if (err) {
+      console.error(err);
+      res.send("刪除失敗，請稍後再試！");
+    } else {
+      res.json({ message: "資料已成功刪除！" });
+    }
+  });
+});
 /////////////////////recipe路由  recipe_common為SQL指令，讓recipe表連接style和related
 const recipe_common =
   "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid";
