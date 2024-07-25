@@ -8,15 +8,15 @@ body {
 }
 
 nav {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
   background-color: tomato;
   color: white;
   font-weight: 900;
-  div {
-    margin-right: 50px;
-    a {
-      margin-left: 10px;
-    }
+  user-select: none;
+  margin-bottom: 10px;
+  span {
+    margin: 0 20px;
   }
 }
 

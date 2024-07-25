@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>添加新項目</title>
+    <title>添加新項目|商品</title>
   </head>
   <link rel="stylesheet" href="/backstage.css" />
   <link rel="stylesheet" href="/add_item.css" />
@@ -40,66 +40,54 @@
         updateCount
       );
 
-      //   // 增加食材欄位的函數
-      //   function addIngredientField(containerSelector, fieldClass) {
-      //     const newField = `
-      //   <div class="${fieldClass}">
-      //     <input placeholder="食材名稱" type="text" maxlength="20" />
-      //     <input placeholder="份量" type="text" maxlength="10" />
-      //   </div>
-      // `;
-      //     $(containerSelector).append(newField);
-      //   }
+      $("#img_upload").change(function () {
+        if (this.files.length > 0) {
+          $("#is_upload")
+            .text("已選擇")
+            .css("background-color", "rgb(75, 181, 67)");
+        } else {
+          $("#is_upload").text("選擇上傳圖片").css("background-color", "");
+        }
+      });
 
-      //   // 為 "增加必要食材欄位" 按鈕添加點擊事件監聽器
-      //   $(".necessary button").click(function () {
-      //     addIngredientField(".necessary", "necessary_ingredients");
-      //   });
+      //將資料傳回資料庫
+      $("#submmit button").click(function (e) {
+        e.preventDefault();
 
-      //   // 為 "增加可選食材欄位" 按鈕添加點擊事件監聽器
-      //   $(".optional button").click(function () {
-      //     addIngredientField(".optional", "optional_ingredients");
-      //   });
+        var data = {
+          product_title: $("#title").val(),
+          part_describe: $("#short_describe").val(),
+          full_describe: $("#full_describe").val(),
+          size: $("#size").val(),
+          price: $("#price").val(),
+          inventory: $("#inventory").val(),
+          sales_amount: $("#sales_amount").val(),
+          related: $('select[name="related"]').val(),
+          // 其他欄位...
+        };
 
-      // //   $("#img_upload").change(function () {
-      //     if (this.files.length > 0) {
-      //       $("#is_upload")
-      //         .text("已選擇")
-      //         .css("background-color", "rgb(75, 181, 67)");
-      //     } else {
-      //       $("#is_upload").text("選擇上傳圖片").css("background-color", "");
-      //     }
-      //   });
+        $.ajax({
+          url: "/addProduct", // 伺服器端處理這個請求的路由
+          method: "POST",
+          data: data,
+          success: function (response) {
+            alert(response.message);
+            var formData = new FormData();
+            formData.append("file", $("#img_upload")[0].files[0]); // 加入圖片的資料
 
-      //   //將資料傳回資料庫
-      //   $("#submmit button").click(function (e) {
-      //     e.preventDefault();
-
-      //     var data = {
-      //       recipe_title: $("#title").val(),
-      //       part_describe: $("#short_describe").val(),
-      //       full_describe: $("#full_describe").val(),
-      //       step: $("#step").val(),
-      //       recipe_size: $("#size").val(),
-      //       preparation_time: $("#prepare_time").val(),
-      //       cook_time: $("#cooking_time").val(),
-      //       when: $('select[name="when"]').val(),
-      //       style: $('select[name="style"]').val(),
-      //       is_vege: $('input[name="is_vage"]:checked').val(),
-      //       isKitchen: $('input[name="is_kitchen"]:checked').val(),
-      //       related: $('select[name="related"]').val(),
-      //       // 其他欄位...
-      //     };
-
-      //     $.ajax({
-      //       url: "/addRecipe", // 伺服器端處理這個請求的路由
-      //       method: "POST",
-      //       data: data,
-      //       success: function (response) {
-      //         // 處理伺服器的回應
-      //       },
-      //     });
-      //   });
+            $.ajax({
+              url: "/uploadProductImage",
+              method: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (response) {
+                alert(response);
+              },
+            });
+          },
+        });
+      });
     });
   </script>
 
@@ -177,16 +165,16 @@
             <input type="file" id="img_upload" accept=".png, .jpg" />
           </div>
           <div>
-            <label for="size">售價 : </label
-            ><input id="size" type="number" min="1" />
+            <label for="prcie">售價 : </label
+            ><input id="prcie" type="number" min="0" />
           </div>
           <div>
-            <label for="prepare_time">存貨數量 : </label
-            ><input id="prepare_time" type="number" min="1" />
+            <label for="inventory">存貨數量 : </label
+            ><input id="inventory" type="number" min="0" />
           </div>
           <div>
-            <label for="cooking_time">銷售數量 : </label
-            ><input id="cooking_time" type="number" min="1" />
+            <label for="sales_amount">銷售數量 : </label
+            ><input id="sales_amount" type="number" min="1" />
           </div>
           <div>
             <label>商品關聯 : </label>

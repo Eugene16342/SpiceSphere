@@ -50,15 +50,6 @@ db.connect((err) => {
 
 //以上都是模組設定
 
-// 萬用路由
-// app.get("*", (req, res, next) => {
-//   if (req.originalUrl === "/login") {
-//     next();
-//   } else {
-//     res.redirect("/login");
-//   }
-// });
-
 function ensureAuthenticated(req, res, next) {
   if (req.session.user) {
     // 如果用戶已登入，則繼續處理請求
@@ -118,13 +109,9 @@ app.use(express.static("jquery"));
 app.use(express.static("CSS"));
 app.use(ensureAuthenticated);
 
-////////////////新增項目
+/////////////////////////////////////////////////////////////////////////////新增食譜項目
 app.get("/addRecipe", (req, res) => {
   res.render("add_recipe");
-});
-
-app.get("/addProduct", (req, res) => {
-  res.render("add_product");
 });
 
 let currentUid;
@@ -172,7 +159,48 @@ app.post("/addIngredient", function (req, res) {
     }
   });
 });
-/////////////////////刪除項目
+///////////////////////////////////////////////////////////////////////新增商品項目
+let currentPid;
+
+app.get("/addProduct", (req, res) => {
+  res.render("add_product");
+});
+
+app.post("/addProduct", function (req, res) {
+  var data = req.body;
+
+  var sql = "INSERT INTO product SET ?";
+  db.query(sql, data, function (err, result) {
+    if (err) {
+      console.error(err);
+      res.send("新增失敗，請檢查是否所有項目皆填寫!");
+    } else {
+      currentPid = result.insertId;
+      res.json({ message: "產品已成功新增！", pid: result.insertId });
+    }
+  });
+});
+
+const productStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../img/product");
+  },
+  filename: function (req, file, cb) {
+    cb(null, "product" + currentPid + path.extname(file.originalname));
+  },
+});
+
+const productUpload = multer({ storage: productStorage });
+
+app.post(
+  "/uploadProductImage",
+  productUpload.single("file"),
+  function (req, res) {
+    res.send("產品圖片已成功上傳！");
+  }
+);
+
+///////////////////////////////////////////////////////////////////////刪除項目
 //單個刪除
 app.post("/deleteRecipe", function (req, res) {
   var uid = req.body.uid;

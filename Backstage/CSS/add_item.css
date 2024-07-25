@@ -48,6 +48,7 @@ select {
   right: 0;
   position: absolute;
   z-index: -1;
+  height: 625px;
 }
 .item_container .hover {
   position: relative;
