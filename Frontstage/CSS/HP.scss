@@ -3,6 +3,13 @@ body {
   padding: 0;
 }
 
+:root {
+  --main_orange: rgb(243, 121, 36);
+  --text_withe: rgb(255, 255, 255);
+  --text_black: rgb(53, 53, 53);
+  --border_gray: rgb(128, 128, 128);
+  --bg_opacity_black: rgba(0, 0, 0, 0.6);
+}
 /* Section A */
 .navBar {
   height: 70px;
@@ -19,21 +26,38 @@ body {
       width: 100%;
       height: 650px;
       object-fit: cover;
+      user-select: none;
     }
-    h1 {
+    .slide_step {
+      background-color: var(--bg_opacity_black);
+      padding: 5px 10px;
       position: absolute;
       top: 50%;
       left: 50%;
+      color: var(--text_withe);
       transform: translate(-50%, -50%);
-      color: white;
-      font-size: 50px;
       font-family: "Courier New", Courier, monospace;
+      &:hover p {
+        opacity: 1;
+        max-height: 200px;
+      }
+      h1 {
+        font-size: 50px;
+        font-family: "Courier New", Courier, monospace;
+      }
+      P {
+        visibility: visible; /* 修改這裡 */
+        font-size: 24px;
+        opacity: 0;
+        transition: 0.8s ease-in-out;
+        max-height: 0; /* 新增的屬性 */
+        overflow: hidden; /* 新增的屬性 */
+      }
     }
   }
   .slide_btn {
     .pre_btn,
     .next_btn {
-      color: red;
       position: absolute;
       height: 650px;
       width: 200px;
@@ -41,9 +65,15 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 50px;
+      transition: background-color 0.2s ease-in-out;
+      color: var(--text_withe);
+      font-size: 150px;
+      svg {
+        width: 50px;
+      }
       &:hover {
         background-color: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
       }
     }
     .next_btn {
@@ -99,131 +129,106 @@ body {
   margin-top: -30px;
 }
 
-.bContainer3 {
+.link_card {
   display: flex;
   justify-content: space-between;
   gap: 50px;
   margin-top: 10px;
-}
-
-.bContainer3 div {
-  position: relative;
-}
-
-.bContainer3 h4 {
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 35px;
-  font-family: "Courier New", Courier, monospace;
-}
-
-.bContainer3 div img {
-  width: 350px;
-  height: 250px;
-  object-fit: cover;
+  div {
+    a {
+      position: relative;
+      display: inline-block;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: opacity 0.5s ease-in-out;
+      }
+      &:hover::before {
+        opacity: 0;
+      }
+      h4 {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--text_withe);
+        font-size: 35px;
+        font-family: "Courier New", Courier, monospace;
+        visibility: hidden;
+        transition: visibility 0.5s ease-in-out;
+      }
+      &:hover h4 {
+        visibility: visible;
+      }
+      img {
+        width: 350px;
+        height: 250px;
+        object-fit: cover;
+      }
+    }
+  }
 }
 
 /* section C  */
-.cContainer1 {
-  position: relative;
-}
-
-.cContainer1 img {
-  width: 100%;
-  height: 600px;
-  margin-top: 40px;
-  object-fit: cover;
-}
-
-.cContainer1 h1 {
-  position: absolute;
-  top: 50%;
-  left: 25%;
-  transform: translate(-50%, -50%);
-  color: rgb(53, 53, 53);
-  font-size: 50px;
-  font-family: "Courier New", Courier, monospace;
-}
-
-.box1 {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-top: 30px;
-}
-
-.box1 img {
-  position: absolute;
-  width: 300px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.box1 a:visited {
-  color: rgb(53, 53, 53);
-}
-
-.box1 a:hover {
-  color: rgba(234, 121, 36, 100%);
-}
-
-.box2 a:visited {
-  color: rgb(53, 53, 53);
-}
-
-.box2 a:hover {
-  color: rgba(234, 121, 36, 100%);
-}
-
-.box3 a:visited {
-  color: rgb(53, 53, 53);
-}
-
-.box3 a:hover {
-  color: rgba(234, 121, 36, 100%);
-}
-
-.box2,
-.box3 {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-top: 60px;
-}
-
-.box2 img {
-  position: absolute;
-  width: 300px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.box3 img {
-  position: absolute;
-  width: 300px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.recTitle {
-  margin-left: 400px;
-  margin-top: 80px;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-.description {
-  margin-left: 400px;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 20px;
-  margin-top: 0px;
+.recipe_recommend_section {
+  .recipe_bar {
+    position: relative;
+  }
+  img {
+    width: 100%;
+    height: 200px;
+    margin-top: 40px;
+    object-fit: cover;
+  }
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    color: var(--text_black);
+    font-size: 50px;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .card_container {
+    .recipe_card {
+      display: flex;
+      justify-content: center;
+      img {
+        width: 300px;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+      }
+      .card_text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 40px;
+        text-decoration: none;
+        color: var(--text_black);
+        max-width: 840px;
+        transition: 0.3s ease-in-out;
+        &:hover {
+          color: var(--main_orange);
+        }
+        .recipe_title {
+          font-family: "Courier New", Courier, monospace;
+          font-weight: bold;
+          font-size: 24px;
+        }
+        .recipe_description {
+          font-family: "Courier New", Courier, monospace;
+          font-size: 20px;
+          margin-top: 0px;
+        }
+      }
+    }
+  }
 }
 
 /* section D  */
