@@ -1,6 +1,4 @@
-//第一步安裝 npm install express mysql ejs
-//第二步安裝 npm install path
-
+//安裝  express mysql ejs path body-parser multer express-sion
 const express = require("express");
 const mysql = require("mysql");
 const ejs = require("ejs");
