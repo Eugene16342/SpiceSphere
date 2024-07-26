@@ -6,7 +6,35 @@
     <link rel="stylesheet" href="/HP.css" />
     <title>SpiceSphere異食鍋</title>
     <link rel="icon" href="../../img/common/favicon.ico" />
+    <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
+  <script>
+    $(document).ready(function () {
+      var radios = $('input[type="radio"]');
+      var recipe_pre_btn = $(".recipe_pre_btn");
+      var recipe_next_btn = $(".recipe_next_btn");
+
+      recipe_pre_btn.click(function () {
+        radios.each(function (i) {
+          if ($(this).is(":checked") && i > 0) {
+            $(this).prop("checked", false);
+            radios.eq(i - 1).prop("checked", true);
+            return false;
+          }
+        });
+      });
+
+      recipe_next_btn.click(function () {
+        radios.each(function (i) {
+          if ($(this).is(":checked") && i < radios.length - 1) {
+            $(this).prop("checked", false);
+            radios.eq(i + 1).prop("checked", true);
+            return false;
+          }
+        });
+      });
+    });
+  </script>
 
   <body>
     <!-- Section A -->
@@ -99,14 +127,179 @@
         <h1>每日食譜推薦</h1>
       </div>
       <div class="card_container">
-        <div class="recipe_card">
-          <img src="../../img/home_page/Fa.jpg" />
-          <a href="" class="card_text">
-            <h4 class="recipe_title">檸檬香草鮭魚</h4>
-            <p class="recipe_description">
-              柠檬的酸爽和香草的芳香完美结合，鲜嫩多汁的鲑鱼，清新美味营养丰富，是一道健康的佳肴。香完美结合，鲜嫩多汁的鲑鱼，清新美味营养丰富，是一道健康的佳肴。香完美结合，鲜嫩多汁的鲑鱼，清新美味营养丰富，是一道健康的佳肴。香完美结合，鲜嫩多汁的鲑鱼，清新美味营养丰富，是一道健康的佳肴。
-            </p>
-          </a>
+        <div class="recipe_3d">
+          <input type="radio" name="position" />
+          <input type="radio" name="position" />
+          <input type="radio" name="position" checked />
+          <input type="radio" name="position" />
+          <input type="radio" name="position" />
+          <main id="carousel">
+            <div class="item">
+              <div class="item_1">
+                <a href=""> <img src="../../img/recipe/recipe1.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+
+              <div class="item_2">
+                <a href=""> <img src="../../img/recipe/recipe2.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item_1">
+                <a href=""> <img src="../../img/recipe/recipe3.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+
+              <div class="item_2">
+                <a href=""> <img src="../../img/recipe/recipe4.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item_1">
+                <a href=""> <img src="../../img/recipe/recipe5.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+
+              <div class="item_2">
+                <a href=""> <img src="../../img/recipe/recipe6.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item_1">
+                <a href=""> <img src="../../img/recipe/recipe7.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+
+              <div class="item_2">
+                <a href=""> <img src="../../img/recipe/recipe8.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div class="item">
+              <div class="item_1">
+                <a href=""> <img src="../../img/recipe/recipe9.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+
+              <div class="item_2">
+                <a href=""> <img src="../../img/recipe/recipe10.jpg" /></a>
+                <a href="" class="item_text">
+                  <h3>好吃的飯</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Iusto, suscipit?
+                  </p>
+                </a>
+              </div>
+            </div>
+          </main>
+        </div>
+        <div class="recipe_btn">
+          <div class="recipe_pre_btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              fill="currentColor"
+              class="bi bi-caret-left"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"
+              />
+            </svg>
+          </div>
+          <div class="recipe_next_btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              fill="currentColor"
+              class="bi bi-caret-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
