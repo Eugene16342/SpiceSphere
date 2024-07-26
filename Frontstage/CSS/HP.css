@@ -4,7 +4,6 @@ body {
   border: none;
   margin: 0;
   padding: 0;
-  width: 100%;
 }
 
 :root {
@@ -20,14 +19,11 @@ a {
 }
 
 /* Section A */
-.navBar {
-  height: 70px;
-  background-color: rgb(234, 121, 36);
-}
-
 .slide_section {
   position: relative;
   height: 80vh;
+  width: 100%;
+  margin-top: 50px;
 }
 .slide_section .slide {
   width: 100%;
@@ -102,6 +98,7 @@ a {
 
 /* Section B */
 .sectionB {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -141,22 +138,23 @@ a {
 }
 
 .bContainer2 {
-  width: 750px;
+  width: 100%;
   text-align: center;
-  font-size: 20px;
+  font-size: 1rem;
   font-family: "Courier New", Courier, monospace;
   margin-top: -30px;
 }
 
 .link_card {
   display: flex;
-  justify-content: space-between;
-  gap: 50px;
+  justify-content: center;
   margin-top: 10px;
+  width: 100%;
 }
 .link_card div a {
   position: relative;
   display: inline-block;
+  margin: 0 40px;
 }
 .link_card div a::before {
   content: "";
@@ -177,7 +175,7 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--text_withe);
-  font-size: 35px;
+  font-size: 30px;
   font-family: "Courier New", Courier, monospace;
   visibility: hidden;
   transition: visibility 0.5s ease-in-out;
@@ -186,7 +184,8 @@ a {
   visibility: visible;
 }
 .link_card div a img {
-  width: 350px;
+  box-sizing: border-box;
+  width: 100%;
   height: 250px;
   -o-object-fit: cover;
      object-fit: cover;
@@ -194,6 +193,7 @@ a {
 
 /* section C  */
 .recipe_recommend_section {
+  width: 100%;
   margin-top: 20px;
 }
 .recipe_recommend_section .recipe_bar {
@@ -249,12 +249,17 @@ a {
 .recipe_recommend_section .card_container .recipe_3d .item div .item_text:hover {
   color: var(--main_orange);
 }
-.recipe_recommend_section .card_container .recipe_3d .item div .item_text h3 {
+.recipe_recommend_section .card_container .recipe_3d .item div .item_text div {
   font-size: 36px;
 }
 .recipe_recommend_section .card_container .recipe_3d .item div .item_text p {
   text-align: start;
   font-size: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* 顯示行數 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .recipe_recommend_section .card_container .recipe_3d main#carousel {
   grid-row: 1/2;
@@ -374,6 +379,7 @@ a {
 
 /* section D  */
 .dContainer1 {
+  width: 100%;
   background-size: cover;
   position: relative;
 }
@@ -394,53 +400,42 @@ a {
 }
 
 .dContainer2 {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 5px;
-  /* 间距 */
-  margin-left: 50px;
-  margin-right: 90px;
+  justify-content: space-around;
+  align-items: center;
 }
-
-.product {
+.dContainer2 .product {
+  display: flex;
+  flex-direction: column;
   padding: 15px;
   width: 250px;
-  /* 4个选项均匀排列 */
   box-sizing: border-box;
+  align-items: center;
   text-align: center;
 }
-
-.product img {
+.dContainer2 .product img {
   width: 250px;
   height: 250px;
   border-radius: 4px;
-  align-items: center;
 }
-
-.product h3 {
+.dContainer2 .product h3 {
   font-size: 1.2em;
   margin: 10px 0;
-  align-items: center;
   font-family: "Courier New", Courier, monospace;
 }
-
-.product p {
+.dContainer2 .product p {
   font-size: 0.9em;
   color: rgb(53, 53, 53);
-  align-items: center;
   font-family: "Courier New", Courier, monospace;
 }
-
-.product .price {
+.dContainer2 .product .price {
   font-size: 1.2em;
   color: rgb(53, 53, 53);
-  margin: 10px 0;
   align-items: center;
   font-family: "Courier New", Courier, monospace;
 }
-
-.product button {
+.dContainer2 .product button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -451,266 +446,230 @@ a {
   align-items: center;
   font-family: "Courier New", Courier, monospace;
 }
-
-.product button:hover {
+.dContainer2 .product button:hover {
   background-color: #0056b3;
 }
 
 /* section E  */
-@media screen and (max-width: 500px) {
-  /* Style the navigation menu */
-  .topnav {
-    overflow: hidden;
+@media screen and (max-width: 1300px) {
+  .slide_section {
     position: relative;
+    height: 60vh;
+    width: 100%;
+    margin-top: 50px;
   }
-  /* Hide the links inside the navigation menu (except for logo/home) */
-  .topnav #myLinks {
-    display: none;
-    background-color: rgba(234, 121, 36, 0.7);
+  .slide_section .slide {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-size: cover;
   }
-  /* Style navigation menu links */
-  .topnav a {
-    color: white;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    display: block;
+  .slide_section .slide img {
+    width: 100%;
+    height: 60vh;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
   }
-  /* Style the hamburger menu */
-  .topnav a.icon {
-    background: rgb(234, 121, 36);
-    display: block;
+  .slide_section .slide .slide_step {
+    background-color: var(--bg_opacity_black);
+    padding: 5px 10px;
     position: absolute;
-    right: 0;
+    top: 50%;
+    left: 50%;
+    color: var(--text_withe);
+    transform: translate(-50%, -50%);
+    font-family: "Courier New", Courier, monospace;
+  }
+  .slide_section .slide .slide_step:hover p {
+    opacity: 1;
+    max-height: 200px;
+  }
+  .slide_section .slide .slide_step h1 {
+    font-size: 40px;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .slide_section .slide .slide_step P {
+    visibility: visible; /* 修改這裡 */
+    font-size: 22px;
+    opacity: 0;
+    transition: 0.8s ease-in-out;
+    max-height: 0; /* 新增的屬性 */
+    overflow: hidden; /* 新增的屬性 */
+  }
+  .slide_section .slide_btn {
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+  }
+  .slide_section .slide_btn .pre_btn,
+  .slide_section .slide_btn .next_btn {
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    position: absolute;
+    height: 100%;
+    width: 5%;
     top: 0;
-  }
-  /* Style the active link (or home/logo) */
-  .active {
-    background-color: rgb(234, 121, 36);
-    color: white;
-  }
-  /* section A  */
-  .slide {
-    text-align: center;
-    background-size: cover;
-    position: relative;
-    display: inline-block;
-  }
-  .slide img {
-    width: 100vw;
-    height: 250px;
-    -o-object-fit: cover;
-       object-fit: cover;
-  }
-  .slide h1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 20px;
-    font-family: "Courier New", Courier, monospace;
-  }
-  /* section B  */
-  .sectionB {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+    color: var(--text_withe);
+    font-size: 150px;
+  }
+  .slide_section .slide_btn .pre_btn:hover,
+  .slide_section .slide_btn .next_btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+  .slide_section .slide_btn .next_btn {
+    right: 0;
+  }
+  .card_container {
+    position: relative;
+  }
+  .card_container .recipe_3d {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    height: 80vh;
+  }
+  .card_container .recipe_3d .item {
+    display: flex;
+    justify-content: space-around;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
-  .bContainer1 {
-    position: relative;
+  .card_container .recipe_3d .item div {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 150px;
-    border-radius: 10px;
-    /* Optional: adds rounded corners */
   }
-  .logo {
+  .card_container .recipe_3d .item div img {
     width: 150px;
-    height: 150px;
-    -o-object-fit: cover;
-       object-fit: cover;
-    /* Ensures the image covers the container without stretching */
-    opacity: 0.4;
-  }
-  .logoText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgb(53, 53, 53);
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    font-family: "Courier New", Courier, monospace;
-  }
-  .bContainer2 {
-    width: 300px;
-    text-align: center;
-    font-size: 16px;
-    font-family: "Courier New", Courier, monospace;
-  }
-  .bContainer3 {
-    margin-top: 10px;
-  }
-  .bContainer3 div {
-    position: relative;
-  }
-  .bContainer3 h4 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 20px;
-    font-family: "Courier New", Courier, monospace;
-  }
-  .bContainer3 div img {
-    width: 200px;
-    height: 125px;
-    -o-object-fit: cover;
-       object-fit: cover;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  /* section C  */
-  .cContainer1 {
-    position: relative;
-  }
-  .cContainer1 img {
-    width: 100vw;
-    height: 250px;
-    margin-top: 20px;
+    height: 200px;
+    border-radius: 5%;
     -o-object-fit: cover;
        object-fit: cover;
   }
-  .cContainer1 h1 {
-    position: absolute;
-    top: 50%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    color: rgb(53, 53, 53);
-    font-size: 20px;
-    font-family: "Courier New", Courier, monospace;
-  }
-  .cContainer2 a {
-    color: rgb(234, 121, 36);
-  }
-  .box1 {
+  .card_container .recipe_3d .item div .item_text {
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
+    justify-content: start;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+    color: var(--text_black);
   }
-  .box1 img {
-    width: 200px;
-    height: 125px;
-    -o-object-fit: cover;
-       object-fit: cover;
-    border-radius: 15px;
-    margin-left: 50px;
+  .card_container .recipe_3d .item div .item_text:hover {
+    color: var(--main_orange);
   }
-  .box2,
-  .box3 {
+  .card_container .recipe_3d .item div .item_text div {
+    font-size: 28px;
+    font-weight: 900;
+  }
+  .card_container .recipe_3d .item div .item_text p {
+    text-align: start;
+    font-size: 20px;
+  }
+  .card_container .recipe_3d main#carousel {
+    grid-row: 1/2;
+    grid-column: 1/8;
+    width: 100%;
+    height: 100%;
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 30px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    --items: 5;
+    --middle: 3;
+    --position: 1;
   }
-  .box2 img {
-    width: 200px;
-    height: 125px;
-    -o-object-fit: cover;
-       object-fit: cover;
-    border-radius: 15px;
-    margin-left: 50px;
-  }
-  .box3 img {
-    width: 200px;
-    height: 125px;
-    -o-object-fit: cover;
-       object-fit: cover;
-    border-radius: 15px;
-    margin-left: 50px;
-  }
-  .recTitle {
-    margin-top: 20px;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: bold;
-    font-size: 14px;
+  .card_container .recipe_3d div.item {
     text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    position: absolute;
+    width: 40%;
+    height: 85%;
+    background-color: white;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../img/common/background.png);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    --r: calc(var(--position) - var(--offset));
+    --abs: max(calc(var(--r) * -1), var(--r));
+    transition: all 0.25s linear;
+    transform: rotateY(calc(-10deg * var(--r))) translateX(calc(-300px * var(--r)));
+    z-index: calc(var(--position) - var(--abs));
   }
-  .description {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 12px;
-    margin-top: 0px;
-    text-align: center;
-    width: 300px;
+  .card_container .recipe_3d input {
+    display: none;
   }
-  /* section D  */
-  .dContainer1 {
-    background-size: cover;
-    position: relative;
+  .card_container .recipe_btn .recipe_pre_btn,
+  .card_container .recipe_btn .recipe_next_btn {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    position: absolute;
+    height: 100%;
+    width: 5%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+    color: var(--text_withe);
+    font-size: 150px;
   }
-  .dContainer1 img {
-    position: relative;
-    width: 100vw;
-    height: 250px;
-    margin-top: 40px;
-    -o-object-fit: cover;
-       object-fit: cover;
+  .card_container .recipe_btn .recipe_pre_btn svg,
+  .card_container .recipe_btn .recipe_next_btn svg {
+    width: 50px;
   }
-  .proTitle {
-    text-align: center;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 25px;
-    margin-top: 10px;
+  .card_container .recipe_btn .recipe_pre_btn:hover,
+  .card_container .recipe_btn .recipe_next_btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+  .card_container .recipe_btn .recipe_next_btn {
+    right: 0;
   }
   .dContainer2 {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 5px;
-    /* 间距 */
-    /* margin-left: 50px;
-            margin-right: 50px; */
+    justify-content: space-around;
+    align-items: center;
   }
-  .product {
-    padding: 15px;
+  .dContainer2 .product {
+    display: flex;
+    flex-direction: column;
     width: 200px;
-    /* 4个选项均匀排列 */
     box-sizing: border-box;
+    align-items: center;
     text-align: center;
   }
-  .product img {
-    width: 125px;
-    height: 125px;
+  .dContainer2 .product img {
+    width: 200px;
+    height: 200px;
     border-radius: 4px;
-    align-items: center;
   }
-  .product h3 {
+  .dContainer2 .product h3 {
     font-size: 1.2em;
-    margin: 10px 0;
-    align-items: center;
     font-family: "Courier New", Courier, monospace;
   }
-  .product p {
+  .dContainer2 .product p {
     font-size: 0.9em;
     color: rgb(53, 53, 53);
-    align-items: center;
     font-family: "Courier New", Courier, monospace;
   }
-  .product .price {
+  .dContainer2 .product .price {
     font-size: 1.2em;
     color: rgb(53, 53, 53);
-    margin: 10px 0;
     align-items: center;
     font-family: "Courier New", Courier, monospace;
   }
-  .product button {
+  .dContainer2 .product button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -721,7 +680,245 @@ a {
     align-items: center;
     font-family: "Courier New", Courier, monospace;
   }
-  .product button:hover {
+  .dContainer2 .product button:hover {
     background-color: #0056b3;
+  }
+}
+@media screen and (max-width: 900px) {
+  .slide_section {
+    position: relative;
+    height: 40vh;
+    width: 100%;
+    margin-top: 50px;
+  }
+  .slide_section .slide {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-size: cover;
+  }
+  .slide_section .slide img {
+    width: 100%;
+    height: 40vh;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+  }
+  .slide_section .slide .slide_step {
+    background-color: var(--bg_opacity_black);
+    padding: 5px 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: var(--text_withe);
+    transform: translate(-50%, -50%);
+    font-family: "Courier New", Courier, monospace;
+  }
+  .slide_section .slide .slide_step:hover p {
+    opacity: 1;
+    max-height: 200px;
+  }
+  .slide_section .slide .slide_step h1 {
+    font-size: 24px;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .slide_section .slide .slide_step P {
+    visibility: visible; /* 修改這裡 */
+    font-size: 16px;
+    opacity: 0;
+    transition: 0.8s ease-in-out;
+    max-height: 0; /* 新增的屬性 */
+    overflow: hidden; /* 新增的屬性 */
+  }
+  .slide_section .slide_btn {
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+  }
+  .slide_section .slide_btn .pre_btn,
+  .slide_section .slide_btn .next_btn {
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    position: absolute;
+    height: 100%;
+    width: 5%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+    color: var(--text_withe);
+    font-size: 150px;
+  }
+  .slide_section .slide_btn .pre_btn:hover,
+  .slide_section .slide_btn .next_btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+  .slide_section .slide_btn .next_btn {
+    right: 0;
+  }
+  .card_container {
+    position: relative;
+  }
+  .card_container .recipe_3d {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    height: 80vh;
+  }
+  .card_container .recipe_3d .item {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+  .card_container .recipe_3d .item div {
+    display: flex;
+  }
+  .card_container .recipe_3d .item div img {
+    width: 100px !important;
+    height: 150px !important;
+    border-radius: 5%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  .card_container .recipe_3d .item div .item_text {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+    color: var(--text_black);
+  }
+  .card_container .recipe_3d .item div .item_text:hover {
+    color: var(--main_orange);
+  }
+  .card_container .recipe_3d .item div .item_text div {
+    font-size: 20px !important;
+    font-weight: 900;
+  }
+  .card_container .recipe_3d .item div .item_text p {
+    text-align: start;
+    font-size: 16px !important;
+  }
+  .card_container .recipe_3d main#carousel {
+    grid-row: 1/2;
+    grid-column: 1/8;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 900px !important;
+    --items: 5;
+    --middle: 3;
+    --position: 1;
+  }
+  .card_container .recipe_3d div.item {
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+    position: absolute;
+    width: 60% !important;
+    height: 85%;
+    background-color: white;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../img/common/background.png);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    --r: calc(var(--position) - var(--offset));
+    --abs: max(calc(var(--r) * -1), var(--r));
+    transition: all 0.25s linear;
+    transform: rotateY(calc(-10deg * var(--r))) translateX(calc(-300px * var(--r)));
+    z-index: calc(var(--position) - var(--abs));
+  }
+  .card_container .recipe_3d input {
+    display: none;
+  }
+  .card_container .recipe_btn .recipe_pre_btn,
+  .card_container .recipe_btn .recipe_next_btn {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+            user-select: none;
+    position: absolute;
+    height: 100%;
+    width: 5%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+    color: var(--text_withe);
+    font-size: 150px;
+  }
+  .card_container .recipe_btn .recipe_pre_btn svg,
+  .card_container .recipe_btn .recipe_next_btn svg {
+    width: 50px;
+  }
+  .card_container .recipe_btn .recipe_pre_btn:hover,
+  .card_container .recipe_btn .recipe_next_btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+  .card_container .recipe_btn .recipe_next_btn {
+    right: 0;
+  }
+  .dContainer2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+  .dContainer2 .product {
+    display: flex;
+    flex-direction: column;
+    width: 115px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+  }
+  .dContainer2 .product img {
+    width: 115px;
+    height: 115px;
+    border-radius: 4px;
+  }
+  .dContainer2 .product h3 {
+    font-size: 1.2em;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .dContainer2 .product p {
+    width: 100%;
+    font-size: 0.9em;
+    color: rgb(53, 53, 53);
+    font-family: "Courier New", Courier, monospace;
+  }
+  .dContainer2 .product .price {
+    font-size: 1.2em;
+    color: rgb(53, 53, 53);
+    align-items: center;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .dContainer2 .product button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.3em;
+    align-items: center;
+    font-family: "Courier New", Courier, monospace;
+  }
+  .dContainer2 .product button:hover {
+    background-color: #0056b3;
+  }
+  .none {
+    display: none !important;
   }
 }/*# sourceMappingURL=HP.css.map */

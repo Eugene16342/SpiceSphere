@@ -15,6 +15,7 @@ a {
 #nav_bar {
   z-index: 10;
   position: fixed;
+  top: 0;
   background-color: var(--main_orange);
   display: flex;
   width: 100%;
@@ -111,8 +112,7 @@ a {
     font-size: 20px;
     align-items: center;
     justify-content: space-between;
-
-    .logo {
+    .nav_logo {
       color: var(--text_withe);
       font-weight: 900;
       font-size: 40px;
@@ -201,10 +201,18 @@ a {
     .nav_logo {
       color: var(--text_withe);
       font-weight: 900;
-      font-size: 40px;
+      font-size: 25px;
       margin-left: 20px;
       text-align: center;
       user-select: none;
+    }
+    .hamburger {
+      display: block;
+      margin-right: 20px;
+      font-weight: 900;
+      font-size: 25px;
+      color: var(--text_withe);
+      cursor: pointer;
     }
   }
 }
