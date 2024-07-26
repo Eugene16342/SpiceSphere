@@ -4,6 +4,7 @@ body {
   border: none;
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
 :root {
@@ -234,6 +235,8 @@ a {
   width: 150px;
   height: 200px;
   border-radius: 5%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .recipe_recommend_section .card_container .recipe_3d .item div .item_text {
   display: flex;
@@ -273,8 +276,8 @@ a {
   padding: 20px;
   border-radius: 20px;
   position: absolute;
-  width: 900px;
-  height: 100%;
+  width: 40%;
+  height: 85%;
   background-color: white;
   background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../img/common/background.png);
   background-size: 50%;
@@ -374,13 +377,14 @@ a {
   background-size: cover;
   position: relative;
 }
-
 .dContainer1 img {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 200px;
   -o-object-fit: cover;
      object-fit: cover;
+  -o-object-position: center top;
+     object-position: center top;
 }
 
 .proTitle {

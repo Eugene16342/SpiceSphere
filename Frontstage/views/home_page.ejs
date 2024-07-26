@@ -38,8 +38,7 @@
 
   <body>
     <!-- Section A -->
-    <div class="navBar"></div>
-
+    <%- include('nav_bar') %>
     <div class="slide_section">
       <div class="slide">
         <div class="img_container">
@@ -87,7 +86,7 @@
     <!-- Section B -->
     <div class="sectionB">
       <div class="bContainer1">
-        <img class="logo" src="../../img/home_page/logo.png" alt="logo" />
+        <img class="logo" src="../../img/home_page/logo.png" />
         <div class="logoText">品牌理念</div>
       </div>
       <div class="bContainer2">
@@ -123,8 +122,10 @@
     <!-- section C  -->
     <div class="recipe_recommend_section">
       <div class="recipe_bar">
-        <img src="../../img/home_page/foodbar.jpg" />
-        <h1>每日食譜推薦</h1>
+        <a href="">
+          <img src="../../img/home_page/foodbar.jpg" />
+          <h1>更多食譜推薦</h1></a
+        >
       </div>
       <div class="card_container">
         <div class="recipe_3d">
@@ -307,28 +308,28 @@
     <!-- section D  -->
     <div class="sectionD">
       <div class="dContainer1">
-        <img src="../../img/home_page/ProductBar.jpg" alt="productBar" />
+        <img src="../../img/home_page/ProductBar2.jpg" alt="productBar" />
       </div>
       <div class="proTitle">
-        <h4>產品介紹</h4>
+        <h4>你可能會需要</h4>
       </div>
       <div class="dContainer2">
         <div class="product">
-          <img src="../../img/home_page/productA.jpg" alt="Product 1" />
+          <img src="../../img/home_page/productA.jpg" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
           <button>加入購物車</button>
         </div>
         <div class="product">
-          <img src="../../img/home_page/productA.jpg" alt="Product 1" />
+          <img src="../../img/home_page/productA.jpg" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
           <button>加入購物車</button>
         </div>
         <div class="product">
-          <img src="../../img/home_page/productA.jpg" alt="Product 1" />
+          <img src="../../img/home_page/productA.jpg" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
@@ -343,15 +344,7 @@
         </div>
       </div>
     </div>
-    <!-- section E -->
-    <footer>
-      <a class="logo" href="">SPICESPHERE</a>
 
-      <small id="footCopyright">© 2024 SPICESPHERE. All rights reserved.</small>
-      <div id="foot_sub">
-        <input type="email" placeholder="E-email" />
-        <button>訂閱</button>
-      </div>
-    </footer>
+    <%- include('footer') %>
   </body>
 </html>
