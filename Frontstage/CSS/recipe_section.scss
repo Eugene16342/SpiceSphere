@@ -459,7 +459,7 @@ a {
     margin: auto;
 
     .recipe_card {
-      height: 100px;
+      height: 220px;
       margin: 10px;
       position: relative;
       .recipe_when,
@@ -513,11 +513,11 @@ a {
     .recipe_card:nth-child(6n + 1),
     .recipe_card:nth-child(6n + 4) {
       height: 220px;
-      grid-column: span 2;
-      grid-row: span 2;
+      grid-column: span 1;
+      grid-row: span 1;
     }
     .recipe_card:nth-child(6n + 4) {
-      grid-column: span 2 / -1;
+      grid-column: span 1;
     }
   }
 }
