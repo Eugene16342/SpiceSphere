@@ -17,6 +17,10 @@ app.get("/home_page", (req, res) => {
   res.render("home_page");
 });
 
+app.get("/recipe_section", (req, res) => {
+  res.render("recipe_section");
+});
+
 app.use(express.static("../"));
 app.use(express.static("jquery"));
 app.use(express.static("CSS"));
