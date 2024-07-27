@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>異鍋豐|某食譜</title>
+    <link rel="stylesheet" href="/recipe_page.css" />
+    <link rel="icon" href="../../img/common/favicon.ico" />
+    <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <%- include('nav_bar') %>
+    <div id="recipe_info">
+      <div class="img_container">
+        <img src="../../img/recipe/recipe1.jpg" />
+      </div>
+
+      <h1>翻切蝦蝦麵</h1>
+
+      <div class="info_rating">
+        <div class="rating">
+          <div id="star_container">
+            <div class="star">
+              <input type="radio" name="star" id="score5" value="5" />
+              <label class="star" for="score5"></label>
+
+              <input type="radio" name="star" id="score4" value="4" />
+              <label class="star" for="score4"></label>
+
+              <input type="radio" name="star" id="score3" value="3" />
+              <label class="star" for="score3"></label>
+
+              <input type="radio" name="star" id="score2" value="2" />
+              <label class="star" for="score2"></label>
+
+              <input type="radio" name="star" id="score1" value="1" />
+              <label class="star" for="score1"></label>
+            </div>
+            <span>(1234)</span>
+          </div>
+        </div>
+        <div class="tag">
+          <span>風格</span>
+          <span>晚餐</span>
+          <span>葷食</span>
+
+          <input type="checkbox" id="like" />
+          <label for="like">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              class="bi bi-heart"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+              />
+            </svg>
+          </label>
+        </div>
+      </div>
+
+      <div class="info_time">
+        <div class="size">份量 9-99 人</div>
+        <div class="time">備料時間 99 分鐘</div>
+        <div class="time">烹飪時間 99 分鐘</div>
+        <div class="time">總時間 999 分鐘</div>
+      </div>
+
+      <div class="info_describe">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil inventore
+        molestias eaque, ipsa molestiae modi pariatur, facere amet reprehenderit
+        vero porro veniam ad voluptatum sed quam illo minus? Quae, voluptate!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil inventore
+        molestias eaque, ipsa molestiae modi pariatur, facere amet reprehenderit
+        vero porro veniam ad voluptatum sed quam illo minus? Quae, voluptate!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil inventore
+        molestias eaque, ipsa molestiae modi pariatur, facere amet reprehenderit
+        vero porro veniam ad voluptatum sed quam illo minus? Quae, voluptate!
+      </div>
+    </div>
+
+    <div id="recipe_ingredient">
+      <div class="ingredients">
+        <div class="title">食材和配料</div>
+        <span>-狗肉 : 120克</span>
+        <span>-貓肉 : 120克</span>
+        <span>-老鼠肉 : 12000克</span>
+        <span>-@飛天髦牛肉 : 5磅</span>
+        <span>-@莫高雷牛排 : 1200克</span>
+        <span>-@飛天髦牛肉 : 5磅</span>
+        <span>-@莫高雷牛排 : 1200克</span>
+        <span>-@飛天髦牛肉 : 5磅</span>
+        <span>-@莫高雷牛排 : 1200克</span>
+      </div>
+      <div class="prodcut">
+        <div class="title">您可能需要</div>
+        <img src="../../img/product/product1.jpg" />
+      </div>
+    </div>
+
+    <div id="step">
+      <div class="step_line">步驟</div>
+      <div class="step_text">
+        <div class="num">1.</div>
+        <div class="text">
+          步驟Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit,
+          magnam! Officia nobis totam optio alias ea adipisci molestias culpa
+          rem exercitationem voluptas, natus est placeat laboriosam dicta quae!
+          Rerum, non?
+        </div>
+      </div>
+      <div class="step_text">
+        <div class="num">1.</div>
+        <div class="text">
+          步驟Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit,
+          magnam! Officia nobis totam optio alias ea adipisci molestias culpa
+          rem exercitationem voluptas, natus est placeat laboriosam dicta quae!
+          Rerum, non?
+        </div>
+      </div>
+      <div class="step_text">
+        <div class="num">1</div>
+        <div class="text">
+          步驟Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit,
+          magnam! Officia nobis totam optio alias ea adipisci molestias culpa
+          rem exercitationem voluptas, natus est placeat laboriosam dicta quae!
+          Rerum, non? 步驟Lorem ipsum, dolor sit amet consectetur adipisicing
+          elit. Sit, magnam! Officia nobis totam optio alias ea adipisci
+          molestias culpa rem exercitationem voluptas, natus est placeat
+          laboriosam dicta quae! Rerum, non?
+        </div>
+      </div>
+      <div class="step_text">
+        <div class="num">1</div>
+        <div class="text">
+          步驟Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit,
+          magnam! Officia nobis totam optio alias ea adipisci molestias culpa
+          rem exercitationem voluptas, natus est placeat laboriosam dicta quae!
+          Rerum, non? 步驟Lorem ipsum, dolor sit amet consectetur adipisicing
+          elit. Sit, magnam! Officia nobis totam optio alias ea adipisci
+          molestias culpa rem exercitationem voluptas, natus est placeat
+          laboriosam dicta quae! Rerum, non? 步驟Lorem ipsum, dolor sit amet
+          consectetur adipisicing elit. Sit, magnam! Officia nobis totam optio
+          alias ea adipisci molestias culpa rem exercitationem voluptas, natus
+          est placeat laboriosam dicta quae! Rerum, non?
+        </div>
+      </div>
+    </div>
+
+    <div id="recommend_section">
+      <div class="title">你可能會喜歡</div>
+      <div class="recipe_cards">
+        <div class="card">
+          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
+          <a class="card_text" href="">好好吃的食物</a>
+          <div>★★★★★</div>
+        </div>
+        <div class="card">
+          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
+          <a class="card_text" href="">好好吃的食物</a>
+          <div>★★★★★</div>
+        </div>
+        <div class="card">
+          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
+          <a class="card_text" href="">好好吃的食物</a>
+          <div>★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <%- include('footer') %>
+  </body>
+</html>
