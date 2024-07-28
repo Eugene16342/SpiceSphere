@@ -711,8 +711,8 @@ a {
       height: 100px;
       z-index: 8;
       background-color: var(--text_withe);
-      border-bottom: 2px solid var(--border-gray);
-      background-color: wheat;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+      background-color: rgb(240, 240, 240);
       .search_bar {
         display: flex;
         margin: auto 0;
@@ -1017,8 +1017,8 @@ a {
       height: 150px;
       z-index: 8;
       background-color: var(--text_withe);
-      border-bottom: 2px solid var(--border-gray);
-      background-color: wheat;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+      background-color: rgb(240, 240, 240);
       .search_bar {
         display: flex;
         margin: auto 0;
