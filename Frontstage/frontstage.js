@@ -21,6 +21,10 @@ app.get("/recipe_section", (req, res) => {
   res.render("recipe_section");
 });
 
+app.get("/product_section", (req, res) => {
+  res.render("product_section");
+});
+
 app.get("/recipe_page", (req, res) => {
   res.render("recipe_page");
 });
