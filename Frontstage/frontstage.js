@@ -33,6 +33,10 @@ app.get("/product_page", (req, res) => {
   res.render("product_page");
 });
 
+app.get("/payment", (req, res) => {
+  res.render("payment");
+});
+
 app.use(express.static("../"));
 app.use(express.static("jquery"));
 app.use(express.static("CSS"));
