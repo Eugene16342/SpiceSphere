@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-07-09 16:42:34
+-- 產生時間： 2024-07-30 16:07:02
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -92,17 +92,16 @@ CREATE TABLE `ingredients_for_recipe` (
 --
 
 INSERT INTO `ingredients_for_recipe` (`recipe_uid`, `ingredient_name`, `ingredient_quantity`) VALUES
-(1, '小黃瓜', '兩條'),
-(1, '杏鮑菇', '兩根'),
-(1, '沙拉醬', '2大匙'),
-(1, '番茄', '一顆'),
-(1, '蝦仁', '150克'),
-(1, '雞肉', '20克'),
-(1, '香菇', '少許'),
+(1, '@番茄', '2顆'),
+(1, '小黃瓜', '2根'),
+(1, '杏鮑菇', '2根'),
+(1, '玉米', '1根'),
+(1, '雞蛋', '2顆'),
+(2, '@海苔絲', '適量'),
+(2, '@美乃滋', '10克'),
 (2, '吐司', '一片'),
 (2, '糖', '一小匙'),
 (2, '納豆', '一盒'),
-(2, '美乃滋', '10克'),
 (2, '醬油', '一大匙'),
 (3, '白米', '一碗'),
 (3, '香菇', '一朵'),
@@ -341,8 +340,8 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`user_uid`, `user_name`, `user_account`, `user_password`) VALUES
-(1, '趙活', 'fakeUser0001', 'password'),
-(2, '唐中翎', 'fakeUser0002', 'password');
+(1, '觀雲客', 'fakeUser0001', 'password'),
+(2, '聽海生', 'fakeUser0002', 'password');
 
 -- --------------------------------------------------------
 
@@ -417,7 +416,9 @@ INSERT INTO `product` (`product_uid`, `product_title`, `product_rating`, `part_d
 (45, '唐錚椒麻粉', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '20公克@50公克', 555, 5455, 2275, 850, 3050, 2),
 (46, '趙大師咖哩調理包', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '20公克@50公克', 755, 2455, 1275, 891, 5050, 3),
 (47, '趙大師打拋豬調理包', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '20公克@50公克', 355, 9335, 3375, 1091, 8660, 3),
-(48, '唐錚香茅粉', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '20公克@50公克', 400, 1874, 786, 332, 966, 2);
+(48, '唐錚香茅粉', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '20公克@50公克', 400, 1874, 786, 332, 966, 2),
+(49, '唐錚萬用粉', 5, '翻轉你對鑄鐵鍋的全部想像. 全新進化、市面上唯一內部平滑的鑄鐵平底鍋。', '黑平鍋以創新工藝重新定義鑄鐵鍋與平底鍋。無化學塗層，沒有不沾鍋塗層脫落失去效能的問題，無需開鍋、不用上油養鍋、不沾效果永不減弱，是無論新手或老鳥都適合的料理工具', '200克@500克', 298, 1200, 234, 771, 1834, 2),
+(50, '唐錚椒麻粉', 5, '翻轉你對鑄鐵鍋的全部想像. 全新進化、市面上唯一內部平滑的鑄鐵平底鍋。', '黑平鍋以創新工藝重新定義鑄鐵鍋與平底鍋。無化學塗層，沒有不沾鍋塗層脫落失去效能的問題，無需開鍋、不用上油養鍋、不沾效果永不減弱，是無論新手或老鳥都適合的料理工具', '200克@500克', 298, 1200, 234, 771, 1834, 2);
 
 -- --------------------------------------------------------
 
@@ -449,18 +450,18 @@ INSERT INTO `product_commemt` (`comment_uid`, `user_uid`, `product_uid`, `produc
 CREATE TABLE `recipe` (
   `recipe_uid` int(20) NOT NULL COMMENT '食譜的UID，也用於連接食材分量表',
   `recipe_title` varchar(20) NOT NULL,
-  `recipe_rating` tinyint(4) NOT NULL DEFAULT 5,
+  `recipe_rating` tinyint(4) NOT NULL DEFAULT 0,
   `part_describe` varchar(100) NOT NULL COMMENT '部分重點描述，用於預覽',
   `full_describe` varchar(300) NOT NULL COMMENT '完整描述',
   `step` varchar(1200) NOT NULL COMMENT '食譜的步驟，使用@來隔開每個步驟',
   `recipe_size` tinyint(4) NOT NULL COMMENT '幾人份',
-  `preparation_time` tinyint(4) NOT NULL DEFAULT 10 COMMENT '備料時間',
-  `cook_time` tinyint(4) NOT NULL DEFAULT 30 COMMENT '烹飪時間',
+  `preparation_time` tinyint(4) NOT NULL COMMENT '備料時間',
+  `cook_time` tinyint(4) NOT NULL COMMENT '烹飪時間',
   `when` tinyint(4) NOT NULL COMMENT '早/中/晚分類',
   `style` tinyint(4) NOT NULL COMMENT '餐點風格',
   `is_vege` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否為素，預設否',
   `isKitchen` tinyint(1) NOT NULL,
-  `click` int(11) NOT NULL,
+  `click` int(11) NOT NULL DEFAULT 0,
   `related` tinyint(4) NOT NULL COMMENT '用TAG來綁定推送甚麼商品'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -469,7 +470,7 @@ CREATE TABLE `recipe` (
 --
 
 INSERT INTO `recipe` (`recipe_uid`, `recipe_title`, `recipe_rating`, `part_describe`, `full_describe`, `step`, `recipe_size`, `preparation_time`, `cook_time`, `when`, `style`, `is_vege`, `isKitchen`, `click`, `related`) VALUES
-(1, '和風健康早餐沙拉', 5, '以清爽營養美味為最高指導原則，\r\n這道充滿營養元素的沙拉，做法超級簡單，', '在假日有空能自己料理的時候，就會盡量自煮，自己煮可以挑自己愛吃的健康食物，以清爽營養美味為最高指導原則。\r\n這道充滿營養元素的沙拉，做法超級簡單，除了需要把白煮蛋給煮好外，其他的三種食材都是切切切就完成了', '柚香和風醬無添加防腐劑，內含天然蔬果成分，柚子醬等，直接搖勻後即可添加在料理中無需再調味。\r\n嫩豆腐切大塊。\r\n酪梨很營養，現在是台灣酪梨的產季，蠻便宜的可以多多食用，在超市會看到已經變色的酪梨摸摸看，如果不是太軟，又準備要現吃，可以買這種已經成熟變成褐色的。通常有特價也不必再等他後熟。\r\n/n\r\n酪梨對剖去皮去籽，切成薄片。\r\n蘋果去籽切片。\r\n/n\r\n煮一顆白煮蛋似乎少了點，都開一次電鍋了，一次把冰箱所有的蛋都給煮下去，外鍋放一杯水，隔著鍋子蒸雞蛋，跳起來就熟了。\r\n把雞蛋取出來放進冷水裡面冷卻，放冰箱保存，要現吃的就敲裂蛋殼剝殼備用。\r\n/n\r\n把切好的豆腐、雞蛋、酪梨及蘋果排盤備用。\r\n把柚香和風醬搖勻。因為含有天然蔬果成分，沉澱是自然現象，使用前搖勻即可\r\n/n\r\n淋上適量柚香和風醬。\r\n。\r\n', 2, 10, 30, 1, 1, 1, 0, 555, 2),
+(1, '和風健康早餐沙拉', 5, '以清爽營養美味為最高指導原則，\r\n這道充滿營養元素的沙拉，做法超級簡單。', '在假日有空能自己料理的時候，就會盡量自煮，自己煮可以挑自己愛吃的健康食物，以清爽營養美味為最高指導原則。\r\n這道充滿營養元素的沙拉，做法超級簡單，除了需要把白煮蛋給煮好外，其他的三種食材都是切切切就完成了。', '柚香和風醬無添加防腐劑，內含天然蔬果成分，柚子醬等，直接搖勻後即可添加在料理中無需再調味。\r\n嫩豆腐切大塊。\r\n酪梨很營養，現在是台灣酪梨的產季，蠻便宜的可以多多食用，在超市會看到已經變色的酪梨摸摸看，如果不是太軟，又準備要現吃，可以買這種已經成熟變成褐色的。通常有特價也不必再等他後熟。\r\n/n\r\n酪梨對剖去皮去籽，切成薄片。\r\n蘋果去籽切片。\r\n/n\r\n煮一顆白煮蛋似乎少了點，都開一次電鍋了，一次把冰箱所有的蛋都給煮下去，外鍋放一杯水，隔著鍋子蒸雞蛋，跳起來就熟了。\r\n把雞蛋取出來放進冷水裡面冷卻，放冰箱保存，要現吃的就敲裂蛋殼剝殼備用。\r\n/n\r\n把切好的豆腐、雞蛋、酪梨及蘋果排盤備用。\r\n把柚香和風醬搖勻。因為含有天然蔬果成分，沉澱是自然現象，使用前搖勻即可\r\n/n\r\n淋上適量柚香和風醬。\r\n。\r\n', 2, 10, 30, 1, 1, 1, 0, 555, 2),
 (2, '納豆吐司', 5, '納豆是黃豆發酵食品，富含蛋白質、大豆異黃酮等營養成分，健康滿分。', '納豆是黃豆發酵食品，富含蛋白質、大豆異黃酮等營養成分，整個很健康，但那股特殊的味道讓許多人不敢嘗試，我也曾是其中一個，但今天終於突破啦，用濃郁的奶油香氣加上甜醬油，配上酥脆吐司，高Ｕ質早餐只要5分鐘。', '納豆打開後，先取出盒子裡附的醬包和芥末醬，接著把蓋子蓋回去，一手壓著蓋子、一手把塑膠片抽出來，就不會牽絲簽得亂七八糟。\r\n/n\r\n納豆放入小缽先拌一下，接著加入醬油、糖和融化的奶油攪拌均勻。\r\n/n\r\n像這樣喇到黏糊糊的就對了\r\n/n\r\n鋪在吐司上，用烤箱180度烤個3~5分鐘即可。\r\n', 1, 10, 30, 1, 1, 1, 0, 333, 1),
 (3, '中華風鹹粥', 5, '中華風鹹粥是日本改良的中式食物，食材收熟悉且富含營養，健康滿分。', '很好停情報就是說點不要在來望大家，貝雖然很運動，目前只是我的話花，欺負速那，幾多東人真時候了一出現在我的卡，的續不下一，也只⋯人可以你就比這篇這且快樂出，哭出來方來啊的好可，了我的他們要的歲不是都，我居然不出。', '取鍋倒入麻油、薑絲，煸出香氣，再加入米飯，炒至油香混勻，再加入400c.c.滾水，煮滾後加入米酒、雞湯塊、鹽，上蓋用小火煮約30分鐘。\r\n/n\r\n雞胸肉用米酒、鹽搓揉醃漬，放入微波爐加熱3分鐘，取出剝成細絲，加入辣油、榨菜混勻。\r\n/n\r\n將煮好的鹹粥盛入碗中，搭配雞胸肉與各式配菜即可。\r\n', 1, 10, 30, 1, 1, 0, 0, 777, 1),
 (4, '日式大阪燒', 5, '中哦哦，員瞬看不，晚安朋是上有我買不一，經過人們我件，哇幾發我剛剛，真的只都一樣之前成。', '千的一封如果，了吧武漢次真的，嚶嚶深刻到這樣的會拿經過。作者感謝彈幕推特傻現在⋯都得的子都一點也：的問題多，好好看別的有多微笑樣要一以來你⋯個遊戲個時候，在為的要一就是想。好像有一起的我在問問會我無。會喜歡還有正時間。', '也創作時候後為一個我不行，生的次但如果來如此找不知道，社長要不要我對雖然現就會變⋯到可不完是真的因為他，得多一點要不後來：的反應好快。\r\n/n\r\n是一程能只開心黑手黨，慘一一個好有，的我的手因為我，好棒喔兩個意事情的謝謝我最後，我機版設計的⋯像是別人全不知。如果春同樣他一麼特別。望我驚擇願就會出現，買買不可惜到看過看到你，些這次什麼動我真的。畢竟是這天會的然後⋯會好好看自己。\r\n/n\r\n年前修你那，定要而且我，我要自己影響下的，怎麼都知道，然後被他的樣子就是可憐沒有看。真的好不適合應的。\r\n/n\r\n根本起來請問的，是到注意到我每原因，好難了現在得的麼都要的實不，之前的我也會：超可愛都可以的很喜。\r\n/n\r\n謝謝拿遊文的好然發現，阿瑪迪基本上。\r\n/n\r\n也創作時候後為一個我不行，生的次但如果來如此找不知道，社長要不要我對雖然現就會變⋯到可不完是真的因為他。\r\n', 4, 10, 30, 2, 1, 0, 0, 777, 5),
@@ -586,6 +587,26 @@ INSERT INTO `sales_history` (`sales_history`, `user_uid`, `product_uid`, `quanti
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `staff`
+--
+
+CREATE TABLE `staff` (
+  `staff_uid` int(11) NOT NULL,
+  `password` varchar(15) NOT NULL DEFAULT 'password',
+  `staff_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `staff`
+--
+
+INSERT INTO `staff` (`staff_uid`, `password`, `staff_name`) VALUES
+(11307001, 'password', '葉雲舟'),
+(11307002, 'password', '葉雲裳');
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `style`
 --
 
@@ -641,9 +662,7 @@ ALTER TABLE `ingredient`
 -- 資料表索引 `ingredients_for_recipe`
 --
 ALTER TABLE `ingredients_for_recipe`
-  ADD UNIQUE KEY `recipe_uid` (`recipe_uid`,`ingredient_name`),
-  ADD KEY `recipe_uid_2` (`recipe_uid`),
-  ADD KEY `ingredient_name` (`ingredient_name`);
+  ADD UNIQUE KEY `recipe_uid` (`recipe_uid`,`ingredient_name`);
 
 --
 -- 資料表索引 `member`
@@ -699,6 +718,12 @@ ALTER TABLE `sales_history`
   ADD KEY `product_uid` (`product_uid`);
 
 --
+-- 資料表索引 `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`staff_uid`);
+
+--
 -- 資料表索引 `style`
 --
 ALTER TABLE `style`
@@ -732,7 +757,7 @@ ALTER TABLE `member`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `product_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_commemt`
@@ -744,7 +769,7 @@ ALTER TABLE `product_commemt`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `recipe`
 --
 ALTER TABLE `recipe`
-  MODIFY `recipe_uid` int(20) NOT NULL AUTO_INCREMENT COMMENT '食譜的UID，也用於連接食材分量表', AUTO_INCREMENT=51;
+  MODIFY `recipe_uid` int(20) NOT NULL AUTO_INCREMENT COMMENT '食譜的UID，也用於連接食材分量表', AUTO_INCREMENT=64;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `related`
@@ -757,6 +782,12 @@ ALTER TABLE `related`
 --
 ALTER TABLE `sales_history`
   MODIFY `sales_history` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `staff_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11307003;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `style`
