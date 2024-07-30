@@ -52,6 +52,10 @@ a {
       display: flex;
       align-items: center;
 
+      #search_toggle:checked ~ select {
+        visibility: visible;
+      }
+
       #search_toggle:checked ~ .search_button {
         visibility: visible;
       }
@@ -59,6 +63,12 @@ a {
       #search_toggle:checked ~ .search_input {
         visibility: visible;
         width: 200px;
+      }
+
+      select {
+        visibility: hidden;
+        height: 22px;
+        border: none;
       }
 
       #search_toggle {
@@ -69,6 +79,8 @@ a {
         margin-left: 5px;
         cursor: pointer;
       }
+
+
 
       .search_input {
         outline: none;
@@ -121,6 +133,7 @@ a {
       user-select: none;
     }
 
+
     #toggle:checked ~ #nav_right {
       right: -92px;
     }
@@ -161,6 +174,13 @@ a {
           color: var(--text_withe);
           margin: 20px;
         }
+      }
+
+      select {
+        visibility: visible !important;
+        height: 22px;
+        border: none;
+        width: 80PX;
       }
 
       .search_bar {

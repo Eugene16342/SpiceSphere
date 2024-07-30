@@ -56,12 +56,20 @@ a {
   display: flex;
   align-items: center;
 }
+#nav_bar #nav_right .search_bar #search_toggle:checked ~ select {
+  visibility: visible;
+}
 #nav_bar #nav_right .search_bar #search_toggle:checked ~ .search_button {
   visibility: visible;
 }
 #nav_bar #nav_right .search_bar #search_toggle:checked ~ .search_input {
   visibility: visible;
   width: 200px;
+}
+#nav_bar #nav_right .search_bar select {
+  visibility: hidden;
+  height: 22px;
+  border: none;
 }
 #nav_bar #nav_right .search_bar #search_toggle {
   display: none;
@@ -156,6 +164,12 @@ a {
     margin: 0 20px;
     color: var(--text_withe);
     margin: 20px;
+  }
+  #nav_bar #nav_right select {
+    visibility: visible !important;
+    height: 22px;
+    border: none;
+    width: 80PX;
   }
   #nav_bar #nav_right .search_bar {
     display: flex;

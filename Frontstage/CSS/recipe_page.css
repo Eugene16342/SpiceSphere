@@ -149,11 +149,18 @@ a {
   font-size: 24px;
   margin-bottom: 20px;
 }
+#recipe_ingredient .title .title_small {
+  font-weight: 600;
+  font-size: 16px;
+}
 #recipe_ingredient .ingredients {
   width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+#recipe_ingredient .ingredients .side_dishes {
+  color: tomato;
 }
 #recipe_ingredient .ingredients span {
   margin: 3px 0;
