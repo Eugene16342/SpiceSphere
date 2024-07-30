@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>異食鍋|某商品</title>
+    <title>異食鍋| <%= items.product_title %></title>
     <link rel="stylesheet" href="/product_page.css" />
     <link rel="icon" href="../../img/common/favicon.ico" />
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
@@ -44,46 +44,83 @@
     <%- include('nav_bar') %>
     <div id="product">
       <div class="product_img">
-        <img src="../../img/product/product12.jpg" />
+        <img src="../../img/product/product<%= items.product_uid %>.jpg" />
       </div>
       <div class="product_info">
-        <div class="product_title">好吃ㄉ蘇西在爭先</div>
+        <div class="product_title"><%= items.product_title %></div>
         <div id="star_container">
           <div class="star">
-            <input type="radio" name="star" id="score5" value="5" />
+            <input type="radio" name="star" id="score5" value="5"<%= items.product_rating == 5 ? 'checked' : '' %> />
             <label class="star" for="score5"></label>
 
-            <input type="radio" name="star" id="score4" value="4" />
+            <input type="radio" name="star" id="score4" value="4" <%= items.product_rating == 4 ? 'checked' : '' %>/>
             <label class="star" for="score4"></label>
 
-            <input type="radio" name="star" id="score3" value="3" />
+            <input type="radio" name="star" id="score3" value="3" <%= items.product_rating == 3 ? 'checked' : '' %>/>
             <label class="star" for="score3"></label>
 
-            <input type="radio" name="star" id="score2" value="2" />
+            <input type="radio" name="star" id="score2" value="2" <%= items.product_rating == 2 ? 'checked' : '' %>/>
             <label class="star" for="score2"></label>
 
-            <input type="radio" name="star" id="score1" value="1" />
+            <input type="radio" name="star" id="score1" value="1" <%= items.product_rating == 1 ? 'checked' : '' %>/>
             <label class="star" for="score1"></label>
           </div>
           <span>(5678)</span>
         </div>
-        <div class="product_price">$ 1234</div>
+        <div class="product_price">$ <%= items.price %></div>
         <div class="product_tag">
-          <span>鍋子</span><span>鍋鍋</span><span>鍋子子</span>
+          <span>
+            <% if (items.related == 1) { %>
+              食材
+            <% } else if (items.related == 2) { %>
+              調味料
+            <% } else if (items.related == 3) { %>
+              調理包
+            <% } else if (items.related == 4) { %>
+              碗具
+            <% } else if (items.related == 5) { %>
+              鍋具
+            <% } %>
+          </span>
+          <span>
+            <% if (items.sales_amount >= 1000 ) { %>
+            熱銷
+            <% } else if (items.sales_amount >= 2500) { %>
+            大熱銷
+            <% } else if (items.sales_amount >= 5000) { %>
+            絕讚熱銷
+            <% } else { %>
+            熱議
+            <% } %>
+          </span>
+          <span>
+            <% if (items.product_rating == 3) { %>
+              好評
+            <% } else if (items.product_rating == 4) { %>
+              極度好評
+            <% } else if (items.product_rating == 5) { %>
+              壓倒性好評
+            <% } else { %>
+              品質優良
+            <% } %>
+          </span>
         </div>
         <div class="product_size">
           <div class="title">尺寸規格</div>
           <div class="size_info">
-            <div>多長132</div>
-            <div>多寬123</div>
-            <div>多元13542</div>
-            <div>多扁154632</div>
+            <% 
+            var sizes = items.size.split("@");
+            sizes.forEach(function(size) { 
+            %>
+              <div><%= size %></div>
+            <% 
+            }); 
+            %>
           </div>
         </div>
         <div class="product_describe">
           <p>
-            是的一笑初步驚人文化態度重視因而，樓上百萬百萬糖尿病首先，貸款普通加拿大看到頁面忍不住，有利於激烈會在關西三星標籤地址點此，一句體驗項目不去傷害，有限互動解放新聞畫面屬性條款告訴我，返回你們的業主幹部內存一旦內置開口影片選擇怎麼樣古代，個人地址，專輯對此。
-          </p>
+            <%= items.full_describe%>
         </div>
         <div class="btn">
           <div class="btn_border">
@@ -101,31 +138,21 @@
     <div id="recommend_section">
       <div class="title">您可能會喜歡</div>
       <div class="recipe_cards">
+        <% recommendations.forEach(function(product) { %>
         <div class="card">
-          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
-          <a class="card_text" href="">好好吃的食物</a>
-          <div>★★★★★</div>
+          <a href="/product_section/product_page/<%= product.product_uid %>"><img src="../../img/product/product<%= product.product_uid %>.jpg" /></a>
+          <a class="card_text" href="/product_section/product_page/<%= product.product_uid %>"><%= product.product_title %></a>
+          <div class="rating">
+            <% for(let i = 1; i <= 5; i++) { %>
+              <% if(i <= product.product_rating) { %>
+                <span>★</span>
+              <% } else { %>
+                <span>☆</span>
+              <% } %>
+            <% } %>
+          </div>
         </div>
-        <div class="card">
-          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
-          <a class="card_text" href="">好好吃的食物</a>
-          <div>★★★★★</div>
-        </div>
-        <div class="card">
-          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
-          <a class="card_text" href="">好好吃的食物</a>
-          <div>★★★★★</div>
-        </div>
-        <div class="card vanish">
-          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
-          <a class="card_text" href="">好好吃的食物</a>
-          <div>★★★★★</div>
-        </div>
-        <div class="card vanish">
-          <a href=""><img src="../../img/recipe/recipe10.jpg" /></a>
-          <a class="card_text" href="">好好吃的食物</a>
-          <div>★★★★★</div>
-        </div>
+        <% }); %>
       </div>
     </div>
 

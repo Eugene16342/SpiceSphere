@@ -100,6 +100,7 @@ a {
       font-size: 35px;
     }
     .product_tag {
+      user-select: none;
       margin-top: 10px;
       span {
         border: 1px solid var(--main_orange);

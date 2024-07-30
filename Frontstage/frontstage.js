@@ -51,7 +51,6 @@ app.get("/recipe_section", (req, res) => {
   res.render("recipe_section");
 });
 
-
 const recipe_common =
   "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid";
 
@@ -72,6 +71,20 @@ const recipe_common =
 
 app.get("/product_section", (req, res) => {
   res.render("product_section");
+});
+
+app.get("/product_section/product_page/:id", (req, res) => {
+  let sql = "SELECT * FROM product WHERE product_uid = ?";
+  db.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    // 查詢隨機的產品，並限制 `related` 類別與主商品相同
+    let sql2 = "SELECT * FROM product WHERE related = ? ORDER BY RAND() LIMIT 5";
+    db.query(sql2, [result[0].related], (err2, result2) => {
+      if (err2) throw err2;
+      // 將產品和推薦的產品一起傳遞給模板
+      res.render("product_page", { items: result[0], recommendations: result2 });
+    });
+  });
 });
 
 app.get("/product_page", (req, res) => {
