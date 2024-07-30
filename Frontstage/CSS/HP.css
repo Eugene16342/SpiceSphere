@@ -284,10 +284,6 @@ a {
   width: 40%;
   height: 85%;
   background-color: white;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../img/common/background.png);
-  background-size: 50%;
-  background-position: center;
-  background-repeat: no-repeat;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   --r: calc(var(--position) - var(--offset));
   --abs: max(calc(var(--r) * -1), var(--r));

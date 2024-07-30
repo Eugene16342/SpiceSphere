@@ -38,6 +38,7 @@ a {
     .link_bar {
       display: flex;
       align-items: center;
+      margin-right: -100px;
       a {
         font-weight: 600;
         margin: 0 20px;
@@ -167,7 +168,7 @@ a {
         display: flex;
         align-items: center;
         flex-direction: column;
-
+        margin-right: 0px;
         a {
           font-weight: 600;
           margin: 0 20px;
@@ -180,7 +181,7 @@ a {
         visibility: visible !important;
         height: 22px;
         border: none;
-        width: 80PX;
+        width: 50PX;
       }
 
       .search_bar {

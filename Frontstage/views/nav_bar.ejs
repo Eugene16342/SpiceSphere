@@ -5,11 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>導覽列</title>
     <link rel="stylesheet" href="/nav_bar.css" />
+    <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
+  <script>
+$(document).ready(function() {
+  $('#search_toggle').change(function() {
+    if(this.checked) {
+      $('.link_bar').css('margin-right', '0px');
+    } else {
+      $('.link_bar').css('margin-right', '-100px');
+    }
+  });
+});
+  </script>
   <body>
     <nav id="nav_bar">
       <div>
-        <a class="nav_logo" href="">SPICESPHERE</a>
+        <a class="nav_logo" href="/home_page">SPICESPHERE</a>
       </div>
 
       <label for="toggle" class="hamburger">&#9776;</label>
@@ -17,10 +29,10 @@
       <input id="toggle" type="checkbox" />
       <div id="nav_right">
         <div class="link_bar">
-          <a href="">探索食譜</a>
-          <a href="">產品介紹</a>
+          <a href="/recipe_section">探索食譜</a>
+          <a href="/product_section">產品介紹</a>
           <a href="">購物車</a>
-          <a href="">會員登入</a>
+          <a class="login_btn" href="">會員登入</a>
         </div>
         <div class="search_bar">
 
