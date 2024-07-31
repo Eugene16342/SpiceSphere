@@ -48,6 +48,39 @@ db.connect((err) => {
 
 //以上都是模組設定
 
+////////////////////////////////////////////給前端渲染資料 食譜單頁
+
+app.get("/api/recipe/:id", (req, res) => {
+  let sql =
+    "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name, ingredients_for_recipe.* FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid LEFT JOIN ingredients_for_recipe ON recipe.recipe_uid = ingredients_for_recipe.recipe_uid WHERE recipe.recipe_uid = ?";
+  db.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    let sql2 = "SELECT * FROM recipe ORDER BY RAND() LIMIT 3";
+    db.query(sql2, (err2, result2) => {
+      if (err2) throw err2;
+      res.json({ items: result, recommendations: result2 });
+    });
+  });
+});
+
+//////////////////////////////////////////商品單頁
+
+app.get("/api/product/:id", (req, res) => {
+  let sql = "SELECT * FROM product WHERE product_uid = ?";
+  db.query(sql, [req.params.id], (err, result) => {
+    if (err) throw err;
+    let sql2 =
+      "SELECT * FROM product WHERE related = ? ORDER BY RAND() LIMIT 5";
+    db.query(sql2, [result[0].related], (err2, result2) => {
+      if (err2) throw err2;
+      // 將產品和推薦的產品一起傳遞給前端
+      res.json({ items: result[0], recommendations: result2 });
+    });
+  });
+});
+
+////////////////////////////////////////////
+
 function ensureAuthenticated(req, res, next) {
   if (req.session.user) {
     // 如果用戶已登入，則繼續處理請求
