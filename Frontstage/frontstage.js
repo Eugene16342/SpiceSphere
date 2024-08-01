@@ -10,41 +10,40 @@ app.listen(3001, function () {
   console.log("port 3001!");
 });
 
+//////////////主頁
 app.get("/home_page", (req, res) => {
   res.render("home_page");
 });
 
+///////////////食譜區
 app.get("/recipe_section", (req, res) => {
   res.render("recipe_section");
 });
 
-// const recipe_common =
-//   "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name FROM recipe LEFT JOIN style ON recipe.style = style.style_uid LEFT JOIN related ON recipe.related = related.related_uid";
-
-
-  app.get("/recipe_section/recipe_page/:id", (req, res) => {
-    fetch(`http://localhost:3000/api/recipe/${req.params.id}`)
-      .then(response => response.json())
-      .then(data => {
-        res.render("recipe_page", data);
-      });
-  });
-
-app.get("/product_section", (req, res) => {
-  res.render("product_section");
-});
-
-app.get("/product_section/product_page/:id", (req, res) => {
-  fetch(`http://localhost:3000/api/product/${req.params.id}`)
-    .then(response => response.json())
-    .then(data => {
-      res.render("product_page", data);
+///////////////食譜單頁
+app.get("/recipe_section/recipe_page/:id", (req, res) => {
+  fetch(`http://localhost:3000/api/recipe/${req.params.id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      res.render("recipe_page", data);
     });
 });
 
-
-app.get("/product_page", (req, res) => {
-  res.render("product_page");
+/////////////商品區
+app.get("/product_section", (req, res) => {
+  fetch("http://localhost:3000/api/products")
+    .then((response) => response.json())
+    .then((data) => {
+      res.render("product_section", data);
+    });
+});
+//////////////商品單頁
+app.get("/product_section/product_page/:id", (req, res) => {
+  fetch(`http://localhost:3000/api/product/${req.params.id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      res.render("product_page", data);
+    });
 });
 
 app.get("/payment", (req, res) => {

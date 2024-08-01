@@ -13,6 +13,48 @@
       $(".range_container").on("input change", function () {
         $("#now_price").text("$ " + $(this).val());
       });
+
+      window.onload = () => {
+        function filterCards() {
+          let searchInput = $("#search_input").val().toLowerCase();
+          let maxPrice = parseInt($("#price_range").val());
+          let checkedValues = $(
+            '.checkbox_container input[type="checkbox"]:checked'
+          )
+            .map(function () {
+              return $(this).val();
+            })
+            .get();
+
+          $(".card").each(function () {
+            let card = $(this);
+            let cardName = card.find(".card_name").text().trim().toLowerCase();
+            let cardPrice = parseInt(
+              card.find(".card_price").text().replace("$", "").trim()
+            );
+            let cardClass = card.attr("value").split(",");
+
+            let matchesSearch = cardName.includes(searchInput);
+            let matchesPrice = cardPrice <= maxPrice;
+            let matchesClass =
+              checkedValues.length === 0 ||
+              cardClass.some((cls) => checkedValues.includes(cls.trim()));
+
+            if (matchesSearch && matchesPrice && matchesClass) {
+              card.show();
+            } else {
+              card.hide();
+            }
+          });
+        }
+
+        $("#search_btn").on("click", filterCards);
+        $("#price_range").on("input", filterCards);
+        $('.checkbox_container input[type="checkbox"]').on(
+          "change",
+          filterCards
+        );
+      };
     });
   </script>
   <body>
@@ -32,8 +74,8 @@
     <div id="main_section">
       <div id="main_section_search">
         <div class="search_bar">
-          <input type="text" placeholder="搜尋" />
-          <button>
+          <input id="search_input" type="text" placeholder="搜尋" />
+          <button id="search_btn">
             <svg
               width="24px"
               height="24px"
@@ -65,16 +107,17 @@
           <div class="section_title">價格</div>
           <div class="range_labels">
             <span>$ 0</span>
-            <span id="now_price">$ 2500</span>
-            <span>$ 5000</span>
+            <span id="now_price">$ 5000</span>
+            <span id="max_price">$ 10000</span>
           </div>
           <input
+            id="price_range"
             class="range_container"
             type="range"
             min="0"
-            max="5000"
-            step="10"
-            value="2500"
+            max="10000"
+            step="200"
+            value="5000"
           />
         </div>
 
@@ -82,22 +125,39 @@
           <div class="section_title">用途</div>
           <div class="checkbox_container">
             <div>
-              <input id="1" type="checkbox" /><label for="1">鍋子</label>
+              <input type="checkbox" id="food" value="食材" /><label for="food"
+                >食材</label
+              >
             </div>
             <div>
-              <input id="2" type="checkbox" /><label for="2">盤子</label>
+              <input type="checkbox" id="seasoning" value="調味料" /><label
+                for="seasoning"
+                >調味料</label
+              >
             </div>
             <div>
-              <input id="3" type="checkbox" /><label for="3">刀具組</label>
+              <input type="checkbox" id="package" value="調理包" /><label
+                for="package"
+                >調理包</label
+              >
             </div>
             <div>
-              <input id="4" type="checkbox" /><label for="4">調理包</label>
+              <input type="checkbox" id="spoon" value="調羹" /><label
+                for="spoon"
+                >調羹</label
+              >
             </div>
             <div>
-              <input id="5" type="checkbox" /><label for="5">清潔</label>
+              <input type="checkbox" id="cookware" value="鍋具" /><label
+                for="cookware"
+                >鍋具</label
+              >
             </div>
             <div>
-              <input id="6" type="checkbox" /><label for="6">其他</label>
+              <input type="checkbox" id="cleaning" value="清潔用品" /><label
+                for="cleaning"
+                >清潔用品</label
+              >
             </div>
           </div>
         </div>
@@ -126,23 +186,20 @@
       </div>
 
       <div id="main_section_product_cards">
-        <div class="card">
-          <a href="">
+        <% items.forEach(function(product) { %>
+        <div class="card" value="<%= product.related_name %>">
+          <a
+            target="_blank"
+            href="/product_section/product_page/<%= product.product_uid %>"
+          >
             <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
+              <img
+                src="../../img/product/product<%= product.product_uid %>.jpg"
+              />
+              <div class="card_description"><%= product.full_describe %></div>
             </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
+            <div class="card_name"><%= product.product_title %></div>
+            <div class="card_price">$ <%= product.price %></div>
           </a>
           <div class="card_btn">
             <button>
@@ -161,387 +218,17 @@
             </button>
           </div>
         </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card">
-          <a href="">
-            <div class="card_img">
-              <img src="../../img/product_section/test_card.jpg" />
-              <div class="card_description">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Accusantium alias quibusdam, quidem minima nesciunt veniam quae
-                recusandae consequatur unde animi, voluptatibus est ipsum
-                laudantium enim, non quis laboriosam debitis. Mollitia!
-              </div>
-            </div>
-            <div class="card_name">鍋子</div>
-            <div class="card_price">$ 200</div>
-          </a>
-          <div class="card_btn">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                fill="currentColor"
-                class="bi bi-cart4"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
+        <% }); %>
       </div>
     </div>
+
     <div id="page">
       <span><</span>
       <sapn class="page_num">
         <span>1</span>
         <span>2</span>
-        <span>3</span></sapn
-      >
+        <span>3</span>
+      </sapn>
 
       <span>></span>
     </div>

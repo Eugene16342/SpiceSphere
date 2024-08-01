@@ -63,6 +63,16 @@ app.get("/api/recipe/:id", (req, res) => {
   });
 });
 
+////////////////////////////////////////商品搜索頁
+app.get("/api/products", (req, res) => {
+  let sql =
+    "SELECT product.*, related.related_name AS related_name FROM product LEFT JOIN related ON product.related = related.related_uid";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.json({ items: result });
+  });
+});
+
 //////////////////////////////////////////商品單頁
 
 app.get("/api/product/:id", (req, res) => {
