@@ -43,7 +43,6 @@ a {
 #nav_bar #nav_right .link_bar {
   display: flex;
   align-items: center;
-  margin-right: -100px;
 }
 #nav_bar #nav_right .link_bar a {
   font-weight: 600;

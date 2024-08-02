@@ -10,6 +10,11 @@ app.listen(3001, function () {
   console.log("port 3001!");
 });
 
+//////////////////////////////登入頁
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 //////////////主頁
 app.get("/home_page", (req, res) => {
   res.render("home_page");
