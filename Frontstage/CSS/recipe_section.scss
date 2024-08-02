@@ -131,13 +131,14 @@ a {
 
 #recipe_pic_section {
   display: grid;
-  width: 1200px;
+  width: 850px;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-flow: dense;
   margin: auto;
 
   .recipe_card {
     height: 250px;
+    width: 250px;
     margin: 10px;
     position: relative;
     .recipe_when,
@@ -200,7 +201,8 @@ a {
   }
   .recipe_card:nth-child(6n + 1),
   .recipe_card:nth-child(6n + 4) {
-    height: 520px;
+    height: 530px;
+    width: 530px;
     grid-column: span 2;
     grid-row: span 2;
   }
@@ -273,13 +275,14 @@ a {
 
   #recipe_pic_section {
     display: grid;
-    width: 850px;
+    width: 700px;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-flow: dense;
     margin: auto;
 
     .recipe_card {
       height: 200px;
+      width: 200px;
       margin: 10px;
       position: relative;
       .recipe_when,
@@ -332,7 +335,8 @@ a {
     }
     .recipe_card:nth-child(6n + 1),
     .recipe_card:nth-child(6n + 4) {
-      height: 420px;
+      height: 430px;
+      width: 430px;
       grid-column: span 2;
       grid-row: span 2;
     }
@@ -454,12 +458,12 @@ a {
   #recipe_pic_section {
     display: grid;
     width: 480px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     grid-auto-flow: dense;
     margin: auto;
-
     .recipe_card {
       height: 220px;
+      width: 220px;
       margin: 10px;
       position: relative;
       .recipe_when,
@@ -513,6 +517,7 @@ a {
     .recipe_card:nth-child(6n + 1),
     .recipe_card:nth-child(6n + 4) {
       height: 220px;
+      width: 220px;
       grid-column: span 1;
       grid-row: span 1;
     }

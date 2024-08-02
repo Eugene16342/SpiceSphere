@@ -245,12 +245,19 @@ a {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    #no_results{
+      display: none;
+      font-weight: 900;
+      font-size: 40px;
+      margin: auto;
+      text-align: center;
+    }
     .card {
       width: 225px;
       height: 325px;
       margin: 0 0 10px 15px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-
+      
       .card_img {
         width: 225px;
         height: 225px;

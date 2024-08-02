@@ -236,6 +236,13 @@ a {
   display: flex;
   flex-wrap: wrap;
 }
+#main_section #main_section_product_cards #no_results {
+  display: none;
+  font-weight: 900;
+  font-size: 40px;
+  margin: auto;
+  text-align: center;
+}
 #main_section #main_section_product_cards .card {
   width: 225px;
   height: 325px;

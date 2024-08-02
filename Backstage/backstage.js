@@ -47,6 +47,20 @@ db.connect((err) => {
 });
 
 //以上都是模組設定
+///////////////////////////////////////////食譜搜索頁
+app.get("/api/recipes", (req, res) => {
+  let sql = 
+  "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name, `when`.time_name AS time_name " +
+  "FROM recipe " +
+  "LEFT JOIN style ON recipe.style = style.style_uid " +
+  "LEFT JOIN related ON recipe.related = related.related_uid " +
+  "LEFT JOIN `when` ON recipe.when = `when`.time_uid " +
+  "GROUP BY recipe.recipe_uid";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.json({ items: result });
+  });
+});
 
 ////////////////////////////////////////////給前端渲染資料 食譜單頁
 
