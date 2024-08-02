@@ -210,43 +210,57 @@ a {
   margin-bottom: 30px;
   position: relative;
 }
-#user_comment .title {
+
+.title {
   font-weight: 900;
   font-size: 32px;
   margin-bottom: 30px;
 }
-#user_comment .comment_carousel {
+
+.comment_carousel {
   width: 80%;
+  overflow: hidden;
+  position: relative;
   box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
   border-radius: 25px;
 }
-#user_comment .comment_carousel .comment_info {
-  width: 100%;
+
+.comment_wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.comment_info {
+  min-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: opacity 0.5s ease-in-out;
 }
-#user_comment .comment_carousel .comment_info .user_name {
+
+.user_name {
   font-weight: 600;
   font-size: 24px;
 }
-#user_comment .comment_carousel .comment_info .user_rating {
+
+.user_rating {
   color: var(--main_orange);
   margin-bottom: 5px;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
 }
-#user_comment .comment_carousel .comment_info .comment_text {
+
+.comment_text {
   padding: 10px 200px 40px 200px;
   font-weight: 600;
   font-size: 18px;
 }
-#user_comment .carousel_btn .carousel_pre,
-#user_comment .carousel_btn .carousel_next {
+
+.carousel_btn .carousel_pre,
+.carousel_btn .carousel_next {
   position: absolute;
-  bottom: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 5%;
   height: 100%;
   display: flex;
@@ -255,11 +269,11 @@ a {
   color: var(--main_orange);
   cursor: pointer;
 }
-#user_comment .carousel_btn .carousel_pre {
-  left: 50px;
+.carousel_btn .carousel_pre {
+  left: 0;
 }
-#user_comment .carousel_btn .carousel_next {
-  right: 50px;
+.carousel_btn .carousel_next {
+  right: 0;
 }
 
 @media screen and (max-width: 1300px) {

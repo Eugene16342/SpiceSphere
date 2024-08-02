@@ -9,36 +9,54 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
-    $(document).ready(function () {
-      $(".add").click(function () {
-        var quantity = parseInt($(".product_quanity").text());
-        $(".product_quanity").text(quantity + 1);
-      });
+$(document).ready(function () {
+  $(".add").click(function () {
+    var quantity = parseInt($(".product_quanity").text());
+    $(".product_quanity").text(quantity + 1);
+  });
 
-      $(".munis").click(function () {
-        var quantity = parseInt($(".product_quanity").text());
-        if (quantity > 0) {
-          $(".product_quanity").text(quantity - 1);
-        }
-      });
+  $(".munis").click(function () {
+    var quantity = parseInt($(".product_quanity").text());
+    if (quantity > 0) {
+      $(".product_quanity").text(quantity - 1);
+    }
+  });
 
-      var commentInfos = $(".comment_carousel .comment_info");
-      var currentIndex = 0;
-      commentInfos.hide().eq(currentIndex).show();
+  var commentInfos = $(".comment_wrapper .comment_info");
+  var currentIndex = 0;
 
-      $(".carousel_next").click(function () {
-        commentInfos.eq(currentIndex).hide();
-        currentIndex = (currentIndex + 1) % commentInfos.length;
-        commentInfos.eq(currentIndex).show();
-      });
+  function showSlide(index) {
+    var offset = -index * 100 + "%";
+    $(".comment_wrapper").css("transform", "translateX(" + offset + ")");
+  }
 
-      $(".carousel_pre").click(function () {
-        commentInfos.eq(currentIndex).hide();
-        currentIndex =
-          (currentIndex - 1 + commentInfos.length) % commentInfos.length;
-        commentInfos.eq(currentIndex).show();
-      });
-    });
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % commentInfos.length;
+    showSlide(currentIndex);
+  }
+
+  $(".carousel_next").click(function () {
+    nextSlide();
+    resetInterval();
+  });
+
+  $(".carousel_pre").click(function () {
+    currentIndex = (currentIndex - 1 + commentInfos.length) % commentInfos.length;
+    showSlide(currentIndex);
+    resetInterval();
+  });
+
+  var interval = setInterval(nextSlide, 5000);
+
+  function resetInterval() {
+    clearInterval(interval);
+    interval = setInterval(nextSlide, 5000);
+  }
+
+  showSlide(currentIndex);
+});
+
+
   </script>
   <body>
     <%- include('nav_bar') %>
@@ -159,32 +177,34 @@
     <div id="user_comment">
       <div class="title">使用心得</div>
       <div class="comment_carousel">
-        <div class="comment_info">
-          <div class="user_name">觀雲客</div>
-          <div class="user_rating">★★★★★</div>
-          <div class="comment_text">
-            廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+        <div class="comment_wrapper">
+          <div class="comment_info">
+            <div class="user_name">觀雲客</div>
+            <div class="user_rating">★★★★★</div>
+            <div class="comment_text">
+              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+            </div>
           </div>
-        </div>
-        <div class="comment_info">
-          <div class="user_name">聽海生</div>
-          <div class="user_rating">★★★★★</div>
-          <div class="comment_text">
-            廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+          <div class="comment_info">
+            <div class="user_name">聽海生</div>
+            <div class="user_rating">★★★★★</div>
+            <div class="comment_text">
+              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+            </div>
           </div>
-        </div>
-        <div class="comment_info">
-          <div class="user_name">州長門</div>
-          <div class="user_rating">★★★★★</div>
-          <div class="comment_text">
-            廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+          <div class="comment_info">
+            <div class="user_name">州長門</div>
+            <div class="user_rating">★★★★★</div>
+            <div class="comment_text">
+              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+            </div>
           </div>
-        </div>
-        <div class="comment_info">
-          <div class="user_name">身屠龍</div>
-          <div class="user_rating">★★★★★</div>
-          <div class="comment_text">
-            廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+          <div class="comment_info">
+            <div class="user_name">身屠龍</div>
+            <div class="user_rating">★★★★★</div>
+            <div class="comment_text">
+              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
+            </div>
           </div>
         </div>
       </div>
@@ -219,6 +239,8 @@
         </div>
       </div>
     </div>
+    
+    
 
     <%- include('footer') %>
   </body>
