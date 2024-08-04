@@ -122,6 +122,15 @@ a {
   top: -50px;
   left: 0;
 }
+#login_bg .login_section .back {
+  margin-top: 10px;
+  text-decoration: none;
+  color: var(--text_black);
+  cursor: pointer;
+}
+#login_bg .login_section .back:hover {
+  color: var(--main_orange);
+}
 
 @media screen and (max-width: 1300px) {
   #login_bg {

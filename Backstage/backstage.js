@@ -1,4 +1,4 @@
-//安裝  express mysql ejs path body-parser multer express-sion
+//安裝  express mysql ejs path body-parser multer express-sion cors
 const express = require("express");
 const mysql = require("mysql");
 const ejs = require("ejs");
@@ -11,6 +11,14 @@ const multer = require("multer");
 const uploadRecipe = multer({ dest: "../img/recipe" });
 const uploadProduct = multer({ dest: "../img/product" });
 const session = require("express-session");
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:3001", // 前端的地址
+    credentials: true, // 允許攜帶 cookie
+  })
+);
 
 app.use(
   session({
@@ -46,23 +54,69 @@ db.connect((err) => {
   console.log("Connected to database");
 });
 
-//以上都是模組設定
+/////////////////////////////////////////以上都是模組設定
+
+///////////////////////////////////////以下是給前端的api
+///////////////////////////////////////前端會員註冊和登入
+//註冊
+app.post("/api/register", (req, res) => {
+  const { userName, email, account, password } = req.body;
+
+  const query =
+    "INSERT INTO member (user_name, user_account, user_password, e_mail) VALUES (?, ?, ?, ?)";
+  db.query(query, [userName, account, password, email], (err, result) => {
+    if (err) {
+      console.error("Error inserting data into database", err);
+      res.status(500).json({ message: "註冊失敗" });
+    } else {
+      console.log("Data inserted successfully", result);
+      res.json({ message: "註冊成功" });
+    }
+  });
+});
+
+//登入
+app.post("/api/login", (req, res) => {
+  const { account, password } = req.body;
+
+  const query =
+    "SELECT * FROM member WHERE user_account = ? AND user_password = ?";
+  db.query(query, [account, password], (err, results) => {
+    if (err) {
+      console.error("Error querying database", err);
+      res.status(500).json({ message: "登入失敗" });
+    } else if (results.length > 0) {
+      req.session.username = results[0].user_name;
+      console.log("Session username:", req.session.username); // 確認 session 是否正確儲存
+      res.json({ message: "登入成功", username: results[0].user_name }); // 返回使用者名稱
+    } else {
+      res.status(401).json({ message: "帳號或密碼錯誤" });
+    }
+  });
+});
+// 檢查是否已經登入
+app.use((req, res, next) => {
+  res.locals.username = req.session.username || null;
+  console.log("Res locals username:", res.locals.username); // 確認 res.locals 是否正確傳遞
+  next();
+});
+
 ///////////////////////////////////////////食譜搜索頁
 app.get("/api/recipes", (req, res) => {
-  let sql = 
-  "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name, `when`.time_name AS time_name " +
-  "FROM recipe " +
-  "LEFT JOIN style ON recipe.style = style.style_uid " +
-  "LEFT JOIN related ON recipe.related = related.related_uid " +
-  "LEFT JOIN `when` ON recipe.when = `when`.time_uid " +
-  "GROUP BY recipe.recipe_uid";
+  let sql =
+    "SELECT recipe.*, style.style_name AS style_name, related.related_name AS related_name, `when`.time_name AS time_name " +
+    "FROM recipe " +
+    "LEFT JOIN style ON recipe.style = style.style_uid " +
+    "LEFT JOIN related ON recipe.related = related.related_uid " +
+    "LEFT JOIN `when` ON recipe.when = `when`.time_uid " +
+    "GROUP BY recipe.recipe_uid";
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.json({ items: result });
   });
 });
 
-////////////////////////////////////////////給前端渲染資料 食譜單頁
+//////////////////////////////////////////// 食譜單頁
 
 app.get("/api/recipe/:id", (req, res) => {
   let sql =
@@ -102,8 +156,9 @@ app.get("/api/product/:id", (req, res) => {
     });
   });
 });
+//////////////////////////////////////////////以上是給前端的api
 
-////////////////////////////////////////////
+////////////////////////////////////////////以下是後端路由
 
 function ensureAuthenticated(req, res, next) {
   if (req.session.user) {

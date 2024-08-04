@@ -36,8 +36,10 @@ a {
     margin-right: 92px;
     display: flex;
     .link_bar {
+      margin-right: -100px;
       display: flex;
       align-items: center;
+      z-index: 10;
       a {
         font-weight: 600;
         margin: 0 20px;
@@ -45,12 +47,16 @@ a {
         &:hover {
           color: wheat;
         }
+        .user_name {
+          margin: 0;
+        }
       }
     }
 
     .search_bar {
       display: flex;
       align-items: center;
+      position: relative;
 
       #search_toggle:checked ~ select {
         visibility: visible;
@@ -79,8 +85,6 @@ a {
         margin-left: 5px;
         cursor: pointer;
       }
-
-
 
       .search_input {
         outline: none;
@@ -133,7 +137,6 @@ a {
       user-select: none;
     }
 
-
     #toggle:checked ~ #nav_right {
       right: -92px;
     }
@@ -180,7 +183,7 @@ a {
         visibility: visible !important;
         height: 22px;
         border: none;
-        width: 50PX;
+        width: 50px;
       }
 
       .search_bar {

@@ -8,6 +8,21 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const username = sessionStorage.getItem("username");
+      if (username) {
+        const loginBtn = document.querySelector(".login_btn");
+        loginBtn.innerHTML = `您好，<a class="user_name" href="/user_page">${username}</a>`;
+      }
+
+      $("#search_toggle").change(function () {
+        if ($(this).is(":checked")) {
+          $(".link_bar").css("margin-right", "0");
+        } else {
+          $(".link_bar").css("margin-right", "-100px ");
+        }
+      });
+    });
   </script>
   <body>
     <nav id="nav_bar">
@@ -15,7 +30,7 @@
         <a class="nav_logo" href="/home_page">SPICESPHERE</a>
       </div>
 
-      <label for="toggle" class="hamburger">&#9776;</label>
+      <label for="toggle" class="hamburger">☰</label>
 
       <input id="toggle" type="checkbox" />
       <div id="nav_right">
@@ -26,7 +41,6 @@
           <a class="login_btn" href="/login">會員登入</a>
         </div>
         <div class="search_bar">
-
           <input id="search_toggle" type="checkbox" />
           <select>
             <option value="recipe">食譜</option>
@@ -35,7 +49,7 @@
           <input class="search_input" type="text" />
           <button class="search_button">搜索</button>
           <label for="search_toggle">
-            <?xml version="1.0" encoding="UTF-8"?><svg
+            <svg
               width="30px"
               height="35px"
               viewBox="0 0 24 24"

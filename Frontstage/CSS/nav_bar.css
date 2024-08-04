@@ -41,8 +41,10 @@ a {
   display: flex;
 }
 #nav_bar #nav_right .link_bar {
+  margin-right: -100px;
   display: flex;
   align-items: center;
+  z-index: 10;
 }
 #nav_bar #nav_right .link_bar a {
   font-weight: 600;
@@ -52,9 +54,13 @@ a {
 #nav_bar #nav_right .link_bar a:hover {
   color: wheat;
 }
+#nav_bar #nav_right .link_bar a .user_name {
+  margin: 0;
+}
 #nav_bar #nav_right .search_bar {
   display: flex;
   align-items: center;
+  position: relative;
 }
 #nav_bar #nav_right .search_bar #search_toggle:checked ~ select {
   visibility: visible;
@@ -170,7 +176,7 @@ a {
     visibility: visible !important;
     height: 22px;
     border: none;
-    width: 50PX;
+    width: 50px;
   }
   #nav_bar #nav_right .search_bar {
     display: flex;

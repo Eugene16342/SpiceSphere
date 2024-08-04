@@ -24,8 +24,8 @@ $(document).ready(function() {
         }
     }
 
-    // Initial binding for existing eye icons
-    $('.eye').on('click', togglePasswordVisibility);
+    // Use event delegation for dynamically created elements
+    $(document).on('click', '.eye', togglePasswordVisibility);
 
     $('#register').on('click', function() {
         $('#login_bg').html(`
@@ -33,7 +33,7 @@ $(document).ready(function() {
             <div class="login_section">
                 <div class="title">註冊</div>
                 <input class="register_input" id="user_name"  maxlength="20" placeholder="請輸入姓名">
-                <input class="register_input" type="email" placeholder="請輸入電子信箱">
+                <input class="register_input" type="email" id="email" placeholder="請輸入電子信箱">
                 <input class="register_input" id="new_account"  maxlength="20" placeholder="請輸入帳號">
                 <input class="register_input" type="password" id="new_password"  maxlength="20" placeholder="請輸入新密碼">
                 <div class="eye">
@@ -50,13 +50,84 @@ $(document).ready(function() {
                     </svg>
                 </div>
                 <button id="submit_register">提交</button>
+                <a class="back" href="/login">回到登入</a>
             </div>
         `);
+    });
 
-        // Re-bind the click event for the new eye icons
-        $('.eye').on('click', togglePasswordVisibility);
+    $(document).on('click', '#submit_register', function() {
+    const userName = $('#user_name').val();
+    const email = $('#email').val();
+    const account = $('#new_account').val();
+    const password = $('#new_password').val();
+    const confirmPassword = $('#confirm_password').val();
+
+    if (password !== confirmPassword) {
+        alert('密碼不一致，請重新確認');
+        return;
+    }
+
+    console.log({ userName, email, account, password });
+
+    fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userName, email, account, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.message === '註冊成功') {
+            window.location.href = '/login';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('註冊失敗，請稍後再試');
     });
 });
+
+$('#login').on('click', function() {
+    const account = $('#account').val();
+    const password = $('#password').val();
+
+    fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include', // 攜帶 cookie
+        body: JSON.stringify({ account, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.message === '登入成功') {
+            sessionStorage.setItem('username', data.username); // 儲存使用者名稱
+            window.location.href = '/home_page'; // 登入成功後重新加載主頁
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('登入失敗，請稍後再試');
+    });
+});
+    
+    $('#forget').on('click',function(){
+    $('.login_section').html(`
+<div class="title">忘記密碼</div>
+                <input  id="new_account"  maxlength="20" placeholder="請輸入帳號">
+                <input  type="email" placeholder="請輸入電子信箱">
+                <div>提交後，我們會將密碼寄至您的電子信箱</div>
+                <button id="submit_forget">提交</button>
+                <a class="back" href="/login">回到登入</a>
+            </div>
+    `)
+})
+});
+
 
 
 </script>

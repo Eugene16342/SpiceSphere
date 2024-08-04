@@ -2,6 +2,7 @@ const express = require("express");
 const ejs = require("ejs");
 const app = express();
 const bodyParser = require("body-parser");
+const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
@@ -10,9 +11,24 @@ app.listen(3001, function () {
   console.log("port 3001!");
 });
 
+app.use(
+  session({
+    secret: "SpiceSphere20240827",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // 如果您的網站使用 HTTPS，請將此選項設為 true
+  })
+);
+
 //////////////////////////////登入頁
 app.get("/login", (req, res) => {
   res.render("login");
+});
+
+///////////////檢查是否已經登入
+app.use((req, res, next) => {
+  res.locals.username = req.session.username || null;
+  next();
 });
 
 //////////////主頁
@@ -23,19 +39,19 @@ app.get("/home_page", (req, res) => {
 ///////////////食譜區
 app.get("/recipe_section", (req, res) => {
   fetch("http://localhost:3000/api/recipes")
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    return response.json();
-  })
-  .then((data) => {
-    res.render("recipe_section", data);
-  })
-  .catch((error) => {
-    console.error('There was a problem with the fetch operation:', error);
-    res.status(500).send('Internal Server Error');
-  });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      res.render("recipe_section", data);
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 ///////////////食譜單頁
 app.get("/recipe_section/recipe_page/:id", (req, res) => {
