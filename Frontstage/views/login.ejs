@@ -32,7 +32,7 @@ $(document).ready(function() {
             <div class="text">歡迎註冊！請填寫以下資訊。</div>
             <div class="login_section">
                 <div class="title">註冊</div>
-                <input class="register_input" id="user_name"  maxlength="20" placeholder="請輸入姓名">
+                <input class="register_input" id="user_name"  maxlength="10" placeholder="請輸入姓名">
                 <input class="register_input" type="email" id="email" placeholder="請輸入電子信箱">
                 <input class="register_input" id="new_account"  maxlength="20" placeholder="請輸入帳號">
                 <input class="register_input" type="password" id="new_password"  maxlength="20" placeholder="請輸入新密碼">
@@ -49,11 +49,32 @@ $(document).ready(function() {
                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
                     </svg>
                 </div>
+            <div class="checkbox_container"><input id="agreetmant" type="checkbox" >我接受<span id="terms">服務條款</span> <input id="subscribe" type="checkbox" checked>我想收到最新消息 </div>
+            <div id="terms_modal" class="modal">
+            <div class="modal_content"><span class="close">&times;</span><p>
+                <p>這裡是服務條款的內容</p>
+                語言古代基地圖書及時活動壓縮範圍之一刪除犯罪，刷新留學，有一定特價模樣準確最高臺中考核，春天降低眼光演唱藍色做出不肯完成，金屬味道開展老公輔助計算台鐵推坑王擴大連載公主，儘快本網網際方法實行，而來網域名稱讓他幸福，豪華都沒，領導的錢轉帖各種，職務明顯，尺                語言古代基地圖書及時活動壓縮範圍之一刪除犯罪，刷新留學，有一定特價模樣準確最高臺中考核，春天降低眼光演唱藍色做出不肯完成，金屬味道開展老公輔助計算台鐵推坑王擴大連載公主，儘快本網網際方法實行，而來網域名稱讓他幸福，豪華都沒，領導的錢轉帖各種，職務明顯，尺                語言古代基地圖書及時活動壓縮範圍之一刪除犯罪，刷新留學，有一定特價模樣準確最高臺中考核，春天降低眼光演唱藍色做出不肯完成，金屬味道開展老公輔助計算台鐵推坑王擴大連載公主，儘快本網網際方法實行，而來網域名稱讓他幸福，豪華都沒，領導的錢轉帖各種，職務明顯，尺                語言古代基地圖書及時活動壓縮範圍之一刪除犯罪，刷新留學，有一定特價模樣準確最高臺中考核，春天降低眼光演唱藍色做出不肯完成，金屬味道開展老公輔助計算台鐵推坑王擴大連載公主，儘快本網網際方法實行，而來網域名稱讓他幸福，豪華都沒，領導的錢轉帖各種，職務明顯，尺                語言古代基地圖書及時活動壓縮範圍之一刪除犯罪，刷新留學，有一定特價模樣準確最高臺中考核，春天降低眼光演唱藍色做出不肯完成，金屬味道開展老公輔助計算台鐵推坑王擴大連載公主，儘快本網網際方法實行，而來網域名稱讓他幸福，豪華都沒，領導的錢轉帖各種，職務明顯，尺。
+                </p></div></div>   
                 <button id="submit_register">提交</button>
                 <a class="back" href="/login">回到登入</a>
             </div>
         `);
     });
+    
+    $(document).on('click', '#terms', function() {
+        $('#terms_modal').css('display', 'block');
+    });
+
+    $(document).on('click', '.close', function() {
+        $('#terms_modal').css('display', 'none');
+    });
+
+    $(window).on('click', function(event) {
+        if ($(event.target).is('#terms_modal')) {
+            $('#terms_modal').css('display', 'none');
+        }
+    });
+
 
     $(document).on('click', '#submit_register', function() {
     const userName = $('#user_name').val();
@@ -61,20 +82,32 @@ $(document).ready(function() {
     const account = $('#new_account').val();
     const password = $('#new_password').val();
     const confirmPassword = $('#confirm_password').val();
+    const agreementChecked = $('#agreetmant').is(':checked');
+
+    if (!userName || !email || !account || !password) {
+        alert('姓名、信箱、帳號和密碼都不能為空');
+        return;
+    }
+
+    if (!agreementChecked) {
+        alert('請同意服務條款');
+        return;
+    }
 
     if (password !== confirmPassword) {
         alert('密碼不一致，請重新確認');
         return;
     }
 
-    console.log({ userName, email, account, password });
+
+    console.log({ userName, email, account, password  });
 
     fetch('http://localhost:3000/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userName, email, account, password })
+        body: JSON.stringify({ userName, email, account, password  })
     })
     .then(response => response.json())
     .then(data => {

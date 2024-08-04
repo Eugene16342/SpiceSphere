@@ -54,8 +54,18 @@ a {
 #nav_bar #nav_right .link_bar a:hover {
   color: wheat;
 }
+#nav_bar #nav_right .link_bar a:last-child {
+  cursor: default;
+}
+#nav_bar #nav_right .link_bar a:last-child:hover {
+  color: var(--text_withe);
+}
 #nav_bar #nav_right .link_bar a .user_name {
+  cursor: pointer;
   margin: 0;
+}
+#nav_bar #nav_right .link_bar a .user_name:hover {
+  color: wheat;
 }
 #nav_bar #nav_right .search_bar {
   display: flex;
