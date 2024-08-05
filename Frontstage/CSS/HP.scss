@@ -16,6 +16,7 @@ body {
 a {
   text-decoration: none;
 }
+
 /* Section A */
 
 .slide_section {
@@ -23,73 +24,86 @@ a {
   height: 80vh;
   width: 100%;
   margin-top: 50px;
-  .slide {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    background-size: cover;
-    img {
-      width: 100%;
-      height: 80vh;
-      object-fit: cover;
-      user-select: none;
-    }
-    .slide_step {
-      background-color: var(--bg_opacity_black);
-      padding: 5px 10px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      color: var(--text_withe);
-      transform: translate(-50%, -50%);
-      font-family: "Courier New", Courier, monospace;
-      &:hover p {
-        opacity: 1;
-        max-height: 200px;
-      }
-      h1 {
-        font-size: 50px;
-        font-family: "Courier New", Courier, monospace;
-      }
-      P {
-        visibility: visible; /* 修改這裡 */
-        font-size: 24px;
-        opacity: 0;
-        transition: 0.8s ease-in-out;
-        max-height: 0; /* 新增的屬性 */
-        overflow: hidden; /* 新增的屬性 */
-      }
-    }
-  }
-  .slide_btn {
-    box-sizing: border-box;
-    border: none;
-    padding: 0;
-    .pre_btn,
-    .next_btn {
-      box-sizing: border-box;
-      border: none;
-      padding: 0;
-      position: absolute;
+    .carousel {
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
       height: 100%;
-      width: 10%;
-      top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.2s ease-in-out;
-      color: var(--text_withe);
-      font-size: 150px;
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
-        cursor: pointer;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      .slide_container {
+          display: flex;
+          transform: translateX(0);
+          transition: transform 0.5s ease-in-out;
+          width: 100%;
+          height: 100%;
+          .slide {
+              min-width: 100%;
+              height: 100%;
+              position: relative;
+              img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  user-select: none;
+              }
+              .slide_text {
+                background-color: var(--bg_opacity_black);
+                padding: 5px 10px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                color: var(--text_withe);
+                transform: translate(-50%, -50%);
+                &:hover p {
+                  opacity: 1;
+                  max-height: 200px;
+                }
+                h1 {
+                  font-size: 50px;
+                  text-align: center;
+                }
+                P {
+                  visibility: visible;
+                  font-size: 24px;
+                  opacity: 0;
+                  transition: 0.8s ease-in-out;
+                  max-height: 0; 
+                  overflow: hidden;
+                }
+              }
+          }
       }
+      .buttons_container {
+        justify-content: space-between;
+  
+        .btn {
+          position: absolute;
+            background-color:var(--bg_opacity_black);
+            color: var(--text_withe);
+            border: none;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            top: 0;
+            height: 100%;
+            outline: none;
+            &:hover,
+            &:focus {
+              background-color: var(--text_black);
+            }
+        }
+        #left {
+          left: 0;
+        }
+    
+        #right {
+          right: 0;
+        }
     }
-    .next_btn {
-      right: 0;
     }
+
   }
-}
+
 
 /* Section B */
 .sectionB {
@@ -451,78 +465,51 @@ a {
 
 @media screen and (max-width: 1300px) {
   .slide_section {
-    position: relative;
-    height: 60vh;
-    width: 100%;
-    margin-top: 50px;
-    .slide {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      background-size: cover;
-      img {
-        width: 100%;
-        height: 60vh;
-        object-fit: cover;
-        user-select: none;
-      }
-      .slide_step {
-        background-color: var(--bg_opacity_black);
-        padding: 5px 10px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        color: var(--text_withe);
-        transform: translate(-50%, -50%);
-        font-family: "Courier New", Courier, monospace;
-        &:hover p {
-          opacity: 1;
-          max-height: 200px;
-        }
-        h1 {
-          font-size: 40px;
-          font-family: "Courier New", Courier, monospace;
-        }
-        P {
-          visibility: visible; /* 修改這裡 */
-          font-size: 22px;
-          opacity: 0;
-          transition: 0.8s ease-in-out;
-          max-height: 0; /* 新增的屬性 */
-          overflow: hidden; /* 新增的屬性 */
-        }
-      }
-    }
-    .slide_btn {
-      box-sizing: border-box;
-      border: none;
-      padding: 0;
-      .pre_btn,
-      .next_btn {
-        box-sizing: border-box;
-        border: none;
-        padding: 0;
-        position: absolute;
-        height: 100%;
-        width: 5%;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--text_withe);
-        font-size: 150px;
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-        }
-      }
-      .next_btn {
-        right: 0;
-      }
-    }
-  }
+    height: 70vh;
+      .carousel {
+        .slide_container {
 
+            .slide {
+                .slide_text {
+                  h1 {
+                    font-size: 40px;
+                    text-align: center;
+                  }
+                  P {
+                    font-size: 20px;
+                  }
+                }
+            }
+        }
+        .buttons_container {
+          justify-content: space-between;
+          .btn {
+            position: absolute;
+              background-color:var(--bg_opacity_black);
+              color: var(--text_withe);
+              border: none;
+              padding: 0;
+              box-sizing: border-box;
+              cursor: pointer;
+              top: 0;
+              height: 100%;
+              outline: none;
+              &:hover,
+              &:focus {
+                background-color: var(--text_black);
+              }
+          }
+          #left {
+            left: 0;
+          }
+      
+          #right {
+            right: 0;
+          }
+      }
+      }
+  
+    }
   .card_container {
     position: relative;
     .recipe_3d {
@@ -689,76 +676,95 @@ a {
 @media screen and (max-width: 900px) {
   .slide_section {
     position: relative;
-    height: 40vh;
+    height: 60vh;
     width: 100%;
     margin-top: 50px;
-    .slide {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      background-size: cover;
-      img {
-        width: 100%;
-        height: 40vh;
-        object-fit: cover;
-        user-select: none;
-      }
-      .slide_step {
-        background-color: var(--bg_opacity_black);
-        padding: 5px 10px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        color: var(--text_withe);
-        transform: translate(-50%, -50%);
-        font-family: "Courier New", Courier, monospace;
-        &:hover p {
-          opacity: 1;
-          max-height: 200px;
-        }
-        h1 {
-          font-size: 24px;
-          font-family: "Courier New", Courier, monospace;
-        }
-        P {
-          visibility: visible; /* 修改這裡 */
-          font-size: 16px;
-          opacity: 0;
-          transition: 0.8s ease-in-out;
-          max-height: 0; /* 新增的屬性 */
-          overflow: hidden; /* 新增的屬性 */
-        }
-      }
-    }
-    .slide_btn {
-      box-sizing: border-box;
-      border: none;
-      padding: 0;
-      .pre_btn,
-      .next_btn {
-        box-sizing: border-box;
-        border: none;
-        padding: 0;
-        position: absolute;
+    margin-bottom: 10px;
+      .carousel {
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         height: 100%;
-        width: 5%;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--text_withe);
-        font-size: 150px;
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.5);
-          cursor: pointer;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        .slide_container {
+            display: flex;
+            transform: translateX(0);
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+            height: 100%;
+            .slide {
+                min-width: 100%;
+                height: 100%;
+                position: relative;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    user-select: none;
+                }
+                .slide_text {
+                  background-color: var(--bg_opacity_black);
+                  padding: 5px 10px;
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  color: var(--text_withe);
+                  transform: translate(-50%, -50%);
+                  &:hover p {
+                    opacity: 1;
+                    max-height: 200px;
+                  }
+                  h1 {
+                    font-size: 24px;
+                    text-align: center;
+                  }
+                  P {
+                    visibility: visible;
+                    font-size: 14px;
+                    opacity: 0;
+                    transition: 0.8s ease-in-out;
+                    max-height: 0; 
+                    overflow: hidden;
+                  }
+                }
+            }
         }
+        .buttons_container {
+          justify-content: space-between;
+    
+          .btn {
+            position: absolute;
+              background-color:var(--bg_opacity_black);
+              color: var(--text_withe);
+              border: none;
+              padding: 0;
+              box-sizing: border-box;
+              cursor: pointer;
+              top: 0;
+              height: 100%;
+              outline: none;
+              width: 5%;
+              align-self: center;
+              &:hover,
+              &:focus {
+                background-color: var(--text_black);
+              }
+              svg{
+                width: 30px;
+                height: 30px;
+              }
+          }
+          #left {
+            left: 0;
+          }
+      
+          #right {
+            right: 0;
+          }
       }
-      .next_btn {
-        right: 0;
       }
+  
     }
-  }
 
   .card_container {
     position: relative;

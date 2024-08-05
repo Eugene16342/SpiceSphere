@@ -47,19 +47,6 @@ a {
         &:hover {
           color: wheat;
         }
-        &:last-child {
-          cursor: default;
-          &:hover {
-            color: var(--text_withe);
-          }
-        }
-        .user_name {
-          cursor: pointer;
-          margin: 0;
-          &:hover {
-            color: wheat;
-          }
-        }
       }
     }
 

@@ -8,12 +8,12 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const username = sessionStorage.getItem("username");
-      if (username) {
-        const loginBtn = document.querySelector(".login_btn");
-        loginBtn.innerHTML = `您好，<a class="user_name" href="/user_page">${username}</a>`;
-      }
+$(document).ready(function() {
+  const username = sessionStorage.getItem("username");
+    if (username) {
+        $(".login_btn").replaceWith('<a href="/user_page">個人檔案</a>');
+    }
+
 
       $("#search_toggle").change(function () {
         if ($(this).is(":checked")) {
@@ -23,6 +23,7 @@
         }
       });
     });
+
   </script>
   <body>
     <nav id="nav_bar">
