@@ -36,7 +36,7 @@ a {
           transition: transform 0.5s ease-in-out;
           width: 100%;
           height: 100%;
-          .slide {
+          .big_slide {
               min-width: 100%;
               height: 100%;
               position: relative;
@@ -74,11 +74,10 @@ a {
           }
       }
       .buttons_container {
-        justify-content: space-between;
-  
+        justify-content: space-between; 
         .btn {
           position: absolute;
-            background-color:var(--bg_opacity_black);
+          background-color:rgba(0, 0, 0, 0.0);
             color: var(--text_withe);
             border: none;
             padding: 0;
@@ -89,7 +88,7 @@ a {
             outline: none;
             &:hover,
             &:focus {
-              background-color: var(--text_black);
+              background-color: var(--bg_opacity_black);
             }
         }
         #left {
@@ -223,170 +222,113 @@ a {
   }
   .card_container {
     position: relative;
-    .recipe_3d {
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      height: 80vh;
-      .item {
-        display: flex;
-        justify-content: space-around;
-        flex-direction: column;
-        div {
-          display: flex;
-          img {
-            width: 150px;
-            height: 200px;
-            border-radius: 5%;
-            object-fit: cover;
-          }
-          .item_text {
-            display: flex;
-            justify-content: start;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-left: 20px;
-            color: var(--text_black);
-            &:hover {
-              color: var(--main_orange);
-            }
-            div {
-              font-size: 36px;
-            }
-            p {
-              text-align: start;
-              font-size: 20px;
-              display: -webkit-box;
-              -webkit-line-clamp: 4; /* 顯示行數 */
-              -webkit-box-orient: vertical;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
-          }
-        }
-      }
-
-      main#carousel {
-        grid-row: 1 / 2;
-        grid-column: 1 /8;
+    height: 80vh;
+    width: 100%;
+    .carousel {
+        height: 100%;
         width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         overflow: hidden;
-        transform-style: preserve-3d;
-        perspective: 1200px;
-        --items: 5;
-        --middle: 3;
-        --position: 1;
-      }
+        position: relative;
+        .slide_container {
+            display: flex;
+            transform: translateX(0);
+            transition: transform 0.5s ease-in-out;
+            width: 300%;
+            height: 100%;
+            .slide {
+                height: 100%;
+                width: 100%;
+                margin:auto;
+                position: relative;
+                display: flex;
+                flex-direction: column;
 
-      div.item {
-        text-align: center;
-        padding: 20px;
-        border-radius: 20px;
-        position: absolute;
-        width: 40%;
-        height: 85%;
-        background-color: white;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        --r: calc(var(--position) - var(--offset));
-        --abs: max(calc(var(--r) * -1), var(--r));
-        transition: all 0.25s linear;
-        transform: rotateY(calc(-10deg * var(--r)))
-          translateX(calc(-300px * var(--r)));
-        z-index: calc((var(--position) - var(--abs)));
-      }
+                .card {
+                    display: flex;
+                    gap: 20px;
+                    width: 100%;
+                    margin: 8px 0;
 
-      input {
-        display: none;
-      }
+                    &:nth-child(odd) {
+                        flex-direction: row;
+                        .card_text {
+                            text-align: left;
+                            align-items: flex-start;
+                        }
+                    }
 
-      div.item:nth-of-type(1) {
-        --offset: 1;
-      }
-      div.item:nth-of-type(2) {
-        --offset: 2;
-      }
-      div.item:nth-of-type(3) {
-        --offset: 3;
-      }
-      div.item:nth-of-type(4) {
-        --offset: 4;
-      }
-      div.item:nth-of-type(5) {
-        --offset: 5;
-      }
+                    &:nth-child(even) {
+                        flex-direction: row-reverse;
+                        .card_text {
+                            text-align: start;
+                            align-items: flex-end;
+                        }
+                    }
 
-      input:nth-of-type(1) {
-        grid-column: 2 / 3;
-        grid-row: 2 / 3;
-      }
+                    img {
+                        width: 400px;
+                        height: 250px;
+                        object-fit: cover;
+                        user-select: none;
+                    }
 
-      input:nth-of-type(1):checked ~ main#carousel {
-        --position: 1;
-      }
+                    .card_text {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        width: 60%;
 
-      input:nth-of-type(2) {
-        grid-column: 3 / 4;
-        grid-row: 2 / 3;
-      }
-      input:nth-of-type(2):checked ~ main#carousel {
-        --position: 2;
-      }
+                        div {
+                            font-size: 30px;
+                            font-weight: 900;
+                        }
 
-      input:nth-of-type(3) {
-        grid-column: 4 /5;
-        grid-row: 2 / 3;
-      }
-      input:nth-of-type(3):checked ~ main#carousel {
-        --position: 3;
-      }
+                        span {
+                            color: var(--main_orange);
+                        }
 
-      input:nth-of-type(4) {
-        grid-column: 5 / 6;
-        grid-row: 2 / 3;
-      }
-      input:nth-of-type(4):checked ~ main#carousel {
-        --position: 4;
-      }
-
-      input:nth-of-type(5) {
-        grid-column: 6 / 7;
-        grid-row: 2 / 3;
-      }
-      input:nth-of-type(5):checked ~ main#carousel {
-        --position: 5;
-      }
-    }
-    .recipe_btn {
-      .recipe_pre_btn,
-      .recipe_next_btn {
-        user-select: none;
-        position: absolute;
-        height: 100%;
-        width: 5%;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--text_withe);
-        font-size: 150px;
-        svg {
-          width: 50px;
+                        p {
+                            font-weight: 600;
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
         }
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.5);
-          cursor: pointer;
+
+        .buttons_container {
+            justify-content: space-between;
+            .btn {
+                position: absolute;
+                background-color: var(--text_withe);
+                color: var(--border_gray);
+                border: none;
+                padding: 0;
+                box-sizing: border-box;
+                top: 0;
+                height: 100%;
+                outline: none;
+
+                svg {
+                    cursor: pointer;
+                    &:hover {
+                        color: var(--main_orange);
+                    }
+                }
+            }
+
+            #recipe_left_btn {
+                left: 0;
+            }
+
+            #recipe_right_btn {
+                right: 0;
+            }
         }
-      }
-      .recipe_next_btn {
-        right: 0;
-      }
     }
-  }
+}
+
+
 }
 
 /* section D  */
@@ -395,6 +337,7 @@ a {
   width: 100%;
   background-size: cover;
   position: relative;
+  margin-top: -20px;
   img {
     position: relative;
     width: 100%;
@@ -469,7 +412,7 @@ a {
       .carousel {
         .slide_container {
 
-            .slide {
+            .big_slide {
                 .slide_text {
                   h1 {
                     font-size: 40px;
@@ -510,119 +453,119 @@ a {
       }
   
     }
-  .card_container {
-    position: relative;
-    .recipe_3d {
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      height: 80vh;
-      .item {
-        display: flex;
-        justify-content: space-around;
-        flex-direction: column;
-        div {
-          display: flex;
-          img {
-            width: 150px;
-            height: 200px;
-            border-radius: 5%;
-            object-fit: cover;
-          }
-          .item_text {
-            display: flex;
-            justify-content: start;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-left: 20px;
-            color: var(--text_black);
-            &:hover {
-              color: var(--main_orange);
-            }
-            div {
-              font-size: 28px;
-              font-weight: 900;
-            }
-            p {
-              text-align: start;
-              font-size: 20px;
-            }
-          }
-        }
-      }
 
-      main#carousel {
-        grid-row: 1 / 2;
-        grid-column: 1 /8;
+    .recipe_recommend_section {
+      .card_container {
+        position: relative;
+        height: 80vh;
         width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        transform-style: preserve-3d;
-        perspective: 1000px;
-        --items: 5;
-        --middle: 3;
-        --position: 1;
-      }
-
-      div.item {
-        text-align: center;
-        padding: 20px;
-        border-radius: 20px;
-        position: absolute;
-        width: 40%;
-        height: 85%;
-        background-color: white;
-        background-image: linear-gradient(
-            rgba(255, 255, 255, 0.7),
-            rgba(255, 255, 255, 0.7)
-          ),
-          url(../../img/common/background.png);
-        background-size: 50%;
-        background-position: center;
-        background-repeat: no-repeat;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        --r: calc(var(--position) - var(--offset));
-        --abs: max(calc(var(--r) * -1), var(--r));
-        transition: all 0.25s linear;
-        transform: rotateY(calc(-10deg * var(--r)))
-          translateX(calc(-300px * var(--r)));
-        z-index: calc((var(--position) - var(--abs)));
-      }
-
-      input {
-        display: none;
-      }
-    }
-    .recipe_btn {
-      .recipe_pre_btn,
-      .recipe_next_btn {
-        user-select: none;
-        position: absolute;
-        height: 100%;
-        width: 5%;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--text_withe);
-        font-size: 150px;
-        svg {
-          width: 50px;
+        .carousel {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            .slide_container {
+                display: flex;
+                transform: translateX(0);
+                transition: transform 0.5s ease-in-out;
+                width: 300%;
+                height: 100%;
+                .slide {
+                    height: 100%;
+                    width: 100%;
+                    margin:auto;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+    
+                    .card {
+                        display: flex;
+                        gap: 20px;
+                        width: 100%;
+                        margin: 8px 0;
+    
+                        &:nth-child(odd) {
+                            flex-direction: row;
+                            .card_text {
+                                text-align: left;
+                                align-items: flex-start;
+                            }
+                        }
+    
+                        &:nth-child(even) {
+                            flex-direction: row-reverse;
+                            .card_text {
+                                text-align: start;
+                                align-items: flex-end;
+                            }
+                        }
+    
+                        img {
+                            width: 400px;
+                            height: 250px;
+                            object-fit: cover;
+                            user-select: none;
+                        }
+    
+                        .card_text {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            width: 40%;
+    
+                            div {
+                                font-size: 30px;
+                                font-weight: 900;
+                            }
+    
+                            span {
+                                color: var(--main_orange);
+                            }
+    
+                            p {
+                                font-weight: 600;
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            .buttons_container {
+                justify-content: space-between;
+                .btn {
+                    position: absolute;
+                    background-color: var(--text_withe);
+                    color: var(--border_gray);
+                    border: none;
+                    padding: 0;
+                    box-sizing: border-box;
+                    top: 0;
+                    height: 100%;
+                    outline: none;
+    
+                    svg {
+                        cursor: pointer;
+                        &:hover {
+                            color: var(--main_orange);
+                        }
+                    }
+                }
+    
+                #recipe_left_btn {
+                    left: 0;
+                }
+    
+                #recipe_right_btn {
+                    right: 0;
+                }
+            }
         }
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-        }
-      }
-      .recipe_next_btn {
-        right: 0;
-      }
     }
-  }
+    
+    
+    }
+    
 
   .dContainer2 {
     display: flex;
@@ -671,6 +614,8 @@ a {
       }
     }
   }
+
+  
 }
 
 @media screen and (max-width: 900px) {
@@ -692,7 +637,7 @@ a {
             transition: transform 0.5s ease-in-out;
             width: 100%;
             height: 100%;
-            .slide {
+            .big_slide {
                 min-width: 100%;
                 height: 100%;
                 position: relative;
@@ -766,119 +711,131 @@ a {
   
     }
 
-  .card_container {
-    position: relative;
-    .recipe_3d {
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      height: 80vh;
-      .item {
-        display: flex;
-        justify-content: space-around;
-        flex-direction: column;
-        div {
-          display: flex;
-          img {
-            width: 100px !important;
-            height: 150px !important;
-            border-radius: 5%;
-            object-fit: cover;
-          }
-          .item_text {
-            display: flex;
-            justify-content: start;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-left: 20px;
-            color: var(--text_black);
-            &:hover {
-              color: var(--main_orange);
-            }
-            div {
-              font-size: 20px !important;
-              font-weight: 900;
-            }
-            p {
-              text-align: start;
-              font-size: 16px !important;
-            }
-          }
-        }
+    .recipe_recommend_section {
+      img {
+        height: 150px;
       }
-
-      main#carousel {
-        grid-row: 1 / 2;
-        grid-column: 1 /8;
+      h1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--text_black);
+        font-size: 40px;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .card_container {
+        position: relative;
+        height: 50%;
         width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        transform-style: preserve-3d;
-        perspective: 900px !important;
-        --items: 5;
-        --middle: 3;
-        --position: 1;
-      }
-
-      div.item {
-        text-align: center;
-        padding: 20px;
-        border-radius: 20px;
-        position: absolute;
-        width: 60% !important;
-        height: 85%;
-        background-color: white;
-        background-image: linear-gradient(
-            rgba(255, 255, 255, 0.7),
-            rgba(255, 255, 255, 0.7)
-          ),
-          url(../../img/common/background.png);
-        background-size: 50%;
-        background-position: center;
-        background-repeat: no-repeat;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        --r: calc(var(--position) - var(--offset));
-        --abs: max(calc(var(--r) * -1), var(--r));
-        transition: all 0.25s linear;
-        transform: rotateY(calc(-10deg * var(--r)))
-          translateX(calc(-300px * var(--r)));
-        z-index: calc((var(--position) - var(--abs)));
-      }
-
-      input {
-        display: none;
-      }
-    }
-    .recipe_btn {
-      .recipe_pre_btn,
-      .recipe_next_btn {
-        user-select: none;
-        position: absolute;
-        height: 100%;
-        width: 5%;
-        top: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s ease-in-out;
-        color: var(--text_withe);
-        font-size: 150px;
-        svg {
-          width: 50px;
+        .carousel {
+            height: 50%;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            .slide_container {
+                display: flex;
+                transform: translateX(0);
+                transition: transform 0.5s ease-in-out;
+                width: 300%;
+                height: 50%;
+                .slide {
+                    height: 100%;
+                    width: 100%;
+                    margin:none;
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+    
+                    .card {
+                        display: flex;
+                        gap: 20px;
+                        width: 100%;
+                        margin: 8px 0;
+    
+                        &:nth-child(odd) {
+                            flex-direction: row;
+                            .card_text {
+                                text-align: left;
+                                align-items: flex-start;
+                            }
+                        }
+    
+                        &:nth-child(even) {
+                          display: none;
+                            flex-direction: row-reverse;
+                            .card_text {
+                                text-align: start;
+                                align-items: flex-end;
+                            }
+                        }
+    
+                        img {
+                            width: 200px;
+                            height: 125px;
+                            object-fit: cover;
+                            user-select: none;
+                            margin: auto;
+                        }
+    
+                        .card_text {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            width: 60%;
+    
+                            div {
+                                font-size: 30px;
+                                font-weight: 900;
+                            }
+    
+                            span {
+                                color: var(--main_orange);
+                            }
+    
+                            p {
+                                font-weight: 600;
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            .buttons_container {
+                justify-content: space-between;
+                .btn {
+                    position: absolute;
+                    background-color:rgba(0, 0, 0, 0.0);
+                    color: var(--border_gray);
+                    border: none;
+                    padding: 0;
+                    box-sizing: border-box;
+                    top: 0;
+                    height: 100%;
+                    outline: none;
+    
+                    svg {
+                        cursor: pointer;
+                        &:hover {
+                            color: var(--main_orange);
+                        }
+                    }
+                }
+    
+                #recipe_left_btn {
+                    left: 0;
+                }
+    
+                #recipe_right_btn {
+                    right: 0;
+                }
+            }
         }
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-        }
-      }
-      .recipe_next_btn {
-        right: 0;
-      }
     }
-  }
+    
+    
+    }
 
   .dContainer2 {
     display: flex;

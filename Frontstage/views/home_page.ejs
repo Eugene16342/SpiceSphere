@@ -9,36 +9,11 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
-    $(document).ready(function () {
-      var radios = $('input[type="radio"]');
-      var recipe_pre_btn = $(".recipe_pre_btn");
-      var recipe_next_btn = $(".recipe_next_btn");
-
-      recipe_pre_btn.click(function () {
-        radios.each(function (i) {
-          if ($(this).is(":checked") && i > 0) {
-            $(this).prop("checked", false);
-            radios.eq(i - 1).prop("checked", true);
-            return false;
-          }
-        });
-      });
-
-      recipe_next_btn.click(function () {
-        radios.each(function (i) {
-          if ($(this).is(":checked") && i < radios.length - 1) {
-            $(this).prop("checked", false);
-            radios.eq(i + 1).prop("checked", true);
-            return false;
-          }
-        });
-      });
-
-      $(document).ready(function() {
+  $(document).ready(function() {
     const $imgs = $('#imgs');
     const $leftBtn = $('#left');
     const $rightBtn = $('#right');
-    const $img = $('#imgs .slide');
+    const $img = $('#imgs .big_slide');
 
     let idx = 0;
     let interval = setInterval(run, 10000); // 自動倒數變成10秒一張
@@ -84,9 +59,59 @@
     $imgs.on('mouseleave', function() {
         resetInterval();
     });
+
+
+    const $slids = $('#slids');
+    const $recipe_left_btn = $('#recipe_left_btn');
+    const $recipe_right_btn = $('#recipe_right_btn');
+    const $slide = $('#slids .slide');
+
+    let slide_order = 0;
+    let recipe_interval = setInterval(run, 10000); // 自動倒數變成10秒一張
+
+    function run() {
+        slide_order++;
+        changeSlide();
+    }
+
+    function changeSlide() {
+        if (slide_order > $slide.length - 1) {
+            slide_order = 0;
+        } else if (slide_order < 0) {
+            slide_order = $slide.length - 1;
+        }
+
+        $slids.css('transform', `translateX(${-slide_order * 100 / $slide.length}%)`);
+    }
+
+    function resetInterval() {
+        clearInterval(recipe_interval);
+        recipe_interval = setInterval(run, 10000); // 自動倒數變成10秒一張
+    }
+
+    $recipe_right_btn.on('click', function() {
+        slide_order++;
+        changeSlide();
+        resetInterval();
+    });
+
+    $recipe_left_btn.on('click', function() {
+        slide_order--;
+        changeSlide();
+        resetInterval();
+    });
+
+    // 當滑鼠進入時停止自動播放
+    $slids.on('mouseenter', function() {
+        clearInterval(recipe_interval);
+    });
+
+    // 當滑鼠移開後繼續倒數
+    $slids.on('mouseleave', function() {
+        resetInterval();
+    });
 });
 
-    });
   </script>
 
   <body>
@@ -96,7 +121,7 @@
     <div class="slide_section">
       <div class="carousel">
           <div class="slide_container" id="imgs">
-              <div class="slide">
+              <div class="big_slide">
                 <img src="../../img/recipe_section/Fish_with_Tomatoes.jpg"/>
               <div class="slide_text">
                 <h1>新北歡樂耶誕城</h1>
@@ -106,7 +131,7 @@
                 </p>
               </div>
               </div>
-              <div class="slide">
+              <div class="big_slide">
                 <img src="../../img/recipe_section/Honey_on_the_pancakes.jpg"/>
                 <div class="slide_text">
                   <h1>新中歡樂耶誕城</h1>
@@ -115,7 +140,7 @@
                   </p>
                 </div>
               </div>
-              <div class="slide">
+              <div class="big_slide">
                 <img src="../../img/recipe_section/pizza.jpg"/>
                 <div class="slide_text">
                   <h1>新南歡樂耶誕城</h1>
@@ -200,180 +225,92 @@
         >
       </div>
       <div class="card_container">
-        <div class="recipe_3d">
-          <input type="radio" name="position" />
-          <input type="radio" name="position" />
-          <input type="radio" name="position" checked />
-          <input type="radio" name="position" />
-          <input type="radio" name="position" />
-          <main id="carousel">
-            <div class="item">
-              <div class="item_1">
-                <a href=""> <img src="../../img/recipe/recipe1.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
+        <div class="carousel">
+          <div class="slide_container" id="slids">
+              <div class="slide">
+                <div class="card">
+                  <img src="../../img/recipe/recipe4.jpg"/>
+                  <div class="card_text">
+                    <div>名稱好吃的菜</div>
+                    <span>★★★★★</span>
+                    <p>千的一封如果，了吧武漢次真的，嚶嚶深刻到這樣的會拿經過。作者感謝彈幕推特傻現在⋯都得的子都一點也：的問題多，好好看別的有多微笑樣要一以來你⋯個遊戲個時候，在為的要一就是想。好像有一起的我在問問會我無。會喜歡還有正時間。</p>
+                  </div>
+                </div>
+                <div class="card">
+                  <img src="../../img/recipe/recipe5.jpg"/>
+                  <div class="card_text">
+                    <div>名稱好吃的菜</div>
+                    <span>★★★★★</span>
+                    <p>一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯反正我去結束了好奇我可，接⋯但幹希望大的很不。你跟覺得情計畫有點了這樣，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="slide">
+                <div class="card">
+                  <img src="../../img/recipe/recipe24.jpg"/>
+                  <div class="card_text">
+                    <div>名稱好吃的菜</div>
+                    <span>★★★★★</span>
+                    <p>千的一封如果，了吧武漢次真的，嚶嚶深刻到這樣的會拿經過。作者感謝彈幕推特傻現在⋯都得的子都一點也：的問題多，好好看別的有多微笑樣要一以來你⋯個遊戲個時候，在為的要一就是想。好像有一起的我在問問會我無。會喜歡還有正時間。</p>
+                  </div>
+                </div>
+                <div class="card">
+                  <img src="../../img/recipe/recipe35.jpg"/>
+                  <div class="card_text">
+                    <div>名稱好吃的菜</div>
+                    <span>★★★★★</span>
+                    <p>一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯反正我去結束了好奇我可，接⋯但幹希望大的很不。你跟覺得情計畫有點了這樣，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。</p>
+                  </div>
+                </div>
               </div>
 
-              <div class="item_2">
-                <a href=""> <img src="../../img/recipe/recipe2.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
+              <div class="slide">
+                <div class="card">
+                  <img src="../../img/recipe/recipe7.jpg"/>
+                  <div class="card_text">
+                    <div>名稱好吃的菜</div>
+                    <span>★★★★★</span>
+                    <p>千的一封如果，了吧武漢次真的，嚶嚶深刻到這樣的會拿經過。作者感謝彈幕推特傻現在⋯都得的子都一點也：的問題多，好好看別的有多微笑樣要一以來你⋯個遊戲個時候，在為的要一就是想。好像有一起的我在問問會我無。會喜歡還有正時間。</p>
+                  </div>
+                </div>
+                <div class="card">
+                  <img src="../../img/recipe/recipe8.jpg"/>
+                  <div class="card_text">
+                    <div>名稱好吃的菜</div>
+                    <span>★★★★★</span>
+                    <p>一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯反正我去結束了好奇我可，接⋯但幹希望大的很不。你跟覺得情計畫有點了這樣，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="item_1">
-                <a href=""> <img src="../../img/recipe/recipe3.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-
-              <div class="item_2">
-                <a href=""> <img src="../../img/recipe/recipe4.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="item_1">
-                <a href=""> <img src="../../img/recipe/recipe5.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-
-              <div class="item_2">
-                <a href=""> <img src="../../img/recipe/recipe6.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="item_1">
-                <a href=""> <img src="../../img/recipe/recipe7.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-
-              <div class="item_2">
-                <a href=""> <img src="../../img/recipe/recipe8.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="item_1">
-                <a href=""> <img src="../../img/recipe/recipe9.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-
-              <div class="item_2">
-                <a href=""> <img src="../../img/recipe/recipe10.jpg" /></a>
-                <a href="" class="item_text">
-                  <div>好吃的飯</div>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, suscipit? Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Iusto, suscipit? Lorem ipsum dolor sit
-                    amet consectetur adipisicing elit. Iusto, suscipit?
-                  </p>
-                </a>
-              </div>
-            </div>
-          </main>
-        </div>
-        <div class="recipe_btn">
-          <div class="recipe_pre_btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
-              fill="currentColor"
-              class="bi bi-caret-left"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"
-              />
-            </svg>
           </div>
-          <div class="recipe_next_btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="50"
-              height="50"
-              fill="currentColor"
-              class="bi bi-caret-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"
-              />
-            </svg>
+          <div class="buttons_container">
+              <button id="recipe_left_btn" class="btn">  <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="currentColor"
+                class="bi bi-caret-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"
+                />
+              </svg></button>
+              <button id="recipe_right_btn" class="btn">          <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="currentColor"
+                class="bi bi-caret-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"
+                />
+              </svg></button>
           </div>
-        </div>
+      </div>
       </div>
     </div>
 
@@ -387,28 +324,28 @@
       </div>
       <div class="dContainer2">
         <div class="product">
-          <img src="../../img/home_page/productA.jpg" />
+          <img src="../../img/product/product10.jpg" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
           <button>加入購物車</button>
         </div>
         <div class="product">
-          <img src="../../img/home_page/productA.jpg" />
+          <img src="../../img/product/product13.jpg" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
           <button>加入購物車</button>
         </div>
         <div class="product">
-          <img src="../../img/home_page/productA.jpg" />
+          <img src="../../img/product/product12.jpg" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
           <button>加入購物車</button>
         </div>
         <div class="product none">
-          <img src="../../img/home_page/productA.jpg" alt="Product 1" />
+          <img src="../../img/product/product21.jpg" alt="Product 1" />
           <h3>鍋具組</h3>
           <p>優質不鏽鋼和鋁合金，耐用且易於清潔</p>
           <div class="price">＄3500</div>
