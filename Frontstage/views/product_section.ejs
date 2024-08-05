@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>異食鍋|商品區</title>
+    <title>異鍋豐|商品區</title>
     <link rel="stylesheet" href="/product_section.css" />
     <link rel="icon" href="../../img/common/favicon.ico" />
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
@@ -61,9 +61,20 @@ window.onload = () => {
 
   // 初始化篩選
   filterCards();
+
+            // 獲取 URL 參數
+            const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get('category');
+
+  // 如果 URL 參數中有 category，則勾選對應的 checkbox 並重新篩選
+  if (category) {
+    $(`#${category}`).prop('checked', true);
+    filterCards(); // 重新篩選
+  }
 };
 
     $(document).ready(function () {
+
       $(".range_container").on("input change", function () {
         $("#now_price").text("$ " + $(this).val());
       });
