@@ -223,19 +223,17 @@ a {
 #user_comment .comment_carousel .comment_wrapper {
   width: 80%;
   display: flex;
+  margin: auto;
   transition: transform 0.5s ease-in-out;
-  justify-content: space-between;
 }
 #user_comment .comment_carousel .comment_wrapper .comment_info {
   min-width: 100%;
-  width: 100%;
-  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
   border-radius: 25px;
-  margin: 10px;
+  margin: 10px 50px 10px 0;
 }
 #user_comment .comment_carousel .comment_wrapper .comment_info .user_name {
   font-weight: 600;
@@ -249,7 +247,7 @@ a {
           user-select: none;
 }
 #user_comment .comment_carousel .comment_wrapper .comment_info .comment_text {
-  padding: 10px 200px 40px 200px;
+  padding: 10px 150px 40px 150px;
   font-weight: 600;
   font-size: 18px;
 }
@@ -465,41 +463,52 @@ a {
   }
   #user_comment .title {
     font-weight: 900;
-    font-size: 24px;
+    font-size: 32px;
     margin-bottom: 30px;
   }
   #user_comment .comment_carousel {
-    width: 80%;
-    box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
-    border-radius: 25px;
-  }
-  #user_comment .comment_carousel .comment_info {
     width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  #user_comment .comment_carousel .comment_wrapper {
+    width: 80%;
+    display: flex;
+    margin: auto;
+    transition: transform 0.5s ease-in-out;
+  }
+  #user_comment .comment_carousel .comment_wrapper .comment_info {
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: opacity 0.5s ease-in-out;
+    box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
+    border-radius: 25px;
+    margin: 10px 50px 10px 0;
   }
-  #user_comment .comment_carousel .comment_info .user_name {
+  #user_comment .comment_carousel .comment_wrapper .comment_info .user_name {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 24px;
   }
-  #user_comment .comment_carousel .comment_info .user_rating {
+  #user_comment .comment_carousel .comment_wrapper .comment_info .user_rating {
     color: var(--main_orange);
     margin-bottom: 5px;
     -webkit-user-select: none;
        -moz-user-select: none;
             user-select: none;
   }
-  #user_comment .comment_carousel .comment_info .comment_text {
-    padding: 10px 100px 40px 100px;
+  #user_comment .comment_carousel .comment_wrapper .comment_info .comment_text {
+    padding: 10px 100px 30px 100px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 18px;
+    max-height: 150px;
+    overflow: auto;
   }
   #user_comment .carousel_btn .carousel_pre,
   #user_comment .carousel_btn .carousel_next {
     position: absolute;
-    bottom: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 5%;
     height: 100%;
     display: flex;
@@ -509,10 +518,10 @@ a {
     cursor: pointer;
   }
   #user_comment .carousel_btn .carousel_pre {
-    left: 50px;
+    left: 0;
   }
   #user_comment .carousel_btn .carousel_next {
-    right: 50px;
+    right: 0;
   }
 }
 @media screen and (max-width: 900px) {
@@ -681,6 +690,9 @@ a {
     flex-direction: column;
     align-items: center;
   }
+  #recommend_section .recipe_cards .card:nth-child(-n+2) {
+    display: none;
+  }
   #recommend_section .recipe_cards .card img {
     width: 125px;
     height: 125px;
@@ -698,9 +710,6 @@ a {
   #recommend_section .recipe_cards .card div {
     color: var(--main_orange);
   }
-  #recommend_section .recipe_cards .vanish {
-    display: none;
-  }
   #user_comment {
     width: 100%;
     display: flex;
@@ -711,44 +720,52 @@ a {
   }
   #user_comment .title {
     font-weight: 900;
-    font-size: 24px;
+    font-size: 32px;
     margin-bottom: 30px;
   }
   #user_comment .comment_carousel {
-    width: 80%;
-    box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
-    border-radius: 25px;
-  }
-  #user_comment .comment_carousel .comment_info {
     width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  #user_comment .comment_carousel .comment_wrapper {
+    width: 80%;
+    display: flex;
+    margin: auto;
+    transition: transform 0.5s ease-in-out;
+  }
+  #user_comment .comment_carousel .comment_wrapper .comment_info {
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: opacity 0.5s ease-in-out;
+    box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
+    border-radius: 25px;
+    margin: 10px 50px 10px 0;
   }
-  #user_comment .comment_carousel .comment_info .user_name {
+  #user_comment .comment_carousel .comment_wrapper .comment_info .user_name {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 24px;
   }
-  #user_comment .comment_carousel .comment_info .user_rating {
+  #user_comment .comment_carousel .comment_wrapper .comment_info .user_rating {
     color: var(--main_orange);
     margin-bottom: 5px;
     -webkit-user-select: none;
        -moz-user-select: none;
             user-select: none;
   }
-  #user_comment .comment_carousel .comment_info .comment_text {
-    padding: 10px 50px 0px 50px;
-    margin-bottom: 20px;
-    height: 150px;
+  #user_comment .comment_carousel .comment_wrapper .comment_info .comment_text {
+    padding: 10px 30px 30px 30px;
     font-weight: 600;
-    font-size: 14px;
-    overflow-y: scroll;
+    font-size: 18px;
+    max-height: 150px;
+    overflow: auto;
   }
   #user_comment .carousel_btn .carousel_pre,
   #user_comment .carousel_btn .carousel_next {
     position: absolute;
-    bottom: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 5%;
     height: 100%;
     display: flex;
@@ -758,9 +775,9 @@ a {
     cursor: pointer;
   }
   #user_comment .carousel_btn .carousel_pre {
-    left: 10px;
+    left: 0;
   }
   #user_comment .carousel_btn .carousel_next {
-    right: 10px;
+    right: 0;
   }
 }/*# sourceMappingURL=product_page.css.map */
