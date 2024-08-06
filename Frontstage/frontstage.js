@@ -31,6 +31,11 @@ app.use((req, res, next) => {
   next();
 });
 
+////////////////用戶資訊頁面
+app.get("/user_page",(req,res)=>{
+  res.render("user_page");
+})
+
 //////////////主頁
 app.get("/home_page", (req, res) => {
   res.render("home_page");
