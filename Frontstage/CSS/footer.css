@@ -66,6 +66,7 @@ footer #foot_sub button {
     padding-right: 10px;
   }
   footer #foot_sub input {
+    width: 150px;
     border-radius: 25px;
     border: none;
     outline: none;

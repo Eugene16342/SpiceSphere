@@ -9,97 +9,204 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
-$(document).ready(function() {
-    $('.tracking_number').click(function() {
-        $(this).find('.order_details').slideToggle();
-    });
+    $(document).ready(function () {
+      // 頁面載入時隱藏所有區塊
+      function hideSections() {
+        $("#edit").hide();
+        $("#like_recipe").hide();
+        $("#tracking_number_list").hide();
+      }
 
-    // 阻止事件冒泡
-    $('.order_details').click(function(event) {
-        event.stopPropagation();
-    });
-});
+      // 切換區塊顯示
+      function toggleSection() {
+        $(".btn_group .btn").click(function () {
+          // 隱藏所有區塊
+          $("#info_section > div").slideUp();
 
+          // 根據按鈕的類名顯示對應的區塊
+          if ($(this).hasClass("edit") && !$("#edit").is(":visible")) {
+            $("#edit").slideDown();
+          } else if (
+            $(this).hasClass("like") &&
+            !$("#like_recipe").is(":visible")
+          ) {
+            $("#like_recipe").slideDown();
+          } else if (
+            $(this).hasClass("order") &&
+            !$("#tracking_number_list").is(":visible")
+          ) {
+            $("#tracking_number_list").slideDown();
+          }
+        });
+      }
+
+      // 訂單追蹤的滑動效果
+      function toggleOrderDetails() {
+        $(".tracking_number").click(function () {
+          $(this).find(".order_details").slideToggle();
+        });
+
+        // 阻止事件冒泡
+        $(".order_details").click(function (event) {
+          event.stopPropagation();
+        });
+      }
+
+      // 初始化函式
+      hideSections();
+      toggleSection();
+      toggleOrderDetails();
+    });
   </script>
   <body>
     <%- include('nav_bar') %>
 
     <div id="select_bar">
-        <div class="img_container">
-            <img src="../../img/home_page/1.jpg">
-        </div>
-        
-        <div class="greeting">您好，使用者</div>
+      <div class="img_container">
+        <img src="../../img/home_page/1.jpg" />
+      </div>
 
-        <div class="btn_group">
-            <div class="btn">編輯資訊</div>
-            <div class="btn">我的收藏</div>
-            <div class="btn">我的訂單</div>
-            <div class="btn">問題回報</div>
-        </div>
+      <div class="greeting">您好，使用者</div>
+
+      <div class="btn_group">
+        <div class="btn edit">編輯資訊</div>
+        <div class="btn like">我的收藏</div>
+        <div class="btn order">我的訂單</div>
+        <div class="btn logout">登出帳號</div>
+      </div>
     </div>
 
     <div id="info_section">
-        <!-- <div class="section">
-            <div class="title">帳號資訊</div>
-            <div class="info_input"><label for="user_name">名稱</label><input id="user_name" maxlength="10" ></div>
+      <div id="edit">
+        <div class="section">
+          <div class="title">帳號資訊</div>
+          <div class="info_input">
+            <label for="user_name">名稱</label
+            ><input id="user_name" maxlength="10" />
+          </div>
 
-            <div class="info_input"><label for="user_account">帳號</label><input id="user_account" readonly  ></div>
-    
-            <div class="info_input"><label for="user_password">密碼</label><input id="user_password" maxlength="20"  ></div>
-    
-            <div class="info_input"><label for="user_password_check">確認密碼</label><input id="user_password_check" maxlength="20" ></div>
-            <button>確認更改</button>
+          <div class="info_input">
+            <label for="user_account">帳號</label
+            ><input id="user_account" readonly />
+          </div>
+
+          <div class="info_input">
+            <label for="user_password">密碼</label
+            ><input id="user_password" maxlength="20" />
+          </div>
+
+          <div class="info_input">
+            <label for="user_password_check">確認密碼</label
+            ><input id="user_password_check" maxlength="20" />
+          </div>
+          <button>確認更改</button>
         </div>
 
         <div class="section">
-            <div class="title">收件資訊</div>
-            <div class="info_input"><label for="user_real_name">收件人</label><input id="user_real_name" maxlength="10" ></div>
+          <div class="title">收件資訊</div>
+          <div class="info_input">
+            <label for="user_real_name">收件人</label
+            ><input id="user_real_name" maxlength="10" />
+          </div>
 
-            <div class="info_input"><label for="user_phone">連絡電話</label><input id="user_phone"  maxlength="10"></div>
-    
-            <div class="info_input"><label for="user_email">電子信箱</label><input id="user_email" maxlength="30"  ></div>
+          <div class="info_input">
+            <label for="user_phone">連絡電話</label
+            ><input id="user_phone" maxlength="10" />
+          </div>
 
-            <div class="info_input"><label for="city">市</label><input id="city" maxlength="20" ></div>
-            <div class="info_input"><label for="district">區</label><input id="district" maxlength="20" ></div>
-            <div class="info_input"><label for="road">路</label><input id="road" maxlength="20" ></div>
-            <div class="info_input"><label for="number">號</label><input id="number" maxlength="20" ></div>
-            
-            <div class="info_input"><label for="zip_code">郵遞區號</label><input id="zip_code" maxlength="20" ></div>
-            
-            <button>確認更改</button>
-        </div> -->
+          <div class="info_input">
+            <label for="user_email">電子信箱</label
+            ><input id="user_email" maxlength="30" />
+          </div>
 
+          <div class="info_input">
+            <label for="city">市</label><input id="city" maxlength="20" />
+          </div>
+          <div class="info_input">
+            <label for="district">區</label
+            ><input id="district" maxlength="20" />
+          </div>
+          <div class="info_input">
+            <label for="road">路</label><input id="road" maxlength="20" />
+          </div>
+          <div class="info_input">
+            <label for="number">號</label><input id="number" maxlength="20" />
+          </div>
 
+          <div class="info_input">
+            <label for="zip_code">郵遞區號</label
+            ><input id="zip_code" maxlength="20" />
+          </div>
 
-        <!-- <div id="like_recipe">
-            <span>
-               <a href="/recipe_section/recipe_page/1"><img src="../../img/recipe/recipe12.jpg"></a> 
-            </span>
-            <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
-            <span>星星</span>
-            <span>tag</span>
-        </div> -->
-
-
-        <div id="tracking_number_list">
-            <div class="tracking_number">
-                <div>                
-                    <span>index1</span>
-                    <span>隨機亂數</span>
-                </div>
-
-                <div class="order_details">
-                    <div class="derails_items"><span><img src="../../img/product/product12.jpg"></span> <span>商品名稱</span><span>數量</span><span>商品單價</span><span>商品總價</span></div>
-                    <div class="derails_items"><span><img src="../../img/product/product12.jpg"></span> <span>商品名稱</span><span>數量</span><span>商品單價</span><span>商品總價</span></div>
-                    <div class="derails_items"><span><img src="../../img/product/product12.jpg"></span> <span>商品名稱</span><span>數量</span><span>商品單價</span><span>商品總價</span></div>
-                
-                </div>
-            </div>
+          <button>確認更改</button>
         </div>
+      </div>
+
+      <div id="like_recipe">
+        <div class="recipe_card">
+          <span>
+            <a href="/recipe_section/recipe_page/1"
+              ><img src="../../img/recipe/recipe12.jpg"
+            /></a>
+          </span>
+          <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
+          <span>星星</span>
+          <span>tag</span>
+        </div>
+        <div class="recipe_card">
+          <span>
+            <a href="/recipe_section/recipe_page/1"
+              ><img src="../../img/recipe/recipe12.jpg"
+            /></a>
+          </span>
+          <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
+          <span>星星</span>
+          <span>tag</span>
+        </div>
+        <div class="recipe_card">
+          <span>
+            <a href="/recipe_section/recipe_page/1"
+              ><img src="../../img/recipe/recipe12.jpg"
+            /></a>
+          </span>
+          <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
+          <span>星星</span>
+          <span>tag</span>
+        </div>
+      </div>
+
+      <div id="tracking_number_list">
+        <div class="tracking_number">
+          <div>
+            <span>index1</span>
+            <span class="order_num">隨機亂數</span>
+            <span>訂單狀態</span>
+          </div>
+
+          <div class="order_details">
+            <div class="derails_items">
+              <span><img src="../../img/product/product12.jpg" /></span>
+              <span>商品名稱</span><span>數量</span><span>商品單價</span
+              ><span>商品總價</span>
+            </div>
+            <div class="derails_items">
+              <span><img src="../../img/product/product12.jpg" /></span>
+              <span>商品名稱</span><span>數量</span><span>商品單價</span
+              ><span>商品總價</span>
+            </div>
+            <div class="derails_items">
+              <span><img src="../../img/product/product12.jpg" /></span>
+              <span>商品名稱</span><span>數量</span><span>商品單價</span
+              ><span>商品總價</span>
+            </div>
+            <div class="total">
+              <span class="total_amount">商品總數量10份</span
+              ><span class="total_price">商品總價格10000元</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-
 
     <%- include('footer') %>
   </body>

@@ -89,6 +89,10 @@ label {
   margin-right: 10px;
 }
 
+span {
+  cursor: default;
+}
+
 #select_bar {
   width: 100%;
   position: relative;
@@ -127,39 +131,47 @@ label {
 }
 
 #info_section {
+  min-height: 30vh;
   margin: 40px auto;
   width: 80%;
+}
+
+#edit {
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
-#info_section .section {
+#edit .section {
   width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#info_section .section .title {
+#edit .section .title {
   font-weight: 900;
   font-size: 25px;
   margin-bottom: 20px;
 }
-#info_section .section .info_input {
+#edit .section .info_input {
   margin-bottom: 20px;
 }
 
 #like_recipe {
   width: 100%;
+}
+#like_recipe .recipe_card {
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
-#like_recipe img {
+#like_recipe .recipe_card img {
   width: 150px;
   height: 150px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 4px;
 }
-#like_recipe span {
+#like_recipe .recipe_card span {
   margin: auto;
   font-weight: 600;
   font-size: 24px;
@@ -172,6 +184,12 @@ label {
   font-weight: 900;
   font-size: 24px;
   margin-bottom: 10px;
+}
+#tracking_number_list .tracking_number .order_num {
+  cursor: pointer;
+}
+#tracking_number_list .tracking_number .order_num:hover {
+  color: var(--main_orange);
 }
 #tracking_number_list .order_details {
   display: none;
@@ -187,4 +205,83 @@ label {
 }
 #tracking_number_list .order_details .derails_items span {
   margin: auto;
+}
+#tracking_number_list .order_details .total {
+  text-align: center;
+}
+#tracking_number_list .order_details .total span {
+  margin: 20px;
+}
+
+@media screen and (max-width: 900px) {
+  #select_bar .greeting {
+    margin: 50px auto;
+    width: 80%;
+    font-weight: 900;
+    font-size: 26px;
+  }
+  #select_bar .btn_group {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+  }
+  #select_bar .btn_group .btn {
+    font-size: 18px;
+  }
+  #edit {
+    width: 100%;
+    display: block;
+    justify-content: center;
+  }
+  #edit .section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  #like_recipe .recipe_card img {
+    width: 100px;
+    height: 100px;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 4px;
+  }
+  #tracking_number_list {
+    width: 100%;
+  }
+  #tracking_number_list .tracking_number {
+    font-weight: 900;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  #tracking_number_list .tracking_number .order_num {
+    cursor: pointer;
+  }
+  #tracking_number_list .tracking_number .order_num:hover {
+    color: var(--main_orange);
+  }
+  #tracking_number_list .order_details {
+    display: none;
+    margin-top: 10px;
+  }
+  #tracking_number_list .order_details img {
+    width: 100px;
+    height: 100px;
+  }
+  #tracking_number_list .order_details .derails_items {
+    display: flex;
+    justify-content: space-around;
+  }
+  #tracking_number_list .order_details .derails_items span {
+    margin: auto;
+  }
+  #tracking_number_list .order_details .total {
+    text-align: center;
+  }
+  #tracking_number_list .order_details .total span {
+    margin: 20px;
+  }
 }/*# sourceMappingURL=user_page.css.map */
