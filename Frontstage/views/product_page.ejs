@@ -26,7 +26,8 @@ $(document).ready(function () {
   var currentIndex = 0;
 
   function showSlide(index) {
-    var offset = -index * 104 + "%";
+    var slideWidth = $(".comment_info").outerWidth(true);
+    var offset = -index * slideWidth + "px";
     $(".comment_wrapper").css("transform", "translateX(" + offset + ")");
   }
 
@@ -54,6 +55,9 @@ $(document).ready(function () {
   }
 
   showSlide(currentIndex);
+  $(window).resize(function() {
+    showSlide(currentIndex); // 當窗口大小改變時重新計算偏移量
+  });
 });
 
 

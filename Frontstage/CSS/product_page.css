@@ -239,19 +239,19 @@ a {
   position: relative;
 }
 #user_comment .comment_carousel .comment_wrapper {
-  width: 80%;
+  width: 300%;
   display: flex;
   margin: auto;
   transition: transform 0.5s ease-in-out;
 }
 #user_comment .comment_carousel .comment_wrapper .comment_info {
-  min-width: 100%;
+  min-width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 10px 10px 5px rgba(243, 121, 36, 0.7);
   border-radius: 25px;
-  margin: 10px 50px 10px 0;
+  margin: 10px 80px 10px 80px;
 }
 #user_comment .comment_carousel .comment_wrapper .comment_info .user_name {
   font-weight: 600;
@@ -334,6 +334,7 @@ a {
 }
 .more_commet .all_comment_card {
   margin: 15px 0;
+  margin-right: 20px;
   position: relative;
 }
 .more_commet .all_comment_card:last-child {
