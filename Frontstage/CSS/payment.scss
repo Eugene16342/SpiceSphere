@@ -3,7 +3,27 @@ body {
     border: none;
     margin: 0;
     padding: 0;
-    background-color: rgb(230, 230, 230);
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+  
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+  
+    &::-webkit-scrollbar-track-piece {
+      background: transparent;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--main_orange);
+      border-radius: 4px;
+      border: none;
+    }
+  
+    &::-webkit-scrollbar-track {
+      box-shadow: transparent;
+    }
   }
   
   :root {
@@ -17,13 +37,17 @@ body {
   a {
     text-decoration: none;
   }
-
+  input{
+    border: 2px solid rgb(204, 204, 204);
+    border-radius: 4px;
+  }
   #container{
     width: 100%;
     margin-top: 50px;
     display: flex;
     justify-content: space-around;
     gap: 5%;
+
     .title {
         font-weight: 900;
         font-size: 40px;
@@ -32,6 +56,7 @@ body {
     .user_info{
         width: 40%;
         .address{
+          border: 2px solid var(--text_black);
           font-weight: 600;
           background-color: var(--text_withe);
             width: 100%;
@@ -49,7 +74,6 @@ body {
                 input{
                   width: 225px;
                   height: 20px;
-                  border: 2px solid var(--border_gray);
                 }
               .row_row{
                   display: flex;
@@ -65,6 +89,7 @@ body {
           }
 
           .payment{
+            border: 2px solid var(--text_black);
             font-weight: 600;
             background-color: var(--text_withe);
               width: 100%;
@@ -86,6 +111,7 @@ body {
         margin-bottom: 50px;
     }
     .cart{
+      border: 2px solid var(--text_black);
       background-color: var(--text_withe);
       padding: 30px 40px;        
       .cart_item{
@@ -208,8 +234,11 @@ body {
       background-color: var(--text_black);
       cursor: pointer;
       border: none;
-      &:active{
+      &:hover{
         background-color: var(--main_orange);
+      }
+      &:active{
+        background-color: var(--text_black);
       }
     }
   }
@@ -249,7 +278,6 @@ body {
                 input{
                   width: 225px;
                   height: 20px;
-                  border: 2px solid var(--border_gray);
                 }
               .row_row{
                   display: flex;
@@ -451,7 +479,6 @@ body {
                 input{
                   width: 180px;
                   height: 20px;
-                  border: 2px solid var(--border_gray);
                   font-size: 14px;
                 }
               .row_row{

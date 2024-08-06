@@ -3,6 +3,24 @@ body {
   border: none;
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-button {
+  display: none;
+}
+body::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--main_orange);
+  border-radius: 4px;
+  border: none;
+}
+body::-webkit-scrollbar-track {
+  box-shadow: transparent;
 }
 
 :root {

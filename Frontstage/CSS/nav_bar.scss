@@ -11,6 +11,10 @@ a {
   text-decoration: none;
   color: black;
 }
+select {
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 4px 0 0 4px;
+}
 
 #nav_bar {
   z-index: 10;
@@ -90,6 +94,7 @@ a {
         visibility: hidden;
         transition: width 0.5s ease-in-out;
         border: none;
+        border-radius: 0 4px 4px 0 ;
       }
       .search_button {
         height: 22px;
@@ -97,6 +102,7 @@ a {
         transition: width 0.5s ease-in-out;
         background-color: var(--text_withe);
         border: none;
+        border-radius: 4px;
         cursor: pointer;
         margin-left: 3px;
         &:hover {
@@ -116,6 +122,11 @@ a {
 }
 
 @media screen and (max-width: 1300px) {
+
+  select {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+  }
   #nav_bar {
     position: fixed;
     background-color: var(--main_orange);
@@ -201,6 +212,7 @@ a {
           visibility: visible;
           transition: width 0.5s ease-in-out;
           margin: 5px;
+          border-radius: 4px;
         }
 
         .search_button {

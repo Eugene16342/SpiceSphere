@@ -4,7 +4,23 @@ body {
   border: none;
   margin: 0;
   padding: 0;
-  background-color: rgb(230, 230, 230);
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-button {
+  display: none;
+}
+body::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--main_orange);
+  border-radius: 4px;
+  border: none;
+}
+body::-webkit-scrollbar-track {
+  box-shadow: transparent;
 }
 
 :root {
@@ -17,6 +33,11 @@ body {
 
 a {
   text-decoration: none;
+}
+
+input {
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 4px;
 }
 
 #container {
@@ -35,6 +56,7 @@ a {
   width: 40%;
 }
 #container .user_info .address {
+  border: 2px solid var(--text_black);
   font-weight: 600;
   background-color: var(--text_withe);
   width: 100%;
@@ -54,7 +76,6 @@ a {
 #container .user_info .address .row input {
   width: 225px;
   height: 20px;
-  border: 2px solid var(--border_gray);
 }
 #container .user_info .address .row .row_row {
   display: flex;
@@ -66,6 +87,7 @@ a {
   margin-right: 20px;
 }
 #container .user_info .payment {
+  border: 2px solid var(--text_black);
   font-weight: 600;
   background-color: var(--text_withe);
   width: 100%;
@@ -81,6 +103,7 @@ a {
   margin-bottom: 50px;
 }
 #container .cart {
+  border: 2px solid var(--text_black);
   background-color: var(--text_withe);
   padding: 30px 40px;
 }
@@ -201,8 +224,11 @@ a {
   cursor: pointer;
   border: none;
 }
-#container #pay:active {
+#container #pay:hover {
   background-color: var(--main_orange);
+}
+#container #pay:active {
+  background-color: var(--text_black);
 }
 
 @media screen and (max-width: 1300px) {
@@ -243,7 +269,6 @@ a {
   #container .user_info .address .row input {
     width: 225px;
     height: 20px;
-    border: 2px solid var(--border_gray);
   }
   #container .user_info .address .row .row_row {
     display: flex;
@@ -433,7 +458,6 @@ a {
   #container .user_info .address .row input {
     width: 180px;
     height: 20px;
-    border: 2px solid var(--border_gray);
     font-size: 14px;
   }
   #container .user_info .address .row .row_row {

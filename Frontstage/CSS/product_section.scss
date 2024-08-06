@@ -3,6 +3,28 @@ body {
   border: none;
   margin: 0;
   padding: 0;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--main_orange);
+    border-radius: 4px;
+    border: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: transparent;
+  }
 }
 
 :root {
@@ -192,53 +214,6 @@ a {
         margin: 10px;
       }
     }
-
-    #star_container {
-      margin-top: -20px;
-      .star {
-        display: inline-flex;
-        flex-direction: row-reverse;
-        color: var(--main_orange);
-
-        > label {
-          font-size: 40px;
-          &::after {
-            content: "☆";
-          }
-          &:hover {
-            cursor: pointer;
-            &::after {
-              content: "★";
-              color: var(--main_orange);
-            }
-            ~ label {
-              &::after {
-                content: "★";
-                color: var(--main_orange);
-              }
-            }
-          }
-        }
-
-        > input {
-          display: none;
-          &:checked {
-            + label {
-              &::after {
-                content: "★";
-                color: var(--main_orange);
-              }
-            }
-            ~ label {
-              &::after {
-                content: "★";
-                color: var(--main_orange);
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   #main_section_product_cards {
@@ -300,43 +275,15 @@ a {
         text-overflow: ellipsis;
       }
       .card_price {
-        font-size: 20px;
+        font-size: 24px;
+        font-weight: 900;
         color: var(--main_orange);
       }
-      .card_btn {
-        width: 100%;
-
-        align-self: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--text_withe);
-        position: relative;
-        &::before {
-          content: "";
-          height: 2px;
-          width: 100%;
-          background-color: var(--text_black);
-          top: 0;
-          position: absolute;
-        }
-        button {
-          width: 100%;
-          height: 100%;
-          font-weight: 900;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--border-gray);
-          background-color: inherit;
-          border: none;
-          cursor: pointer;
-          transition: color 0.3s ease-in-out;
-          &:hover {
-            color: var(--main_orange);
-          }
-        }
-      }
+      .rating {
+        color: var(--main_orange);
+        margin-left: 10px;
+        user-select: none;
+    }
     }
   }
 }
@@ -545,53 +492,6 @@ a {
           margin: 10px;
         }
       }
-
-      #star_container {
-        margin-top: -20px;
-        .star {
-          display: inline-flex;
-          flex-direction: row-reverse;
-          color: var(--main_orange);
-
-          > label {
-            font-size: 40px;
-            &::after {
-              content: "☆";
-            }
-            &:hover {
-              cursor: pointer;
-              &::after {
-                content: "★";
-                color: var(--main_orange);
-              }
-              ~ label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-            }
-          }
-
-          > input {
-            display: none;
-            &:checked {
-              + label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-              ~ label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-            }
-          }
-        }
-      }
     }
 
     #main_section_product_cards {
@@ -645,39 +545,6 @@ a {
         .card_price {
           font-size: 18px;
           color: var(--main_orange);
-        }
-        .card_btn {
-          width: 100%;
-          align-self: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: var(--text_withe);
-          position: relative;
-          &::before {
-            content: "";
-            height: 2px;
-            width: 100%;
-            background-color: var(--text_black);
-            top: 0;
-            position: absolute;
-          }
-          button {
-            width: 100%;
-            height: 100%;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--border-gray);
-            background-color: inherit;
-            border: none;
-            cursor: pointer;
-            transition: color 0.3s ease-in-out;
-            &:hover {
-              color: var(--main_orange);
-            }
-          }
         }
       }
     }
@@ -798,13 +665,13 @@ a {
         align-items: center;
         width: 70%;
         position: relative;
-        -webkit-appearance: none; /* 移除預設樣式 */
+        -webkit-appearance: none;
         appearance: none;
-        height: 2px; /* 調整這個值以改變滑桿的高度 */
-        background-color: var(--main_orange); /* 調整這個值以改變滑桿的顏色 */
+        height: 2px; 
+        background-color: var(--main_orange); 
         outline: none;
         &::-webkit-slider-thumb {
-          -webkit-appearance: none; /* 移除預設樣式 */
+          -webkit-appearance: none;
           appearance: none;
           width: 10px;
           height: 10px;
@@ -834,11 +701,11 @@ a {
       }
 
       .range_container::before {
-        left: 0; /* 調整這個值以改變端點的位置 */
+        left: 0;
       }
 
       .range_container::after {
-        right: 0; /* 調整這個值以改變端點的位置 */
+        right: 0; 
       }
 
       .range_labels {
@@ -877,54 +744,6 @@ a {
         }
       }
 
-      #star_container {
-        width: auto;
-        margin-left: 0px;
-        margin-top: -20px;
-        .star {
-          display: inline-flex;
-          flex-direction: row-reverse;
-          color: var(--main_orange);
-
-          > label {
-            font-size: 30px;
-            &::after {
-              content: "☆";
-            }
-            &:hover {
-              cursor: pointer;
-              &::after {
-                content: "★";
-                color: var(--main_orange);
-              }
-              ~ label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-            }
-          }
-
-          > input {
-            display: none;
-            &:checked {
-              + label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-              ~ label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-            }
-          }
-        }
-      }
     }
 
     #main_section_product_cards {
@@ -977,39 +796,6 @@ a {
           font-size: 18px;
           color: var(--main_orange);
         }
-        .card_btn {
-          width: 100%;
-          align-self: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: var(--text_withe);
-          position: relative;
-          &::before {
-            content: "";
-            height: 2px;
-            width: 100%;
-            background-color: var(--text_black);
-            top: 0;
-            position: absolute;
-          }
-          button {
-            width: 100%;
-            height: 100%;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--border-gray);
-            background-color: inherit;
-            border: none;
-            cursor: pointer;
-            transition: color 0.3s ease-in-out;
-            &:hover {
-              color: var(--main_orange);
-            }
-          }
-        }
       }
     }
   }
@@ -1029,7 +815,7 @@ a {
       flex-direction: row;
       justify-content: none;
       width: 100%;
-      height: 150px;
+      height: 110px;
       z-index: 8;
       background-color: var(--text_withe);
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
@@ -1183,54 +969,6 @@ a {
         }
       }
 
-      #star_container {
-        width: auto;
-        margin-left: 0px;
-        margin-top: -20px;
-        .star {
-          display: inline-flex;
-          flex-direction: row-reverse;
-          color: var(--main_orange);
-
-          > label {
-            font-size: 30px;
-            &::after {
-              content: "☆";
-            }
-            &:hover {
-              cursor: pointer;
-              &::after {
-                content: "★";
-                color: var(--main_orange);
-              }
-              ~ label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-            }
-          }
-
-          > input {
-            display: none;
-            &:checked {
-              + label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-              ~ label {
-                &::after {
-                  content: "★";
-                  color: var(--main_orange);
-                }
-              }
-            }
-          }
-        }
-      }
     }
 
     #main_section_product_cards {
@@ -1282,39 +1020,6 @@ a {
         .card_price {
           font-size: 18px;
           color: var(--main_orange);
-        }
-        .card_btn {
-          width: 100%;
-          align-self: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: var(--text_withe);
-          position: relative;
-          &::before {
-            content: "";
-            height: 2px;
-            width: 100%;
-            background-color: var(--text_black);
-            top: 0;
-            position: absolute;
-          }
-          button {
-            width: 100%;
-            height: 100%;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--border-gray);
-            background-color: inherit;
-            border: none;
-            cursor: pointer;
-            transition: color 0.3s ease-in-out;
-            &:hover {
-              color: var(--main_orange);
-            }
-          }
         }
       }
     }
