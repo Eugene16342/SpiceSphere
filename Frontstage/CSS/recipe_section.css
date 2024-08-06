@@ -328,8 +328,8 @@ a {
     left: 0;
     bottom: 0;
     right: 0;
-    transition: 0.3s ease; /* 新增的transition */
-    opacity: 0; /* 新增的opacity */
+    transition: 0.3s ease;
+    opacity: 0;
     -webkit-user-select: none;
        -moz-user-select: none;
             user-select: none;
@@ -341,7 +341,7 @@ a {
        object-fit: cover;
   }
   #recipe_pic_section .recipe_card:hover .recipe_describe {
-    opacity: 1; /* 修改的opacity */
+    opacity: 1;
   }
   #recipe_pic_section .recipe_card:nth-child(6n+1),
   #recipe_pic_section .recipe_card:nth-child(6n+4) {

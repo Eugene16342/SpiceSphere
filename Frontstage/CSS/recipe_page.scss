@@ -198,7 +198,7 @@ a {
     width: 60%;
     position: relative;
     text-align: center;
-    line-height: 2em; /* 調整這個值以改變文字與線的距離 */
+    line-height: 2em;
 
     &::before,
     &::after {
@@ -206,20 +206,20 @@ a {
       position: absolute;
       top: 50%;
       width: 60%;
-      height: 3px; /* 調整這個值以改變線的粗細 */
-      background: black; /* 調整這個值以改變線的顏色 */
+      height: 3px; 
+      background: black; 
     }
 
     &::before {
       left: 0;
       transform: translateX(-50%);
-      border-left: 10px solid black; /* 調整這個值以改變箭頭的大小和顏色 */
+      border-left: 10px solid black; 
     }
 
     &::after {
       right: 0;
       transform: translateX(50%);
-      border-right: 10px solid black; /* 調整這個值以改變箭頭的大小和顏色 */
+      border-right: 10px solid black;
     }
   }
 
