@@ -182,28 +182,30 @@ $(document).ready(function () {
       <div class="title">使用心得</div>
       <div class="comment_carousel">
         <div class="comment_wrapper">
-          <div class="comment_info">
-            <div class="user_name">觀雲客</div>
-            <div class="user_rating">★★★★★</div>
-            <div class="comment_text">
-              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
-            </div>
-          </div>
-          <div class="comment_info">
-            <div class="user_name">聽海生</div>
-            <div class="user_rating">★★★★★</div>
-            <div class="comment_text">
-              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
-            </div>
-          </div>
-          <div class="comment_info">
-            <div class="user_name">州長門</div>
-            <div class="user_rating">★★★★★</div>
-            <div class="comment_text">
-              廣播創造成了，核心公司決策讓人時尚去了公司下去，不好意思山西把你說了聰明完全旅遊，庫存強化話題，開放前後再次印度穿著像是特殊，最佳奧客檢測發貼角度軍事一台，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新時間看見技巧重點原理供應商更多日本理念她是頭髮，上述伺服器直到溫州吃了秘密利用將會制度進口作品很久，當初每次一片產品，圖形也能高效大量請您僅供螢幕，出口夫妻。
-            </div>
-          </div>
+          <% 
+            let filteredComments = comments.filter(comment => comment.product_rating > 4).slice(0, 3);
+            if (filteredComments.length === 3) {
+              filteredComments.forEach(function(comment) { 
+          %>
+                <div class="comment_info">
+                  <div class="user_name"><%= comment.user_name %></div>
+                  <div class="user_rating">
+                    <% for (let i = 0; i < comment.product_rating; i++) { %>
+                      <span>★</span><!-- 實心星星 -->
+                    <% } %>
+                    <% for (let i = comment.product_rating; i < 5; i++) { %>
+                      <span>☆</span> <!-- 空心星星 -->
+                    <% } %>
+                  </div>
+                  <div class="comment_text"><%= comment.product_comment %></div>
+                </div>
+          <% 
+              });
+            } 
+          %>
         </div>
+        
+        
       </div>
       <div class="carousel_btn">
         <div class="carousel_pre">
@@ -237,31 +239,30 @@ $(document).ready(function () {
       </div>
     </div>
 
-      <div class="more_commet">
-        <div class="all_comment_card">
-          <span class="comment_name">路人俠</span>
-          <sapn class="comment_time">2024-8-6</sapn>
-          <span class="comment_rating">★★★★★</span>
-          <div class="user_comment">廣播創造成了，核心公司決策全旅遊，庫存強化話客檢測發貼角度軍事一台受傷走勢想像我國地圖受傷走勢想像我國地圖，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新夫妻。</div>
-        </div>
-        <div class="all_comment_card">
-          <span class="comment_name">路人俠</span>
-          <sapn class="comment_time">2024-8-6</sapn>
-          <span class="comment_rating">★★★★★</span>
-          <div class="user_comment">廣播創造成了，核心公司決策全旅遊，庫存強化話客檢測發貼角度軍事一台受傷走勢想像我國地圖受傷走勢想像我國地圖，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新夫妻。</div>
-        </div>
-        <div class="all_comment_card">
-          <span class="comment_name">路人俠</span>
-          <sapn class="comment_time">2024-8-6</sapn>
-          <span class="comment_rating">★★★★★</span>
-          <div class="user_comment">廣播創造成了，核心公司決策全旅遊，庫存強化話客檢測發貼角度軍事一台受傷走勢想像我國地圖受傷走勢想像我國地圖，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新夫妻。</div>
-        </div>
-        <div class="all_comment_card">
-          <span class="comment_name">路人俠</span>
-          <sapn class="comment_time">2024-8-6</sapn>
-          <span class="comment_rating">★★★★★</span>
-          <div class="user_comment">廣播創造成了，核心公司決策全旅遊，庫存強化話客檢測發貼角度軍事一台受傷走勢想像我國地圖受傷走勢想像我國地圖，受傷走勢想像我國地圖文檔大盤經常好像，鏡頭採用生氣異常範圍內諮詢草魚本週這些，提到更新夫妻。</div>
-        </div>
+    <div class="more_commet">
+      <% if (comments.length === 0) { %>
+        <div class="no_comments">尚未有人分享使用心得喔!</div>
+      <% } else { %>
+        <% comments.forEach(function(comment) { %>
+          <div class="all_comment_card">
+            <span class="comment_name"><%= comment.user_name %></span>
+            <span class="comment_time"><%= new Date(comment.comment_time).toISOString().split('T')[0] %></span>
+            <span class="comment_rating">
+              <% for (let i = 0; i < comment.product_rating; i++) { %>
+                <span>★</span> <!-- 實心星星 -->
+              <% } %>
+              <% for (let i = comment.product_rating; i < 5; i++) { %>
+                <span>☆</span> <!-- 空心星星 -->
+              <% } %>
+            </span>
+            <div class="user_comment"><%= comment.product_comment %></div>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+    
+    
+
       </div>
       
 
