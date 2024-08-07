@@ -142,17 +142,24 @@ app.get("/api/products", (req, res) => {
 });
 
 //////////////////////////////////////////商品單頁
-
 app.get("/api/product/:id", (req, res) => {
   let sql = "SELECT * FROM product WHERE product_uid = ?";
   db.query(sql, [req.params.id], (err, result) => {
     if (err) throw err;
-    let sql2 =
-      "SELECT * FROM product WHERE related = ? ORDER BY RAND() LIMIT 5";
+    let sql2 = "SELECT * FROM product WHERE related = ? ORDER BY RAND() LIMIT 5";
     db.query(sql2, [result[0].related], (err2, result2) => {
       if (err2) throw err2;
-      // 將產品和推薦的產品一起傳遞給前端
-      res.json({ items: result[0], recommendations: result2 });
+      let sql3 = `
+        SELECT pc.*, m.user_name 
+        FROM product_commemt pc 
+        JOIN member m ON pc.user_uid = m.user_uid 
+        WHERE pc.product_uid = ?
+      `;
+      db.query(sql3, [req.params.id], (err3, result3) => {
+        if (err3) throw err3;
+        // 將產品、推薦的產品和留言一起傳遞給前端
+        res.json({ items: result[0], recommendations: result2, comments: result3 });
+      });
     });
   });
 });
