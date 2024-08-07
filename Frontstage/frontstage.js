@@ -21,10 +21,10 @@ app.use(
 );
 
 ////////////////////導覽列
-app.get('/nav_bar', (req, res) => {
+app.get("/nav_bar", (req, res) => {
   const user = req.session.user;
   console.log(user); // 檢查 user 變數
-  res.render('nav_bar', { user });
+  res.render("nav_bar", { user });
 });
 
 //////////////////////////////登入頁
@@ -53,24 +53,24 @@ app.get("/user_page", (req, res) => {
   res.render("user_page", { user });
 });
 //////////////主頁
-app.get('/home_page', (req, res) => {
+app.get("/home_page", (req, res) => {
   const user = req.session.user;
-  res.render('home_page', { user });
+  res.render("home_page", { user });
 });
 
 // 導覽列搜尋跳轉
 app.post("/turning", (req, res) => {
   const select = req.body.select;
   let url;
-  if (select === "recipe"){
-    url = "recipe_section"
-  }else if (select === "product"){
-    url = "product_section"
-  }else {
-    url = "/"
+  if (select === "recipe") {
+    url = "recipe_section";
+  } else if (select === "product") {
+    url = "product_section";
+  } else {
+    url = "/";
   }
-  res.json({reUrl : url})
-})
+  res.json({ reUrl: url });
+});
 
 ///////////////食譜區
 app.get("/recipe_section", (req, res) => {

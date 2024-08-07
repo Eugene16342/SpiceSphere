@@ -224,7 +224,7 @@ a {
   border-right: 10px solid black;
 }
 #step .step_text {
-  width: 95%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -232,9 +232,16 @@ a {
   font-weight: 600;
   font-size: 18px;
 }
+#step .step_text:nth-child(odd) {
+  align-self: flex-end;
+}
+#step .step_text:nth-child(even) {
+  align-self: flex-start;
+}
 #step .step_text .num {
   font-weight: 900;
-  font-size: 32px;
+  font-size: 38px;
+  margin-bottom: 20px;
   color: var(--main_orange);
 }
 

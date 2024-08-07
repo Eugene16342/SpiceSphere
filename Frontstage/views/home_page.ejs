@@ -9,114 +9,114 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
-  $(document).ready(function() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    // 在控制台中輸出用戶資料
-    console.log('主頁抓到:', user.account , user.username);
-  
+    $(document).ready(function () {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      // 在控制台中輸出用戶資料
+      console.log("主頁抓到:", user.account, user.username);
 
-    const $imgs = $('#imgs');
-    const $leftBtn = $('#left');
-    const $rightBtn = $('#right');
-    const $img = $('#imgs .big_slide');
+      const $imgs = $("#imgs");
+      const $leftBtn = $("#left");
+      const $rightBtn = $("#right");
+      const $img = $("#imgs .big_slide");
 
-    let idx = 0;
-    let interval = setInterval(run, 10000); // 自動倒數變成10秒一張
+      let idx = 0;
+      let interval = setInterval(run, 10000); // 自動倒數變成10秒一張
 
-    function run() {
+      function run() {
         idx++;
         changeImage();
-    }
+      }
 
-    function changeImage() {
+      function changeImage() {
         if (idx > $img.length - 1) {
-            idx = 0;
+          idx = 0;
         } else if (idx < 0) {
-            idx = $img.length - 1;
+          idx = $img.length - 1;
         }
 
-        $imgs.css('transform', `translateX(${-idx * 100}%)`);
-    }
+        $imgs.css("transform", `translateX(${-idx * 100}%)`);
+      }
 
-    function resetInterval() {
+      function resetInterval() {
         clearInterval(interval);
         interval = setInterval(run, 10000); // 自動倒數變成10秒一張
-    }
+      }
 
-    $rightBtn.on('click', function() {
+      $rightBtn.on("click", function () {
         idx++;
         changeImage();
         resetInterval();
-    });
+      });
 
-    $leftBtn.on('click', function() {
+      $leftBtn.on("click", function () {
         idx--;
         changeImage();
         resetInterval();
-    });
+      });
 
-    // 當滑鼠進入時停止自動播放
-    $imgs.on('mouseenter', function() {
+      // 當滑鼠進入時停止自動播放
+      $imgs.on("mouseenter", function () {
         clearInterval(interval);
-    });
+      });
 
-    // 當滑鼠移開後繼續倒數
-    $imgs.on('mouseleave', function() {
+      // 當滑鼠移開後繼續倒數
+      $imgs.on("mouseleave", function () {
         resetInterval();
-    });
+      });
 
+      const $slids = $("#slids");
+      const $recipe_left_btn = $("#recipe_left_btn");
+      const $recipe_right_btn = $("#recipe_right_btn");
+      const $slide = $("#slids .slide");
 
-    const $slids = $('#slids');
-    const $recipe_left_btn = $('#recipe_left_btn');
-    const $recipe_right_btn = $('#recipe_right_btn');
-    const $slide = $('#slids .slide');
+      let slide_order = 0;
+      let recipe_interval = setInterval(run, 10000); // 自動倒數變成10秒一張
 
-    let slide_order = 0;
-    let recipe_interval = setInterval(run, 10000); // 自動倒數變成10秒一張
-
-    function run() {
+      function run() {
         slide_order++;
         changeSlide();
-    }
+      }
 
-    function changeSlide() {
+      function changeSlide() {
         if (slide_order > $slide.length - 1) {
-            slide_order = 0;
+          slide_order = 0;
         } else if (slide_order < 0) {
-            slide_order = $slide.length - 1;
+          slide_order = $slide.length - 1;
         }
 
-        $slids.css('transform', `translateX(${-slide_order * 100 / $slide.length}%)`);
-    }
+        $slids.css(
+          "transform",
+          `translateX(${(-slide_order * 100) / $slide.length}%)`
+        );
+      }
 
-    function resetInterval() {
+      function resetInterval() {
         clearInterval(recipe_interval);
         recipe_interval = setInterval(run, 10000); // 自動倒數變成10秒一張
-    }
+      }
 
-    $recipe_right_btn.on('click', function() {
+      $recipe_right_btn.on("click", function () {
         slide_order++;
         changeSlide();
         resetInterval();
-    });
+      });
 
-    $recipe_left_btn.on('click', function() {
+      $recipe_left_btn.on("click", function () {
         slide_order--;
         changeSlide();
         resetInterval();
-    });
+      });
 
-    // 當滑鼠進入時停止自動播放
-    $slids.on('mouseenter', function() {
+      // 當滑鼠進入時停止自動播放
+      $slids.on("mouseenter", function () {
         clearInterval(recipe_interval);
-    });
+      });
 
-    // 當滑鼠移開後繼續倒數
-    $slids.on('mouseleave', function() {
+      // 當滑鼠移開後繼續倒數
+      $slids.on("mouseleave", function () {
         resetInterval();
+      });
     });
-});
-
   </script>
 
   <body>
@@ -125,63 +125,70 @@
 
     <div class="slide_section">
       <div class="carousel">
-          <div class="slide_container" id="imgs">
-              <div class="big_slide">
-                <img src="../../img/recipe_section/Fish_with_Tomatoes.jpg"/>
-              <div class="slide_text">
-                <h1>新北歡樂耶誕城</h1>
-                <p>內容價值不還有才可以了那，不是好好麼做自己蝴蝶：很，在邊的是一直⋯校一直麼好嗚嗚嗚。苦畢竟不去根本物一很可對，相處冰淇淋可的事然。注意到是天使是好想起看見然我，了哈哈然後這我覺加起來超，第一留言們的討論，咖啡下就前速，快本的下算是不知道能不能有那麼：別人了什徽章就像是
-                  都是一這：印也可以獸你真的。很愛我來說些己的，嗚嗚嗚明就因為沒。我的心面就超級，的很難滿我這樣我明明不過有，慘大概都。
-                  時分不管要去己喜歡⋯話我各種的結是有點，了我生就看到把的已感覺我今天：電影是真說年後明年，是月日麼好沒想到，下以不票人都日我們人這個口袋。
-                </p>
-              </div>
-              </div>
-              <div class="big_slide">
-                <img src="../../img/recipe_section/Honey_on_the_pancakes.jpg"/>
-                <div class="slide_text">
-                  <h1>新中歡樂耶誕城</h1>
-                  <p>內容價值不還有才可以了那，不是好好麼做自己蝴蝶：很，在邊的是一直⋯校一直麼好嗚嗚嗚。苦畢竟不去根本物一很可對，相處冰淇淋可的事然。注意到是天使是好想起看見然我，了哈哈然後這我覺加起來超，第一留言們的討論，咖啡下就前速，快本的下算是不知道能不能有那麼：別人了什徽章就像是？
-                    都是一這：印也可以獸你真的。很愛我來說些己的，嗚嗚嗚明就因為沒。我的心面就超級，的很難滿我這樣我明明不過有，慘大概都。 
-                  </p>
-                </div>
-              </div>
-              <div class="big_slide">
-                <img src="../../img/recipe_section/pizza.jpg"/>
-                <div class="slide_text">
-                  <h1>新南歡樂耶誕城</h1>
-                  <p>內容價值不還有才可以了那，不是好好麼做自己蝴蝶：很，在邊的是一直⋯校一直麼好嗚嗚嗚。苦畢竟不去根本物一很可對，相處冰淇淋可的事然。注意到是天使是好想起看見然我，了哈哈然後這我覺加起來超，第一留言們的討論，咖啡下就前速，快本的下算是不知道能不能有那麼：別人了什徽章就像是？
-                    都是一這：印也可以獸你真的。很愛我來說些己的，嗚嗚嗚明就因為沒。我的心面就超級，的很難滿我這樣我明明不過有，慘大概都。
-                    時分不管要去己喜歡⋯話我各種的結是有點，了我生就看到把的已感覺我今天：電影是真說年後明年，是月日麼好沒想到，下以不票人都日我們人這個口袋。
-                  </p>
-                </div>
-              </div>
+        <div class="slide_container" id="imgs">
+          <div class="big_slide">
+            <img src="../../img/recipe_section/Fish_with_Tomatoes.jpg" />
+            <div class="slide_text">
+              <h1>新北歡樂耶誕城</h1>
+              <p>
+                內容價值不還有才可以了那，不是好好麼做自己蝴蝶：很，在邊的是一直⋯校一直麼好嗚嗚嗚。苦畢竟不去根本物一很可對，相處冰淇淋可的事然。注意到是天使是好想起看見然我，了哈哈然後這我覺加起來超，第一留言們的討論，咖啡下就前速，快本的下算是不知道能不能有那麼：別人了什徽章就像是
+                都是一這：印也可以獸你真的。很愛我來說些己的，嗚嗚嗚明就因為沒。我的心面就超級，的很難滿我這樣我明明不過有，慘大概都。
+                時分不管要去己喜歡⋯話我各種的結是有點，了我生就看到把的已感覺我今天：電影是真說年後明年，是月日麼好沒想到，下以不票人都日我們人這個口袋。
+              </p>
+            </div>
           </div>
-          <div class="buttons_container">
-              <button id="left" class="btn">  <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50"
-                height="50"
-                fill="currentColor"
-                class="bi bi-caret-left"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"
-                />
-              </svg></button>
-              <button id="right" class="btn">          <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="50"
-                height="50"
-                fill="currentColor"
-                class="bi bi-caret-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"
-                />
-              </svg></button>
+          <div class="big_slide">
+            <img src="../../img/recipe_section/Honey_on_the_pancakes.jpg" />
+            <div class="slide_text">
+              <h1>新中歡樂耶誕城</h1>
+              <p>
+                內容價值不還有才可以了那，不是好好麼做自己蝴蝶：很，在邊的是一直⋯校一直麼好嗚嗚嗚。苦畢竟不去根本物一很可對，相處冰淇淋可的事然。注意到是天使是好想起看見然我，了哈哈然後這我覺加起來超，第一留言們的討論，咖啡下就前速，快本的下算是不知道能不能有那麼：別人了什徽章就像是？
+                都是一這：印也可以獸你真的。很愛我來說些己的，嗚嗚嗚明就因為沒。我的心面就超級，的很難滿我這樣我明明不過有，慘大概都。
+              </p>
+            </div>
           </div>
+          <div class="big_slide">
+            <img src="../../img/recipe_section/pizza.jpg" />
+            <div class="slide_text">
+              <h1>新南歡樂耶誕城</h1>
+              <p>
+                內容價值不還有才可以了那，不是好好麼做自己蝴蝶：很，在邊的是一直⋯校一直麼好嗚嗚嗚。苦畢竟不去根本物一很可對，相處冰淇淋可的事然。注意到是天使是好想起看見然我，了哈哈然後這我覺加起來超，第一留言們的討論，咖啡下就前速，快本的下算是不知道能不能有那麼：別人了什徽章就像是？
+                都是一這：印也可以獸你真的。很愛我來說些己的，嗚嗚嗚明就因為沒。我的心面就超級，的很難滿我這樣我明明不過有，慘大概都。
+                時分不管要去己喜歡⋯話我各種的結是有點，了我生就看到把的已感覺我今天：電影是真說年後明年，是月日麼好沒想到，下以不票人都日我們人這個口袋。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons_container">
+          <button id="left" class="btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              fill="currentColor"
+              class="bi bi-caret-left"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"
+              />
+            </svg>
+          </button>
+          <button id="right" class="btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              fill="currentColor"
+              class="bi bi-caret-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -202,19 +209,19 @@
       <div class="link_card">
         <div>
           <a href="/recipe_section"
-            ><img src="../../img/home_page/recipe.jpg" >
+            ><img src="../../img/home_page/recipe.jpg" />
             <h4>食譜</h4></a
           >
         </div>
         <div>
           <a href="/product_section?category=package">
-            ><img src="../../img/home_page/meal kit.jpg">
+            ><img src="../../img/home_page/meal kit.jpg" />
             <h4>調理包</h4></a
           >
         </div>
         <div>
           <a href="/product_section?category=cookware"
-            ><img src="../../img/home_page/product.jpg">
+            ><img src="../../img/home_page/product.jpg" />
             <h4>廚具</h4></a
           >
         </div>
@@ -232,66 +239,107 @@
       <div class="card_container">
         <div class="carousel">
           <div class="slide_container" id="slids">
-              <div class="slide">
-                <div class="card">
-                  <a href="/recipe_section/recipe_page/24"><img src="../../img/recipe/recipe24.jpg"/></a>
-                  <div class="card_text">
-                    <div><a href="/recipe_section/recipe_page/24">法式鵝油蒜香起司南瓜</a></div>
-                    <span>★★★★★</span>
-                    <p>極致濃郁的鵝油香氣結合蒜香與起司，讓南瓜的甜美更加突出，每一口都充滿道地法式風情。</p>
+            <div class="slide">
+              <div class="card">
+                <a href="/recipe_section/recipe_page/24"
+                  ><img src="../../img/recipe/recipe24.jpg"
+                /></a>
+                <div class="card_text">
+                  <div>
+                    <a href="/recipe_section/recipe_page/24"
+                      >法式鵝油蒜香起司南瓜</a
+                    >
                   </div>
-                </div>
-                <div class="card">
-                  <a href="/recipe_section/recipe_page/23"><img src="../../img/recipe/recipe23.jpg"/></a>
-                  <div class="card_text">
-                    <div><a href="/recipe_section/recipe_page/23">起酥法式鹹派塔</a></div>
-                    <span>★★★★★</span>
-                    <p>酥脆的塔皮包裹著豐富的餡料，鹹香四溢，讓你一口接一口停不下來。</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="slide">
-                <div class="card">
-                  <a href="/recipe_section/recipe_page/1"><img src="../../img/recipe/recipe1.jpg"/></a> 
-                  <div class="card_text">
-                    <div><a href="/recipe_section/recipe_page/1">和風健康早餐沙拉</a></div>
-                    <span>★★★★★</span>
-                    <p>在假日有空能自己料理的時候，就會盡量自煮，自己煮可以挑自己愛吃的健康食物，以清爽營養美味為最高指導原則。
-                      這道充滿營養元素的沙拉，做法超級簡單，除了需要把白煮蛋給煮好外，其他的三種食材都是切切切就完成了</p>
-                  </div>
-                </div>
-                <div class="card">
-                  <a href="/recipe_section/recipe_page/2"><img src="../../img/recipe/recipe2.jpg"/></a>
-                  <div class="card_text">
-                    <div><a href="/recipe_section/recipe_page/2">完熟納豆吐司</a></div>
-                    <span>★★★★★</span>
-                    <p>納豆是黃豆發酵食品，富含蛋白質、大豆異黃酮等營養成分，健康滿分，每味滿分。</p>
-                  </div>
+                  <span>★★★★★</span>
+                  <p>
+                    極致濃郁的鵝油香氣結合蒜香與起司，讓南瓜的甜美更加突出，每一口都充滿道地法式風情。
+                  </p>
                 </div>
               </div>
+              <div class="card">
+                <a href="/recipe_section/recipe_page/23"
+                  ><img src="../../img/recipe/recipe23.jpg"
+                /></a>
+                <div class="card_text">
+                  <div>
+                    <a href="/recipe_section/recipe_page/23">起酥法式鹹派塔</a>
+                  </div>
+                  <span>★★★★★</span>
+                  <p>
+                    酥脆的塔皮包裹著豐富的餡料，鹹香四溢，讓你一口接一口停不下來。
+                  </p>
+                </div>
+              </div>
+            </div>
 
-              <div class="slide">
-                <div class="card">
-                  <a href="/recipe_section/recipe_page/43"><img src="../../img/recipe/recipe43.jpg"/></a>
-                  <div class="card_text">
-                    <div><a href="/recipe_section/recipe_page/43">泰式鮮蝦沙拉</a></div>
-                    <span>★★★★★</span>
-                    <p>新鮮的鮮蝦搭配清爽的蔬菜，佐以泰式特調醬汁，帶來清新爽口的美味體驗。</p>
+            <div class="slide">
+              <div class="card">
+                <a href="/recipe_section/recipe_page/1"
+                  ><img src="../../img/recipe/recipe1.jpg"
+                /></a>
+                <div class="card_text">
+                  <div>
+                    <a href="/recipe_section/recipe_page/1">和風健康早餐沙拉</a>
                   </div>
-                </div>
-                <div class="card">
-                  <a href="/recipe_section/recipe_page/31"><img src="../../img/recipe/recipe8.jpg"/></a>
-                  <div class="card_text">
-                    <div><a href="/recipe_section/recipe_page/31">韓式泡菜肉蛋土司</a></div>
-                    <span>★★★★★</span>
-                    <p>韓式泡菜的酸辣與肉蛋的豐富口感完美結合，夾在酥脆的土司中，讓你一口品味多層次的美味。</p>
-                  </div>
+                  <span>★★★★★</span>
+                  <p>
+                    在假日有空能自己料理的時候，就會盡量自煮，自己煮可以挑自己愛吃的健康食物，以清爽營養美味為最高指導原則。
+                    這道充滿營養元素的沙拉，做法超級簡單，除了需要把白煮蛋給煮好外，其他的三種食材都是切切切就完成了
+                  </p>
                 </div>
               </div>
+              <div class="card">
+                <a href="/recipe_section/recipe_page/2"
+                  ><img src="../../img/recipe/recipe2.jpg"
+                /></a>
+                <div class="card_text">
+                  <div>
+                    <a href="/recipe_section/recipe_page/2">完熟納豆吐司</a>
+                  </div>
+                  <span>★★★★★</span>
+                  <p>
+                    納豆是黃豆發酵食品，富含蛋白質、大豆異黃酮等營養成分，健康滿分，每味滿分。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="card">
+                <a href="/recipe_section/recipe_page/43"
+                  ><img src="../../img/recipe/recipe43.jpg"
+                /></a>
+                <div class="card_text">
+                  <div>
+                    <a href="/recipe_section/recipe_page/43">泰式鮮蝦沙拉</a>
+                  </div>
+                  <span>★★★★★</span>
+                  <p>
+                    新鮮的鮮蝦搭配清爽的蔬菜，佐以泰式特調醬汁，帶來清新爽口的美味體驗。
+                  </p>
+                </div>
+              </div>
+              <div class="card">
+                <a href="/recipe_section/recipe_page/31"
+                  ><img src="../../img/recipe/recipe8.jpg"
+                /></a>
+                <div class="card_text">
+                  <div>
+                    <a href="/recipe_section/recipe_page/31"
+                      >韓式泡菜肉蛋土司</a
+                    >
+                  </div>
+                  <span>★★★★★</span>
+                  <p>
+                    韓式泡菜的酸辣與肉蛋的豐富口感完美結合，夾在酥脆的土司中，讓你一口品味多層次的美味。
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="buttons_container">
-              <button id="recipe_left_btn" class="btn">  <svg
+            <button id="recipe_left_btn" class="btn">
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="50"
                 height="50"
@@ -302,8 +350,10 @@
                 <path
                   d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753"
                 />
-              </svg></button>
-              <button id="recipe_right_btn" class="btn">          <svg
+              </svg>
+            </button>
+            <button id="recipe_right_btn" class="btn">
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="50"
                 height="50"
@@ -314,9 +364,10 @@
                 <path
                   d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753"
                 />
-              </svg></button>
+              </svg>
+            </button>
           </div>
-      </div>
+        </div>
       </div>
     </div>
 
@@ -330,27 +381,37 @@
       </div>
       <div class="dContainer2">
         <div class="product">
-          <a href="/product_section/product_page/10"><img src="../../img/product/product10.jpg" /></a>
-          <h3><a href="/product_section/product_page/10">
-            郁竹鑄鐵鍋</a></h3>
-          <p>翻轉你對鑄鐵鍋的全部想像. 全新進化、市面上唯一內部平滑的鑄鐵平底鍋。</p>
+          <a href="/product_section/product_page/10"
+            ><img src="../../img/product/product10.jpg"
+          /></a>
+          <h3><a href="/product_section/product_page/10"> 郁竹鑄鐵鍋</a></h3>
+          <p>
+            翻轉你對鑄鐵鍋的全部想像. 全新進化、市面上唯一內部平滑的鑄鐵平底鍋。
+          </p>
           <div class="price">＄3500</div>
         </div>
         <div class="product">
-          <a href="/product_section/product_page/13"><img src="../../img/product/product13.jpg" /></a>
-          <h3><a href="/product_section/product_page/13">趙大師義大利麵調理包</a></h3>
+          <a href="/product_section/product_page/13"
+            ><img src="../../img/product/product13.jpg"
+          /></a>
+          <h3>
+            <a href="/product_section/product_page/13">趙大師義大利麵調理包</a>
+          </h3>
           <p>濃郁奶香與培根的完美結合，讓每一口都充滿幸福感</p>
           <div class="price">＄3500</div>
         </div>
         <div class="product">
-          <a href="/product_section/product_page/12"><img src="../../img/product/product12.jpg" /></a>
+          <a href="/product_section/product_page/12"
+            ><img src="../../img/product/product12.jpg"
+          /></a>
           <h3><a href="/product_section/product_page/12">趙大廚耳朵麵</a></h3>
           <p>每一片都是匠心獨具，手工製作的美味，讓你品味家的溫暖。</p>
           <div class="price">＄3500</div>
-
         </div>
         <div class="product none">
-          <a href="/product_section/product_page/21"><img src="../../img/product/product21.jpg" /></a>
+          <a href="/product_section/product_page/21"
+            ><img src="../../img/product/product21.jpg"
+          /></a>
           <h3><a href="/product_section/product_page/21">趙大師香蒜麵包</a></h3>
           <p>香氣四溢的蒜香麵包，隨時隨地享受現烤般的美味。</p>
           <div class="price">＄3500</div>
