@@ -41,6 +41,20 @@ app.get("/home_page", (req, res) => {
   res.render("home_page");
 });
 
+// 導覽列搜尋跳轉
+app.post("/turning", (req, res) => {
+  const select = req.body.select;
+  let url;
+  if (select === "recipe"){
+    url = "recipe_section"
+  }else if (select === "product"){
+    url = "product_section"
+  }else {
+    url = "/"
+  }
+  res.json({reUrl : url})
+})
+
 ///////////////食譜區
 app.get("/recipe_section", (req, res) => {
   fetch("http://localhost:3000/api/recipes")
@@ -83,7 +97,7 @@ app.get("/product_section/product_page/:id", (req, res) => {
       res.render("product_page", data);
     });
 });
-
+///////////////////////購物車/結帳
 app.get("/payment", (req, res) => {
   res.render("payment");
 });

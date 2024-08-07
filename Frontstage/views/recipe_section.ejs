@@ -12,11 +12,13 @@
 </head>
 <script>
   $(document).ready(function () {
+    
     const searchFromNav = sessionStorage.getItem('searchFromNav')
     if (searchFromNav) {
       $("#want").val(searchFromNav);
       sessionStorage.removeItem('searchFromNav');
     }
+    
     function filterRecipes() {
       // 選擇被勾選的標籤
       function checkedValues(className) {

@@ -8,22 +8,32 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
-$(document).ready(function() {
-  const username = sessionStorage.getItem("username");
-    if (username) {
-        $(".login_btn").replaceWith('<a href="/user_page">個人檔案</a>');
-    }
-
-
-      $("#search_toggle").change(function () {
-        if ($(this).is(":checked")) {
-          $(".link_bar").css("margin-right", "0");
+    $(document).ready(function () {
+      $('#search_toggle').change(function () {
+        if (this.checked) {
+          $('.link_bar').css('margin-right', '0px');
         } else {
-          $(".link_bar").css("margin-right", "-100px ");
+          $('.link_bar').css('margin-right', '-100px');
         }
       });
-    });
-
+      $('.search_button').on('click', function (p){
+        sessionStorage.setItem('searchFromNav', $('.search_input').val());
+        p.preventDefault()
+        $.ajax({
+          url: "/turning",
+          method: "post",
+          data: {
+            select: $('select').val(),
+            searchInput: $('.search_input').val() 
+          },
+          success: function(res) {
+            window.location = res.reUrl;
+          }
+        })
+      })
+    
+  
+  });
   </script>
   <body>
     <nav id="nav_bar">

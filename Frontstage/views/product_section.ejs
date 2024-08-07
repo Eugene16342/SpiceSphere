@@ -10,6 +10,12 @@
   </head>
   <script>
 window.onload = () => {
+  const searchFromNav = sessionStorage.getItem('searchFromNav')
+        if (searchFromNav) {
+          $("#search_input").val(searchFromNav);
+          sessionStorage.removeItem('searchFromNav');
+        }
+        
   function filterCards() {
     let searchInput = $("#search_input").val().toLowerCase();
     let maxPrice = parseInt($("#price_range").val());
@@ -220,7 +226,7 @@ window.onload = () => {
       </div>
     </div>
 
-    <div id="page">
+    <!-- <div id="page">
       <span><</span>
       <sapn class="page_num">
         <span>1</span>
@@ -229,7 +235,7 @@ window.onload = () => {
       </sapn>
 
       <span>></span>
-    </div>
+    </div> -->
 
     <%- include('footer') %>
   </body>
