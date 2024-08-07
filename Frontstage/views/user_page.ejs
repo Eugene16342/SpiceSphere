@@ -56,6 +56,13 @@
       hideSections();
       toggleSection();
       toggleOrderDetails();
+      const user = JSON.parse(sessionStorage.getItem('user'));
+  if (user) {
+    $('.greeting').text(`您好，${user.username}`);
+  }
+  // 在控制台中輸出用戶資料
+  console.log('用戶頁:', user ? user.account : '未登入', user ? user.username : '');
+  
     });
   </script>
   <body>

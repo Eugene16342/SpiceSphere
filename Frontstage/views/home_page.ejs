@@ -10,6 +10,11 @@
   </head>
   <script>
   $(document).ready(function() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    // 在控制台中輸出用戶資料
+    console.log('主頁抓到:', user.account , user.username);
+  
+
     const $imgs = $('#imgs');
     const $leftBtn = $('#left');
     const $rightBtn = $('#right');
@@ -116,7 +121,7 @@
 
   <body>
     <!-- Section A -->
-    <%- include('nav_bar') %>
+    <%- include('nav_bar')%>
 
     <div class="slide_section">
       <div class="carousel">

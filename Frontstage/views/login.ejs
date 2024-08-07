@@ -123,29 +123,30 @@ $(document).ready(function() {
 });
 
 $('#login').on('click', function() {
-    const account = $('#account').val();
-    const password = $('#password').val();
+  const account = $('#account').val();
+  const password = $('#password').val();
 
-    fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include', // 攜帶 cookie
-        body: JSON.stringify({ account, password })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        if (data.message === '登入成功') {
-            sessionStorage.setItem('username', data.username); // 儲存使用者名稱
-            window.location.href = '/home_page'; // 登入成功後重新加載主頁
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('登入失敗，請稍後再試');
-    });
+  fetch('http://localhost:3000/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify({ account, password })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert(data.message);
+    if (data.message === '登入成功') {
+      // 將用戶的所有資料存放在 sessionStorage 中
+      sessionStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/home_page'; // 登入成功後重新加載主頁
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('登入失敗，請稍後再試');
+  });
 });
     
     $('#forget').on('click',function(){

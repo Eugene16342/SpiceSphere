@@ -11,7 +11,7 @@ const multer = require("multer");
 const uploadRecipe = multer({ dest: "../img/recipe" });
 const uploadProduct = multer({ dest: "../img/product" });
 const session = require("express-session");
-const cors = require("cors");
+const cors = require('cors');
 
 app.use(
   cors({
@@ -75,26 +75,30 @@ app.post("/api/register", (req, res) => {
   });
 });
 
-//登入
+//////////////////////前端登入
 app.post("/api/login", (req, res) => {
   const { account, password } = req.body;
 
-  const query =
-    "SELECT * FROM member WHERE user_account = ? AND user_password = ?";
+  const query = "SELECT * FROM member WHERE user_account = ? AND user_password = ?";
   db.query(query, [account, password], (err, results) => {
     if (err) {
       console.error("Error querying database", err);
       res.status(500).json({ message: "登入失敗" });
     } else if (results.length > 0) {
-      req.session.username = results[0].user_name;
-      console.log("Session username:", req.session.username); // 確認 session 是否正確儲存
-      res.json({ message: "登入成功", username: results[0].user_name }); // 返回使用者名稱
+      req.session.user = {
+        account: results[0].user_account,
+        username: results[0].user_name,
+        email: results[0].e_mail
+      };
+      console.log("Session user:", req.session.user); // 確認 session 是否正確儲存
+      res.json({ message: "登入成功", user: req.session.user }); // 返回用戶資料
     } else {
       res.status(401).json({ message: "帳號或密碼錯誤" });
     }
   });
 });
-// 檢查是否已經登入
+
+/////////////////////// 檢查是否已經登入
 app.use((req, res, next) => {
   res.locals.username = req.session.username || null;
   console.log("Res locals username:", res.locals.username); // 確認 res.locals 是否正確傳遞

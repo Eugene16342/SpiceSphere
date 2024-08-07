@@ -20,25 +20,42 @@ app.use(
   })
 );
 
+////////////////////導覽列
+app.get('/nav_bar', (req, res) => {
+  const user = req.session.user;
+  console.log(user); // 檢查 user 變數
+  res.render('nav_bar', { user });
+});
+
 //////////////////////////////登入頁
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
-///////////////檢查是否已經登入
-app.use((req, res, next) => {
-  res.locals.username = req.session.username || null;
-  next();
+///////////////檢查是否已經登入(不確定有無作用)
+// app.use((req, res, next) => {
+//   res.locals.username = req.session.username || null;
+//   next();
+// });
+
+////////////////檢查是否登入
+// function isAuthenticated(req, res, next) {
+//   if (req.session.user) {
+//     return next();
+//   } else {
+//     res.redirect('/login');
+//   }
+// }
+
+// 用戶資訊頁面路由
+app.get("/user_page", (req, res) => {
+  const user = req.session.user;
+  res.render("user_page", { user });
 });
-
-////////////////用戶資訊頁面
-app.get("/user_page",(req,res)=>{
-  res.render("user_page");
-})
-
 //////////////主頁
-app.get("/home_page", (req, res) => {
-  res.render("home_page");
+app.get('/home_page', (req, res) => {
+  const user = req.session.user;
+  res.render('home_page', { user });
 });
 
 // 導覽列搜尋跳轉

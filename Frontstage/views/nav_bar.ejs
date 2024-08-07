@@ -32,7 +32,17 @@
         })
       })
     
-  
+      const user = JSON.parse(sessionStorage.getItem('user'));
+  // 在控制台中輸出用戶資料
+  console.log('導覽列抓到:', user ? user.account : '未登入', user ? user.username : '');
+
+  // 動態改變導覽列
+  if (user) {
+    console.log('User is logged in'); // 調試信息
+    $('.login_btn').attr('href', '/user_page').text('個人頁面').removeClass('login_btn');
+  } else {
+    console.log('User is not logged in'); // 調試信息
+  }
   });
   </script>
   <body>
