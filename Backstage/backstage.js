@@ -11,7 +11,7 @@ const multer = require("multer");
 const uploadRecipe = multer({ dest: "../img/recipe" });
 const uploadProduct = multer({ dest: "../img/product" });
 const session = require("express-session");
-const cors = require('cors');
+const cors = require("cors");
 
 app.use(
   cors({
@@ -79,7 +79,8 @@ app.post("/api/register", (req, res) => {
 app.post("/api/login", (req, res) => {
   const { account, password } = req.body;
 
-  const query = "SELECT * FROM member WHERE user_account = ? AND user_password = ?";
+  const query =
+    "SELECT * FROM member WHERE user_account = ? AND user_password = ?";
   db.query(query, [account, password], (err, results) => {
     if (err) {
       console.error("Error querying database", err);
@@ -89,12 +90,12 @@ app.post("/api/login", (req, res) => {
         account: results[0].user_account,
         username: results[0].user_name,
         email: results[0].e_mail,
-        phone:results[0].phone,
-        city:results[0].city,
-        district:results[0].district,
-        road:results[0].road,
-        number:results[0].number,
-        zip:results[0].zip
+        phone: results[0].phone,
+        city: results[0].city,
+        district: results[0].district,
+        road: results[0].road,
+        number: results[0].number,
+        zip: results[0].zip,
       };
       console.log("Session user:", req.session.user); // 確認 session 是否正確儲存
       res.json({ message: "登入成功", user: req.session.user }); // 返回用戶資料
@@ -145,6 +146,45 @@ app.get("/api/recipe/:id", (req, res) => {
     });
   });
 });
+////食譜收藏功能
+app.post("/api/favorite", (req, res) => {
+  const { user_account, recipe_uid, action } = req.body;
+
+  if (action === "check") {
+    const query =
+      "SELECT * FROM favorites WHERE user_account = ? AND recipe_uid = ?";
+    db.query(query, [user_account, recipe_uid], (err, results) => {
+      if (err) {
+        console.error("Error querying database", err);
+        res.status(500).json({ message: "檢查失敗" });
+      } else {
+        res.json({ isFavorite: results.length > 0 });
+      }
+    });
+  } else if (action === "add") {
+    const query =
+      "INSERT INTO favorites (user_account, recipe_uid) VALUES (?, ?)";
+    db.query(query, [user_account, recipe_uid], (err, results) => {
+      if (err) {
+        console.error("Error inserting into database", err);
+        res.status(500).json({ message: "收藏失敗" });
+      } else {
+        res.json({ message: "收藏成功" });
+      }
+    });
+  } else if (action === "remove") {
+    const query =
+      "DELETE FROM favorites WHERE user_account = ? AND recipe_uid = ?";
+    db.query(query, [user_account, recipe_uid], (err, results) => {
+      if (err) {
+        console.error("Error deleting from database", err);
+        res.status(500).json({ message: "取消收藏失敗" });
+      } else {
+        res.json({ message: "取消收藏成功" });
+      }
+    });
+  }
+});
 
 ////////////////////////////////////////商品搜索頁
 app.get("/api/products", (req, res) => {
@@ -161,7 +201,8 @@ app.get("/api/product/:id", (req, res) => {
   let sql = "SELECT * FROM product WHERE product_uid = ?";
   db.query(sql, [req.params.id], (err, result) => {
     if (err) throw err;
-    let sql2 = "SELECT * FROM product WHERE related = ? ORDER BY RAND() LIMIT 5";
+    let sql2 =
+      "SELECT * FROM product WHERE related = ? ORDER BY RAND() LIMIT 5";
     db.query(sql2, [result[0].related], (err2, result2) => {
       if (err2) throw err2;
       let sql3 = `
@@ -173,41 +214,65 @@ app.get("/api/product/:id", (req, res) => {
       db.query(sql3, [req.params.id], (err3, result3) => {
         if (err3) throw err3;
         // 將產品、推薦的產品和留言一起傳遞給前端
-        res.json({ items: result[0], recommendations: result2, comments: result3 });
+        res.json({
+          items: result[0],
+          recommendations: result2,
+          comments: result3,
+        });
       });
     });
   });
 });
 
 ///////////////////////////////////獲取購物車的內容將他倒入資料庫
-app.post('/api/orders', (req, res) => {
+app.post("/api/orders", (req, res) => {
   const { order_id, user, address, payment, cart } = req.body;
 
-  const orderQuery = 'INSERT INTO orders (order_id, user, who, phone, mail, zip, city, district, road, number, payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-  const orderValues = [order_id, user, address.who, address.phone, address.mail, address.zip, address.city, address.district, address.road, address.number, payment];
+  const orderQuery =
+    "INSERT INTO orders (order_id, user, who, phone, mail, zip, city, district, road, number, payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  const orderValues = [
+    order_id,
+    user,
+    address.who,
+    address.phone,
+    address.mail,
+    address.zip,
+    address.city,
+    address.district,
+    address.road,
+    address.number,
+    payment,
+  ];
 
   db.query(orderQuery, orderValues, (err, result) => {
     if (err) {
-      res.status(500).send('Error inserting order');
+      res.status(500).send("Error inserting order");
       return;
     }
 
-    const orderItemsQuery = 'INSERT INTO order_items (order_id, product_uid, product_title, product_price, product_quantity) VALUES ?';
-    const orderItemsValues = cart.map(item => [order_id, item.product_uid, item.product_title, item.product_price, item.product_quantity]);
+    const orderItemsQuery =
+      "INSERT INTO order_items (order_id, product_uid, product_title, product_price, product_quantity) VALUES ?";
+    const orderItemsValues = cart.map((item) => [
+      order_id,
+      item.product_uid,
+      item.product_title,
+      item.product_price,
+      item.product_quantity,
+    ]);
 
     db.query(orderItemsQuery, [orderItemsValues], (err, result) => {
       if (err) {
-        res.status(500).send('Error inserting order items');
+        res.status(500).send("Error inserting order items");
         return;
       }
 
-      res.status(200).send('Order placed successfully');
+      res.status(200).send("Order placed successfully");
     });
   });
 });
 
 /////////////////////////////////////編輯個人資料
-app.post('/api/updateUserInfo', (req, res) => {
+app.post("/api/updateUserInfo", (req, res) => {
   const userInfo = req.body;
 
   const query = `
@@ -216,24 +281,28 @@ app.post('/api/updateUserInfo', (req, res) => {
     WHERE user_account = ?
   `;
 
-  db.query(query, [
-    userInfo.realName,
-    userInfo.email,
-    userInfo.phone,
-    userInfo.city,
-    userInfo.district,
-    userInfo.road,
-    userInfo.number,
-    userInfo.zipCode,
-    userInfo.account
-  ], (err, result) => {
-    if (err) {
-      console.error("Error updating database", err);
-      res.status(500).json({ message: "更新失敗" });
-    } else {
-      res.status(200).json({ message: "更新成功" });
+  db.query(
+    query,
+    [
+      userInfo.realName,
+      userInfo.email,
+      userInfo.phone,
+      userInfo.city,
+      userInfo.district,
+      userInfo.road,
+      userInfo.number,
+      userInfo.zipCode,
+      userInfo.account,
+    ],
+    (err, result) => {
+      if (err) {
+        console.error("Error updating database", err);
+        res.status(500).json({ message: "更新失敗" });
+      } else {
+        res.status(200).json({ message: "更新成功" });
+      }
     }
-  });
+  );
 });
 
 //////////////////////////////////////////////以上是給前端的api

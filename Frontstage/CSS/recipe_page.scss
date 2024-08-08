@@ -63,6 +63,7 @@ a {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
+
     .rating {
       width: 400px;
       display: flex;
@@ -126,6 +127,11 @@ a {
         padding: 3px 15px;
       }
     }
+
+    .label_like {
+      cursor: pointer;
+    }
+
     .bi {
       display: none;
       width: 30px;

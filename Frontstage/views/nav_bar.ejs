@@ -9,45 +9,42 @@
   </head>
   <script>
     $(document).ready(function () {
-      $('#search_toggle').change(function () {
+      $("#search_toggle").change(function () {
         if (this.checked) {
-          $('.link_bar').css('margin-right', '0px');
+          $(".link_bar").css("margin-right", "0px");
         } else {
-          $('.link_bar').css('margin-right', '-100px');
+          $(".link_bar").css("margin-right", "-100px");
         }
       });
-      $('.search_button').on('click', function (p){
-        sessionStorage.setItem('searchFromNav', $('.search_input').val());
-        p.preventDefault()
+      $(".search_button").on("click", function (p) {
+        sessionStorage.setItem("searchFromNav", $(".search_input").val());
+        p.preventDefault();
         $.ajax({
           url: "/turning",
           method: "post",
           data: {
-            select: $('select').val(),
-            searchInput: $('.search_input').val() 
+            select: $("select").val(),
+            searchInput: $(".search_input").val(),
           },
-          success: function(res) {
+          success: function (res) {
             window.location = res.reUrl;
-          }
-        })
-      })
-    
+          },
+        });
+      });
 
-      const user = JSON.parse(sessionStorage.getItem('user'));
-  // 在控制台中輸出用戶資料
-  console.log('導覽列抓到:', user ? user.account : '未登入', user ? user.username : '');
+      const user = JSON.parse(sessionStorage.getItem("user"));
 
-  // 動態改變導覽列
-  if (user) {
-    console.log('User is logged in'); // 調試信息
-    $('.login_btn').attr('href', '/user_page').text('個人頁面').removeClass('login_btn');
-  } else {
-    console.log('User is not logged in'); // 調試信息
-  }
-  });
-
-
-
+      // 動態改變導覽列
+      if (user) {
+        console.log("User is logged in"); // 調試信息
+        $(".login_btn")
+          .attr("href", "/user_page")
+          .text("個人頁面")
+          .removeClass("login_btn");
+      } else {
+        console.log("User is not logged in"); // 調試信息
+      }
+    });
   </script>
   <body>
     <nav id="nav_bar">
@@ -62,7 +59,10 @@
         <div class="link_bar">
           <a href="/recipe_section">探索食譜</a>
           <a href="/product_section">產品介紹</a>
-          <a href="/payment">購物車 <span id="brackets">(<span id="nav_cart_count">0</span>)</span></a>
+          <a href="/payment"
+            >購物車
+            <span id="brackets">(<span id="nav_cart_count">0</span>)</span></a
+          >
           <a class="login_btn" href="/login">會員登入</a>
         </div>
         <div class="search_bar">

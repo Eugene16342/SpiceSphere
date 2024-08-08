@@ -32,21 +32,6 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-///////////////檢查是否已經登入(不確定有無作用)
-// app.use((req, res, next) => {
-//   res.locals.username = req.session.username || null;
-//   next();
-// });
-
-////////////////檢查是否登入
-// function isAuthenticated(req, res, next) {
-//   if (req.session.user) {
-//     return next();
-//   } else {
-//     res.redirect('/login');
-//   }
-// }
-
 // 用戶資訊頁面路由
 app.get("/user_page", (req, res) => {
   const user = req.session.user;

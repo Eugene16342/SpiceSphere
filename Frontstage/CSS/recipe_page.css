@@ -114,6 +114,9 @@ a {
   border-radius: 25px;
   padding: 3px 15px;
 }
+#recipe_info .info_rating .label_like {
+  cursor: pointer;
+}
 #recipe_info .info_rating .bi {
   display: none;
   width: 30px;
