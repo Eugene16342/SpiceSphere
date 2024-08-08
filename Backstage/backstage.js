@@ -172,6 +172,34 @@ app.get("/api/product/:id", (req, res) => {
     });
   });
 });
+
+///////////////////////////////////獲取購物車的內容將他倒入資料庫
+app.post('/api/orders', (req, res) => {
+  const { order_id, user, address, payment, cart } = req.body;
+
+  const orderQuery = 'INSERT INTO orders (order_id, user, who, phone, mail, zip, city, district, road, number, payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  const orderValues = [order_id, user, address.who, address.phone, address.mail, address.zip, address.city, address.district, address.road, address.number, payment];
+
+  db.query(orderQuery, orderValues, (err, result) => {
+    if (err) {
+      res.status(500).send('Error inserting order');
+      return;
+    }
+
+    const orderItemsQuery = 'INSERT INTO order_items (order_id, product_uid, product_title, product_price, product_quantity) VALUES ?';
+    const orderItemsValues = cart.map(item => [order_id, item.product_uid, item.product_title, item.product_price, item.product_quantity]);
+
+    db.query(orderItemsQuery, [orderItemsValues], (err, result) => {
+      if (err) {
+        res.status(500).send('Error inserting order items');
+        return;
+      }
+
+      res.status(200).send('Order placed successfully');
+    });
+  });
+});
+
 //////////////////////////////////////////////以上是給前端的api
 
 ////////////////////////////////////////////以下是後端路由

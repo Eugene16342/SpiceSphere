@@ -42,6 +42,7 @@ input {
 
 #container {
   width: 100%;
+  min-height: 87.5vh;
   margin-top: 50px;
   display: flex;
   justify-content: space-around;
@@ -108,6 +109,8 @@ input {
   padding: 30px 40px;
 }
 #container .cart .cart_item {
+  max-height: 360px;
+  overflow: auto;
   margin-bottom: 50px;
 }
 #container .cart .cart_item .card {

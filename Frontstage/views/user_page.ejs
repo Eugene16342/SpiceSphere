@@ -10,23 +10,6 @@
   </head>
   <script>
     $(document).ready(function () {
-      function updateNavBarCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const cartCount = cart.length;
-  if (cartCount === 0) {
-    $('#brackets').hide();
-  } else {
-    $('#nav_cart_count').text(cartCount);
-    $('#brackets').show();
-  }
-}
-
-      // 初始化 nav_bar 購物車數量
-      updateNavBarCartCount();
-
-// 初始化購物車數量
-updateCartCount();
-updateNavBarCartCount();
       // 頁面載入時隱藏所有區塊
       function hideSections() {
         $("#edit").hide();
@@ -78,12 +61,26 @@ updateNavBarCartCount();
       if (user) {
         $(".greeting").text(`您好，${user.username}`);
       }
-      // 在控制台中輸出用戶資料
-      console.log(
-        "用戶頁:",
-        user ? user.account : "未登入",
-        user ? user.username : ""
-      );
+
+
+      function updateNavBarCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = cart.length;
+  if (cartCount === 0) {
+    $('#brackets').hide();
+  } else {
+    $('#nav_cart_count').text(cartCount);
+    $('#brackets').show();
+  }
+}
+
+      // 初始化 nav_bar 購物車數量
+      updateNavBarCartCount();
+
+// 初始化購物車數量
+updateCartCount();
+updateNavBarCartCount();
+
     });
   </script>
   <body>

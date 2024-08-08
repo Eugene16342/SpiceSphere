@@ -9,38 +9,160 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
 </head>
 <script>
-    $(document).ready(function() {
-      // 更新購物車數量
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  $('#cart_count').text(cart.length);
-}
+$(document).ready(function() {
+  // 更新購物車數量
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    $('#cart_count').text(cart.length);
+  }
 
-// 更新 nav_bar 購物車數量
-function updateNavBarCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  $('#nav_cart_count').text(cart.length);
-}
+  // 更新 nav_bar 購物車數量
+  function updateNavBarCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = cart.length;
+    if (cartCount === 0) {
+      $('#brackets').hide();
+    } else {
+      $('#nav_cart_count').text(cartCount);
+      $('#brackets').show();
+    }
+  }
 
-// 初始化購物車數量
-updateCartCount();
-updateNavBarCartCount();
+  // 渲染購物車內容
+  function renderCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = $('.cart_item');
+    cartContainer.empty(); // 清空現有的購物車內容
+
+    let totalAmount = 0;
+    const shippingFee = 100;
+
+    cart.forEach((item, index) => {
+      const itemTotal = item.product_price * item.product_quantity;
+      totalAmount += itemTotal;
+
+      const cartItem = `
+        <div class="card">
+          <div class="order">${index + 1}</div>
+          <a href=""> <img src="../../img/product/product${item.product_uid}.jpg"></a>
+          <div class="card_info">
+            <a href=""><div>${item.product_title}</div></a>
+            <div class="price">$ ${item.product_price}</div>
+          </div>
+          <div class="card_btn">
+            <div class="btn_btn">
+              <button class="munis">-</button>
+              <span class="product_quanity">${item.product_quantity}</span>
+              <button class="add">+</button>
+            </div>
+          </div>
+        </div>
+      `;
+      cartContainer.append(cartItem);
+    });
+
+    // 更新商品總金額和運費
+    $('.money div:nth-child(1) span:last-child').text(`$ ${totalAmount}`);
+    $('.money div:nth-child(2) span:last-child').text(`$ ${shippingFee}`);
+    $('.money .total span:last-child').text(`$ ${totalAmount + shippingFee}`);
+
+    // 同步更新 nav_bar 購物車數量
+    updateNavBarCartCount();
+  }
+
+  // 初始化購物車數量和內容
+  updateCartCount();
+  updateNavBarCartCount();
+  renderCart();
+
   // 監聽 .add 按鈕的點擊事件
-  $('.card').on('click', '.add', function() {
-    var quantityElement = $(this).siblings('.product_quanity');
-    var quantity = parseInt(quantityElement.text(), 10);
-    quantityElement.text(quantity + 1);
+  $(document).on('click', '.add', function() {
+    const index = $(this).closest('.card').index();
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart[index].product_quantity += 1;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
   });
 
   // 監聽 .munis 按鈕的點擊事件
-  $('.card').on('click', '.munis', function() {
-    var quantityElement = $(this).siblings('.product_quanity');
-    var quantity = parseInt(quantityElement.text(), 10);
-    if (quantity > 0) {
-      quantityElement.text(quantity - 1);
+  $(document).on('click', '.munis', function() {
+    const index = $(this).closest('.card').index();
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart[index].product_quantity > 1) {
+      cart[index].product_quantity -= 1;
+    } else {
+      cart.splice(index, 1); // 如果數量為 1，則從購物車中移除該商品
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  });
+
+  // 生成隨機 order_id
+  function generateOrderId() {
+    return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+  }
+
+  // 監聽結帳按鈕的點擊事件
+  $('#pay').on('click', function() {
+    const user = JSON.parse(sessionStorage.getItem('user')); // 解析 JSON 字符串
+    if (!user) {
+      // 如果沒有登入，導向登入頁面
+      window.location.href = '/login_page';
+    } else {
+      // 檢查收件地址和付款方式是否填寫
+      const who = $('#who').val().trim();
+      const phone = $('#phone').val().trim();
+      const mail = $('#mail').val().trim();
+      const zip = $('#zip').val().trim();
+      const city = $('#city').val().trim();
+      const district = $('#district').val().trim();
+      const road = $('#road').val().trim();
+      const number = $('#number').val().trim();
+      const payment = $('input[name="payment"]:checked').val();
+
+      if (!who || !phone || !mail || !zip || !city || !district || !road || !number || !payment) {
+        alert('請填寫完整的收件地址和選擇付款方式');
+      } else {
+        // 已經登入且填寫完整，將資訊發送到後端
+        const orderId = generateOrderId();
+        const orderData = {
+          order_id: orderId,
+          user: user.account,
+          address: {
+            who: who,
+            phone: phone,
+            mail: mail,
+            zip: zip,
+            city: city,
+            district: district,
+            road: road,
+            number: number
+          },
+          payment: payment,
+          cart: JSON.parse(localStorage.getItem('cart'))
+        };
+
+        $.ajax({
+          url: 'http://localhost:3000/api/orders',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(orderData),
+          success: function(response) {
+            alert(`結帳成功！您的訂單單號是：${orderId}`);
+            // 清空購物車
+            localStorage.removeItem('cart');
+            renderCart();
+          },
+          error: function(error) {
+            alert('結帳失敗，請稍後再試');
+          }
+        });
+      }
     }
   });
 });
+
+
 </script>
 <body>
     <%- include('nav_bar') %>
@@ -66,8 +188,8 @@ updateNavBarCartCount();
                       <input id="mail">
                     </div>
                     <div class="group"> 
-                      <label for="where">郵遞區號</label>
-                      <input id="where">
+                      <label for="zip">郵遞區號</label>
+                      <input id="zip">
                     </div>
 
                 </div>
@@ -97,69 +219,24 @@ updateNavBarCartCount();
 
               <div class="title">付款方式</div>
             <div class="payment">
-                <div class="payment_chose">
-                    <div><input type="radio" name="payment" id="cash"> <label for="cash">貨到付款</label></div>
-                    <div><input type="radio" name="payment" id="credit"> <label for="credit">信用卡</label></div>
-                    <div><input type="radio" name="payment" id="credit2"> <label for="credit2">信用卡分期</label></div>
-                    <div><input type="radio" name="payment" id="jk"> <label for="jk">街口支付</label></div>
-                </div>
+              <div class="payment_chose">
+                <div><input type="radio" name="payment" id="cash" value="cash"> <label for="cash">貨到付款</label></div>
+                <div><input type="radio" name="payment" id="credit" value="credit"> <label for="credit">信用卡</label></div>
+                <div><input type="radio" name="payment" id="credit2" value="credit2"> <label for="credit2">信用卡分期</label></div>
+                <div><input type="radio" name="payment" id="jk" value="jk"> <label for="jk">街口支付</label></div>
+              </div>
             </div>
         </div>
         <div class="cart_section">
             <div class="title">購物車</div>
             <div class="cart">
                 <div class="cart_item">
-                    <div class="card">
-                        <div class="order">1</div>
-                        <a href=""> <img src="../../img/product/product15.jpg"></a>
-                        <div class="card_info">
-                                <a href=""><div>好吃好吃好吃</div></a>
-                                <div class="price">$ 9999</div>
-                        </div>
-                        <div class="card_btn">
-                            <div class="btn_btn">
-                              <button class="munis">-</button
-                              ><span class="product_quanity">0</span
-                              ><button class="add">+</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card">
-                        <div class="order">1</div>
-                        <a href=""> <img src="../../img/product/product15.jpg"></a>
-                        <div class="card_info">
-                                <a href=""><div>好吃好吃好吃</div></a>
-                                <div class="price">$ 9999</div>
-                        </div>
-                        <div class="card_btn">
-                            <div class="btn_btn">
-                              <button class="munis">-</button
-                              ><span class="product_quanity">0</span
-                              ><button class="add">+</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card">
-                        <div class="order">12</div>
-                        <a href=""> <img src="../../img/product/product15.jpg"></a>
-                        <div class="card_info">
-                                <a href=""><div>好吃好吃好吃</div></a>
-                                <div class="price">$ 9999</div>
-                        </div>
-                        <div class="card_btn">
-                            <div class="btn_btn">
-                              <button class="munis">-</button
-                              ><span class="product_quanity">0</span
-                              ><button class="add">+</button>
-                        </div>
-                      </div>
-                    </div>
                 </div>
 
                 <div class="money">
-                    <div><span>商品總金額</span> <span>$ 123</span></div>
-                    <div><span>運費總金額</span> <span>$ 123</span></div>
-                    <div class="total"><span>付款金額</span> <span>$ 123</span></div>
+                    <div><span>商品總金額</span> <span></span></div>
+                    <div><span>運費總金額</span> <span></span></div>
+                    <div class="total"><span>付款金額</span> <span></span></div>
                   </div>
 
                 <button id="pay">結帳</button>

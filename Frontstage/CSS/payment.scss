@@ -43,6 +43,7 @@ body {
   }
   #container{
     width: 100%;
+    min-height: 87.5vh;
     margin-top: 50px;
     display: flex;
     justify-content: space-around;
@@ -115,6 +116,8 @@ body {
       background-color: var(--text_withe);
       padding: 30px 40px;        
       .cart_item{
+        max-height: 360px;
+        overflow: auto;
         margin-bottom: 50px;
         .card{
           display: flex;
