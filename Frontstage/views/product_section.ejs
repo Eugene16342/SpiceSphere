@@ -10,6 +10,20 @@
   </head>
   <script>
 window.onload = () => {
+  function updateNavBarCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = cart.length;
+  if (cartCount === 0) {
+    $('#brackets').hide();
+  } else {
+    $('#nav_cart_count').text(cartCount);
+    $('#brackets').show();
+  }
+}
+
+      // 初始化 nav_bar 購物車數量
+      updateNavBarCartCount();
+
   const searchFromNav = sessionStorage.getItem('searchFromNav')
         if (searchFromNav) {
           $("#search_input").val(searchFromNav);
@@ -198,7 +212,6 @@ window.onload = () => {
         <% items.forEach(function(product) { %>
         <div class="card" value="<%= product.related_name %>">
           <a
-            target="_blank"
             href="/product_section/product_page/<%= product.product_uid %>"
           >
             <div class="card_img">

@@ -8,6 +8,24 @@
     <link rel="icon" href="../../img/common/favicon.ico" />
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
+  <script>
+     $(document).ready(function () {
+      
+      function updateNavBarCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = cart.length;
+  if (cartCount === 0) {
+    $('#brackets').hide();
+  } else {
+    $('#nav_cart_count').text(cartCount);
+    $('#brackets').show();
+  }
+}
+
+      // 初始化 nav_bar 購物車數量
+      updateNavBarCartCount();
+     })
+  </script>
   <body>
     <%- include('nav_bar') %>
     <div id="recipe_info">

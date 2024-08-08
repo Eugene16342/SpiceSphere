@@ -32,6 +32,7 @@
         })
       })
     
+
       const user = JSON.parse(sessionStorage.getItem('user'));
   // 在控制台中輸出用戶資料
   console.log('導覽列抓到:', user ? user.account : '未登入', user ? user.username : '');
@@ -44,6 +45,9 @@
     console.log('User is not logged in'); // 調試信息
   }
   });
+
+
+
   </script>
   <body>
     <nav id="nav_bar">
@@ -58,7 +62,7 @@
         <div class="link_bar">
           <a href="/recipe_section">探索食譜</a>
           <a href="/product_section">產品介紹</a>
-          <a href="/payment">購物車</a>
+          <a href="/payment">購物車 <span id="brackets">(<span id="nav_cart_count">0</span>)</span></a>
           <a class="login_btn" href="/login">會員登入</a>
         </div>
         <div class="search_bar">

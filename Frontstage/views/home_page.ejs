@@ -10,6 +10,22 @@
   </head>
   <script>
     $(document).ready(function () {
+
+      
+      function updateNavBarCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = cart.length;
+  if (cartCount === 0) {
+    $('#brackets').hide();
+  } else {
+    $('#nav_cart_count').text(cartCount);
+    $('#brackets').show();
+  }
+}
+
+      // 初始化 nav_bar 購物車數量
+      updateNavBarCartCount();
+      
       const user = JSON.parse(sessionStorage.getItem("user"));
       // 在控制台中輸出用戶資料
       console.log("主頁抓到:", user.account, user.username);

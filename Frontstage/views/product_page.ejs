@@ -9,6 +9,8 @@
     <script src="/Backstage/jquery/jquery-3.7.1.min.js"></script>
   </head>
   <script>
+
+
 $(document).ready(function () {
   $(".add").click(function () {
     var quantity = parseInt($(".product_quanity").text());
@@ -58,7 +60,54 @@ $(document).ready(function () {
   $(window).resize(function() {
     showSlide(currentIndex); // 當窗口大小改變時重新計算偏移量
   });
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    $('#cart_count').text(cart.length);
+  }
+
+  function updateNavBarCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = cart.length;
+    if (cartCount === 0) {
+      $('#brackets').hide();
+    } else {
+      $('#nav_cart_count').text(cartCount);
+      $('#brackets').show();
+    }
+  }
+
+  // 初始化購物車數量
+  updateCartCount();
+  updateNavBarCartCount();
+
+  // 點擊 "放入購物車" 按鈕
+  $('.btn_text').on('click', function () {
+    const product = {
+      product_uid: '<%= items.product_uid %>',
+      product_title: '<%= items.product_title %>',
+      product_price: '<%= items.price %>',
+      product_quantity: parseInt($('.product_quanity').text(), 10),
+    };
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // 更新購物車數量
+    updateCartCount();
+    updateNavBarCartCount();
+
+    // 跳出訊息說加入成功
+    alert('加入購物車成功！');
+
+    // 商品數量歸零
+    $('.product_quanity').text(0);
+  });
 });
+
+
+
 
 
   </script>

@@ -10,6 +10,21 @@
 </head>
 <script>
     $(document).ready(function() {
+      // 更新購物車數量
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  $('#cart_count').text(cart.length);
+}
+
+// 更新 nav_bar 購物車數量
+function updateNavBarCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  $('#nav_cart_count').text(cart.length);
+}
+
+// 初始化購物車數量
+updateCartCount();
+updateNavBarCartCount();
   // 監聽 .add 按鈕的點擊事件
   $('.card').on('click', '.add', function() {
     var quantityElement = $(this).siblings('.product_quanity');

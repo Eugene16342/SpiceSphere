@@ -12,6 +12,23 @@
 </head>
 <script>
   $(document).ready(function () {
+    function updateNavBarCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCount = cart.length;
+  if (cartCount === 0) {
+    $('#brackets').hide();
+  } else {
+    $('#nav_cart_count').text(cartCount);
+    $('#brackets').show();
+  }
+}
+
+      // 初始化 nav_bar 購物車數量
+      updateNavBarCartCount();
+
+// 初始化購物車數量
+updateCartCount();
+updateNavBarCartCount();
     
     const searchFromNav = sessionStorage.getItem('searchFromNav')
     if (searchFromNav) {
@@ -168,7 +185,7 @@
       <% items.forEach(function(recipe) { %>
         <div class="recipe_card" data-ingredients="<%= recipe.ingredients %>" data-isKitchen="<%= recipe.isKitchen %>"
           data-when="<%= recipe.time_name %>" data-style="<%= recipe.style_name %>" data-vege="<%= recipe.is_vege %>">
-          <a target="_blank" href="/recipe_section/recipe_page/<%= recipe.recipe_uid %>">
+          <a href="/recipe_section/recipe_page/<%= recipe.recipe_uid %>">
             <img src="../../img/recipe/recipe<%= recipe.recipe_uid %>.jpg" />
           </a>
           <div class="recipe_when">
@@ -177,7 +194,7 @@
           <div class="recipe_title">
             <%= recipe.recipe_title %>
           </div>
-          <a target="_blank" href="/recipe_section/recipe_page/<%= recipe.recipe_uid %>" class="recipe_describe">
+          <a  href="/recipe_section/recipe_page/<%= recipe.recipe_uid %>" class="recipe_describe">
             <%= recipe.full_describe %>
           </a>
         </div>
