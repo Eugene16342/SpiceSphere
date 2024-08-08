@@ -88,7 +88,13 @@ app.post("/api/login", (req, res) => {
       req.session.user = {
         account: results[0].user_account,
         username: results[0].user_name,
-        email: results[0].e_mail
+        email: results[0].e_mail,
+        phone:results[0].phone,
+        city:results[0].city,
+        district:results[0].district,
+        road:results[0].road,
+        number:results[0].number,
+        zip:results[0].zip
       };
       console.log("Session user:", req.session.user); // 確認 session 是否正確儲存
       res.json({ message: "登入成功", user: req.session.user }); // 返回用戶資料
@@ -197,6 +203,36 @@ app.post('/api/orders', (req, res) => {
 
       res.status(200).send('Order placed successfully');
     });
+  });
+});
+
+/////////////////////////////////////編輯個人資料
+app.post('/api/updateUserInfo', (req, res) => {
+  const userInfo = req.body;
+
+  const query = `
+    UPDATE member 
+    SET user_name = ?, e_mail = ?, phone = ?, city = ?, district = ?, road = ?, number = ?, zip = ?
+    WHERE user_account = ?
+  `;
+
+  db.query(query, [
+    userInfo.realName,
+    userInfo.email,
+    userInfo.phone,
+    userInfo.city,
+    userInfo.district,
+    userInfo.road,
+    userInfo.number,
+    userInfo.zipCode,
+    userInfo.account
+  ], (err, result) => {
+    if (err) {
+      console.error("Error updating database", err);
+      res.status(500).json({ message: "更新失敗" });
+    } else {
+      res.status(200).json({ message: "更新成功" });
+    }
   });
 });
 

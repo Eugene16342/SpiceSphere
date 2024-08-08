@@ -60,6 +60,16 @@
       const user = JSON.parse(sessionStorage.getItem("user"));
       if (user) {
         $(".greeting").text(`您好，${user.username}`);
+          // 將用戶資料填充到對應的欄位中
+    $("#user_real_name").val(user.username);
+    $("#who").val(user.username);
+    $("#user_phone").val(user.phone);
+    $("#user_email").val(user.email);
+    $("#city").val(user.city);
+    $("#district").val(user.district);
+    $("#road").val(user.road);
+    $("#number").val(user.number);
+    $("#zip_code").val(user.zip);
       }
 
 
@@ -80,6 +90,35 @@
 // 初始化購物車數量
 updateCartCount();
 updateNavBarCartCount();
+
+$("#info_section").on("click", "#edit_check", function () {
+        console.log("qq");
+        const userInfo = {
+          account: user.account, // 從 sessionStorage 中獲取用戶帳號
+          username: $("#who").val(),
+          phone: $("#phone").val(),
+          email: $("#mail").val(),
+          city: $("#city").val(),
+          district: $("#district").val(),
+          road: $("#road").val(),
+          number: $("#number").val(),
+          zip: $("#zip").val(),
+        };
+
+        // 發送資料到後端
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3001/api/updateUserInfo",
+          data: JSON.stringify(userInfo),
+          contentType: "application/json",
+          success: function (response) {
+            alert("資料已更新");
+          },
+          error: function (error) {
+            alert("更新失敗，請稍後再試");
+          },
+        });
+      });
 
     });
   </script>
@@ -103,45 +142,22 @@ updateNavBarCartCount();
 
     <div id="info_section">
       <div id="edit">
-        <div class="section">
-          <div class="title">帳號資訊</div>
-          <div class="info_input">
-            <label for="user_name">名稱</label
-            ><input id="user_name" maxlength="10" />
-          </div>
-
-          <div class="info_input">
-            <label for="user_account">帳號</label
-            ><input id="user_account" readonly />
-          </div>
-
-          <div class="info_input">
-            <label for="user_password">密碼</label
-            ><input id="user_password" maxlength="20" />
-          </div>
-
-          <div class="info_input">
-            <label for="user_password_check">確認密碼</label
-            ><input id="user_password_check" maxlength="20" />
-          </div>
-          <button>確認更改</button>
-        </div>
-
+ 
         <div class="section">
           <div class="title">收件資訊</div>
           <div class="info_input">
-            <label for="user_real_name">收件人</label
-            ><input id="user_real_name" maxlength="10" />
+            <label for="who">收件人</label
+            ><input id="who" maxlength="10" />
           </div>
 
           <div class="info_input">
-            <label for="user_phone">連絡電話</label
-            ><input id="user_phone" maxlength="10" />
+            <label for="phone">連絡電話</label
+            ><input id="phone" maxlength="10" />
           </div>
 
           <div class="info_input">
-            <label for="user_email">電子信箱</label
-            ><input id="user_email" maxlength="30" />
+            <label for="mail">電子信箱</label
+            ><input id="mail" maxlength="30" />
           </div>
 
           <div class="info_input">
@@ -159,11 +175,11 @@ updateNavBarCartCount();
           </div>
 
           <div class="info_input">
-            <label for="zip_code">郵遞區號</label
-            ><input id="zip_code" maxlength="20" />
+            <label for="zip">郵遞區號</label
+            ><input id="zip" maxlength="20" />
           </div>
 
-          <button>確認更改</button>
+          <button id="edit_check">確認更改</button>
         </div>
       </div>
 
