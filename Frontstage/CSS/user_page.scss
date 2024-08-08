@@ -165,17 +165,41 @@ span {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 10px;
+    position: relative;
+    &::after {
+      position: absolute;
+      bottom: -5px;
+      left: 50;
+      right: 50;
+      content: "";
+      height: 2px;
+      width: 90%;
+      background-color: var(--border_gray);
+    }
     img {
       width: 150px;
       height: 150px;
       object-fit: cover;
       border-radius: 4px;
+      user-select: none;
     }
 
     span {
       margin: auto;
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
+    }
+    .recipe_name {
+      width: 10%;
+      a {
+        &:hover {
+          color: var(--main_orange);
+        }
+      }
+    }
+    .recipe_describe {
+      width: 30%;
     }
   }
 }

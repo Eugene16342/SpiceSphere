@@ -60,38 +60,19 @@
       const user = JSON.parse(sessionStorage.getItem("user"));
       if (user) {
         $(".greeting").text(`您好，${user.username}`);
-          // 將用戶資料填充到對應的欄位中
-    $("#user_real_name").val(user.username);
-    $("#who").val(user.username);
-    $("#user_phone").val(user.phone);
-    $("#user_email").val(user.email);
-    $("#city").val(user.city);
-    $("#district").val(user.district);
-    $("#road").val(user.road);
-    $("#number").val(user.number);
-    $("#zip_code").val(user.zip);
+        // 將用戶資料填充到對應的欄位中
+        $("#user_real_name").val(user.username);
+        $("#who").val(user.username);
+        $("#user_phone").val(user.phone);
+        $("#user_email").val(user.email);
+        $("#city").val(user.city);
+        $("#district").val(user.district);
+        $("#road").val(user.road);
+        $("#number").val(user.number);
+        $("#zip_code").val(user.zip);
       }
 
-
-      function updateNavBarCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const cartCount = cart.length;
-  if (cartCount === 0) {
-    $('#brackets').hide();
-  } else {
-    $('#nav_cart_count').text(cartCount);
-    $('#brackets').show();
-  }
-}
-
-      // 初始化 nav_bar 購物車數量
-      updateNavBarCartCount();
-
-// 初始化購物車數量
-updateCartCount();
-updateNavBarCartCount();
-
-$("#info_section").on("click", "#edit_check", function () {
+      $("#info_section").on("click", "#edit_check", function () {
         console.log("qq");
         const userInfo = {
           account: user.account, // 從 sessionStorage 中獲取用戶帳號
@@ -120,6 +101,78 @@ $("#info_section").on("click", "#edit_check", function () {
         });
       });
 
+      // 獲取用戶收藏的食譜
+      $.ajax({
+        url: "http://localhost:3000/api/user_favorites",
+        method: "GET",
+        data: { user_uid: user.account },
+        success: function (data) {
+          const likeRecipeContainer = $("#like_recipe");
+          likeRecipeContainer.empty();
+
+          data.forEach((recipe) => {
+            const recipeCard = `
+            <div class="recipe_card" data-recipe_uid="${recipe.recipe_uid} >
+              <span >
+                <a href="/recipe_section/recipe_page/${recipe.recipe_uid}">
+                  <img src="../../img/recipe/recipe${recipe.recipe_uid}.jpg" />
+                </a>
+              </span >
+              <span class="recipe_name">
+                <a href="/recipe_section/recipe_page/${recipe.recipe_uid}">
+                  ${recipe.recipe_title}
+                </a>
+              </span>
+              <span class="recipe_describe">${recipe.part_describe}</span>
+              <span class="btn del_btn">刪除按鈕</span>
+            </div>
+          `;
+            likeRecipeContainer.append(recipeCard);
+          });
+          // 刪除收藏功能
+          $(".del_btn").on("click", function () {
+            const recipeCard = $(this).closest(".recipe_card");
+            const recipe_uid = recipeCard.data("recipe_uid");
+
+            $.ajax({
+              url: "http://localhost:3000/api/favorite",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({
+                user_account: user.account,
+                recipe_uid: recipe_uid,
+                action: "remove",
+              }),
+              success: function (data) {
+                alert(data.message);
+                if (data.message === "取消收藏成功") {
+                  recipeCard.remove();
+                }
+              },
+              error: function (err) {
+                console.error("Error:", err);
+              },
+            });
+          });
+        },
+        error: function (err) {
+          console.error("Error:", err);
+        },
+      });
+
+      function updateNavBarCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartCount = cart.length;
+        if (cartCount === 0) {
+          $("#brackets").hide();
+        } else {
+          $("#nav_cart_count").text(cartCount);
+          $("#brackets").show();
+        }
+      }
+
+      // 初始化 nav_bar 購物車數量
+      updateNavBarCartCount();
     });
   </script>
   <body>
@@ -142,12 +195,10 @@ $("#info_section").on("click", "#edit_check", function () {
 
     <div id="info_section">
       <div id="edit">
- 
         <div class="section">
           <div class="title">收件資訊</div>
           <div class="info_input">
-            <label for="who">收件人</label
-            ><input id="who" maxlength="10" />
+            <label for="who">收件人</label><input id="who" maxlength="10" />
           </div>
 
           <div class="info_input">
@@ -156,8 +207,7 @@ $("#info_section").on("click", "#edit_check", function () {
           </div>
 
           <div class="info_input">
-            <label for="mail">電子信箱</label
-            ><input id="mail" maxlength="30" />
+            <label for="mail">電子信箱</label><input id="mail" maxlength="30" />
           </div>
 
           <div class="info_input">
@@ -175,8 +225,7 @@ $("#info_section").on("click", "#edit_check", function () {
           </div>
 
           <div class="info_input">
-            <label for="zip">郵遞區號</label
-            ><input id="zip" maxlength="20" />
+            <label for="zip">郵遞區號</label><input id="zip" maxlength="20" />
           </div>
 
           <button id="edit_check">確認更改</button>
@@ -191,28 +240,8 @@ $("#info_section").on("click", "#edit_check", function () {
             /></a>
           </span>
           <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
-          <span>星星</span>
-          <span>tag</span>
-        </div>
-        <div class="recipe_card">
-          <span>
-            <a href="/recipe_section/recipe_page/1"
-              ><img src="../../img/recipe/recipe12.jpg"
-            /></a>
-          </span>
-          <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
-          <span>星星</span>
-          <span>tag</span>
-        </div>
-        <div class="recipe_card">
-          <span>
-            <a href="/recipe_section/recipe_page/1"
-              ><img src="../../img/recipe/recipe12.jpg"
-            /></a>
-          </span>
-          <span><a href="/recipe_section/recipe_page/1">菜名</a></span>
-          <span>星星</span>
-          <span>tag</span>
+          <span>簡短描述</span>
+          <span class="btn">刪除按鈕</span>
         </div>
       </div>
 

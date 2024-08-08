@@ -163,6 +163,18 @@ span {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin-bottom: 10px;
+  position: relative;
+}
+#like_recipe .recipe_card::after {
+  position: absolute;
+  bottom: -5px;
+  left: 50;
+  right: 50;
+  content: "";
+  height: 2px;
+  width: 90%;
+  background-color: var(--border_gray);
 }
 #like_recipe .recipe_card img {
   width: 150px;
@@ -170,11 +182,23 @@ span {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 4px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 #like_recipe .recipe_card span {
   margin: auto;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
+}
+#like_recipe .recipe_card .recipe_name {
+  width: 10%;
+}
+#like_recipe .recipe_card .recipe_name a:hover {
+  color: var(--main_orange);
+}
+#like_recipe .recipe_card .recipe_describe {
+  width: 30%;
 }
 
 #tracking_number_list {

@@ -224,7 +224,7 @@ app.get("/api/product/:id", (req, res) => {
   });
 });
 
-///////////////////////////////////獲取購物車的內容將他倒入資料庫
+///////////////////////////////////獲取購物車的內容將其導入資料庫
 app.post("/api/orders", (req, res) => {
   const { order_id, user, address, payment, cart } = req.body;
 
@@ -271,7 +271,9 @@ app.post("/api/orders", (req, res) => {
   });
 });
 
-/////////////////////////////////////編輯個人資料
+///////////////////////////////////////////個人頁面
+
+///////////編輯個人資料
 app.post("/api/updateUserInfo", (req, res) => {
   const userInfo = req.body;
 
@@ -303,6 +305,26 @@ app.post("/api/updateUserInfo", (req, res) => {
       }
     }
   );
+});
+
+////////////////獲取用戶的收藏食譜
+app.get("/api/user_favorites", (req, res) => {
+  const { user_uid } = req.query;
+
+  const query = `
+    SELECT r.recipe_uid, r.recipe_title, r.part_describe
+    FROM favorites f
+    JOIN recipe r ON f.recipe_uid = r.recipe_uid
+    WHERE f.user_account = ?
+  `;
+  db.query(query, [user_uid], (err, results) => {
+    if (err) {
+      console.error("Error querying database", err);
+      res.status(500).json({ message: "獲取收藏失敗" });
+    } else {
+      res.json(results);
+    }
+  });
 });
 
 //////////////////////////////////////////////以上是給前端的api
