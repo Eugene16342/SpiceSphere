@@ -61,6 +61,39 @@ $(document).ready(function () {
     showSlide(currentIndex); // 當窗口大小改變時重新計算偏移量
   });
 
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+$("#comment_btn").click(function () {
+  const commentData = {
+    account: user.account, // 傳遞帳號
+    product_uid: '<%= items.product_uid %>',
+    product_rating: $("input[name='star']:checked").val(),
+    product_comment: $("#user_text").val(),
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:3000/api/addComment",
+    data: JSON.stringify(commentData),
+    contentType: "application/json",
+    success: function (response) {
+      alert(response.message);
+      if (response.message === "新增留言成功") {
+        // 清空留言輸入框和評分
+        $("#user_text").val("");
+        $("input[name='star']").prop("checked", false);
+        location.reload(); // 刷新頁面
+      }
+    },
+    error: function (error) {
+      console.error("新增留言失敗", error);
+      alert("新增留言失敗，請稍後再試");
+    },
+  });
+});
+
+
+
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     $('#cart_count').text(cart.length);
@@ -232,7 +265,7 @@ $(document).ready(function () {
       <div class="comment_carousel">
         <div class="comment_wrapper">
           <% 
-            let filteredComments = comments.filter(comment => comment.product_rating > 4).slice(0, 3);
+            let filteredComments = comments.filter(comment => comment.product_rating >= 4).slice(0, 3);
             if (filteredComments.length === 3) {
               filteredComments.forEach(function(comment) { 
           %>
@@ -319,22 +352,22 @@ $(document).ready(function () {
         <div class="me_comment">
           <div class="comment_star">
             <input type="radio" name="star" id="comment_score5" value="5">
-            <label class="star" for="scomment_core5"></label>
+            <label class="star" for="comment_score5"></label>
 
-            <input type="radio" name="star" id="comment_score4" />
+            <input type="radio" name="star" id="comment_score4" value="4" />
             <label class="star" for="comment_score4"></label>
 
-            <input type="radio" name="star" id="comment_score3"/>
+            <input type="radio" name="star" id="comment_score3" value="3"/>
             <label class="star" for="comment_score3"></label>
 
-            <input type="radio" name="star" id="comment_score2" />
+            <input type="radio" name="star" id="comment_score2" value="2" />
             <label class="star" for="comment_score2"></label>
 
-            <input type="radio" name="star" id="comment_score1"/>
+            <input type="radio" name="star" id="comment_score1" value="1" />
             <label class="star" for="comment_score1"></label>
           </div>
           <textarea id="user_text" maxlength="200" placeholder="與其他人分享你的心得吧"></textarea>
-          <button>我要留言</button>
+          <button id="comment_btn">我要留言</button>
         </div>
 
 

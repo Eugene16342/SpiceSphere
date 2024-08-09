@@ -217,6 +217,33 @@ app.get("/api/product/:id", (req, res) => {
   });
 });
 
+//商品頁新增留言
+app.post("/api/addComment", (req, res) => {
+  const { account, product_uid, product_rating, product_comment } = req.body;
+
+  // 首先根據帳號查找 user_uid
+  const sql1 = "SELECT user_uid FROM member WHERE user_account = ?";
+  db.query(sql1, [account], (err1, result1) => {
+    if (err1) {
+      console.error("Error querying database", err1);
+      res.status(500).json({ message: "獲取用戶 UID 失敗" });
+    } else {
+      const user_uid = result1[0].user_uid;
+
+      // 然後插入新留言
+      const sql2 = "INSERT INTO product_commemt (product_uid, user_uid, product_rating, product_comment) VALUES (?, ?, ?, ?)";
+      db.query(sql2, [product_uid, user_uid, product_rating, product_comment], (err2, result2) => {
+        if (err2) {
+          console.error("Error inserting comment", err2);
+          res.status(500).json({ message: "新增留言失敗" });
+        } else {
+          res.json({ message: "新增留言成功" });
+        }
+      });
+    }
+  });
+});
+
 ///////////////////////////////////獲取購物車的內容將其導入資料庫
 app.post("/api/orders", (req, res) => {
   const { order_id, user, address, payment, cart } = req.body;
