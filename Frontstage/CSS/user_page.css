@@ -226,6 +226,18 @@ span {
 #tracking_number_list .order_details .derails_items {
   display: flex;
   justify-content: space-around;
+  position: relative;
+  margin-bottom: 10px;
+}
+#tracking_number_list .order_details .derails_items::after {
+  position: absolute;
+  bottom: -5px;
+  left: 50;
+  right: 50;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background-color: var(--border_gray);
 }
 #tracking_number_list .order_details .derails_items span {
   margin: auto;

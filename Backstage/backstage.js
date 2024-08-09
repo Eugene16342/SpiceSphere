@@ -1,4 +1,4 @@
-//安裝  express mysql ejs path body-parser multer express-sion cors nodemailer
+//安裝  express mysql ejs path body-parser multer express-sesion cors nodemailer
 const express = require("express");
 const mysql = require("mysql");
 const ejs = require("ejs");
@@ -334,6 +334,39 @@ app.get("/api/user_favorites", (req, res) => {
   });
 });
 
+//////////////////////////////////////////獲取用戶訂單資訊
+app.get("/api/getUserOrders/:account", (req, res) => {
+  const account = req.params.account; // 從路由參數中獲取帳號
+
+  const queryOrders = "SELECT * FROM orders WHERE user = ?";
+  db.query(queryOrders, [account], (err, orders) => {
+    if (err) {
+      console.error("Error querying database", err);
+      res.status(500).json({ message: "獲取訂單資料失敗" });
+    } else {
+      const orderIds = orders.map(order => order.order_id);
+      if (orderIds.length === 0) {
+        return res.json([]);
+      }
+
+      const queryOrderDetails = "SELECT * FROM order_items WHERE order_id IN (?)";
+      db.query(queryOrderDetails, [orderIds], (err, orderDetails) => {
+        if (err) {
+          console.error("Error querying database", err);
+          res.status(500).json({ message: "獲取訂單詳細資料失敗" });
+        } else {
+          const ordersWithDetails = orders.map(order => {
+            return {
+              ...order,
+              items: orderDetails.filter(item => item.order_id === order.order_id)
+            };
+          });
+          res.json(ordersWithDetails);
+        }
+      });
+    }
+  });
+});
 //////////////////////////////////////////////以上是給前端的api
 
 ////////////////////////////////////////////以下是後端路由

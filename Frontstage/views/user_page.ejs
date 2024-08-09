@@ -42,9 +42,9 @@
 
       // 訂單追蹤的滑動效果
       function toggleOrderDetails() {
-        $(".tracking_number").click(function () {
-          $(this).find(".order_details").slideToggle();
-        });
+    $("#tracking_number_list").on("click", ".tracking_number", function () {
+      $(this).find(".order_details").slideToggle();
+    });
 
         // 阻止事件冒泡
         $(".order_details").click(function (event) {
@@ -108,15 +108,9 @@ $("#info_section").on("click", "#edit_check", function () {
   });
 });
 
-// 登出按鈕點擊事件
-$(".logout").click(function () {
-  // 清除 sessionStorage 中的 user 資訊
-  sessionStorage.removeItem("user");
-  // 導向 /login 頁面
-  window.location.href = "/login";
-});
-      // 獲取用戶收藏的食譜
-      $.ajax({
+
+// 獲取用戶收藏的食譜
+$.ajax({
         url: "http://localhost:3000/api/user_favorites",
         method: "GET",
         data: { user_uid: user.account },
@@ -174,7 +168,57 @@ $(".logout").click(function () {
         },
       });
 
-      function updateNavBarCartCount() {
+
+$.ajax({
+  type: "GET",
+  url: `http://localhost:3000/api/getUserOrders/${user.account}`,
+  success: function (orders) {
+
+    // 遍歷訂單資料並生成 HTML
+    orders.forEach((order, index) => {
+      const orderHTML = `
+        <div class="tracking_number">
+          <div>
+            <span>${index + 1}、</span>
+            <span class="order_num">${order.order_id}</span>
+            <span>${order.status}</span>
+          </div>
+          <div class="order_details">
+            ${order.items.map(item => `
+              <div class="derails_items">
+                <span><img src="../../img/product/product${item.product_uid}.jpg" /></span>
+                <span>${item.product_title}</span>
+                <span>購買數量${item.product_quantity}份</span>
+                <span>商品單價${item.product_price}元</span>
+                <span>商品總價${item.product_quantity * item.product_price}元</span>
+              </div>
+            `).join('')}
+            <div class="total">
+              <span class="total_amount">商品總數量 ${order.items.reduce((sum, item) => sum + item.product_quantity, 0)} 份</span>
+              <span class="total_price">商品總價格 ${order.items.reduce((sum, item) => sum + item.product_quantity * item.product_price, 0)} 元</span>
+            </div>
+          </div>
+        </div>
+      `;
+      $("#tracking_number_list").append(orderHTML);
+    });
+  },
+  error: function (error) {
+    console.error("獲取訂單資料失敗", error);
+    alert("獲取訂單資料失敗，請稍後再試");
+  },
+});
+
+
+// 登出按鈕點擊事件
+$(".logout").click(function () {
+  // 清除 sessionStorage 中的 user 資訊
+  sessionStorage.removeItem("user");
+  // 導向 /login 頁面
+  window.location.href = "/login";
+});
+
+  function updateNavBarCartCount() {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         const cartCount = cart.length;
         if (cartCount === 0) {
@@ -184,8 +228,7 @@ $(".logout").click(function () {
           $("#brackets").show();
         }
       }
-
-      // 初始化 nav_bar 購物車數量
+// 初始化 nav_bar 購物車數量
       updateNavBarCartCount();
     });
   </script>
@@ -260,35 +303,6 @@ $(".logout").click(function () {
       </div>
 
       <div id="tracking_number_list">
-        <div class="tracking_number">
-          <div>
-            <span>index1</span>
-            <span class="order_num">隨機亂數</span>
-            <span>訂單狀態</span>
-          </div>
-
-          <div class="order_details">
-            <div class="derails_items">
-              <span><img src="../../img/product/product12.jpg" /></span>
-              <span>商品名稱</span><span>數量</span><span>商品單價</span
-              ><span>商品總價</span>
-            </div>
-            <div class="derails_items">
-              <span><img src="../../img/product/product12.jpg" /></span>
-              <span>商品名稱</span><span>數量</span><span>商品單價</span
-              ><span>商品總價</span>
-            </div>
-            <div class="derails_items">
-              <span><img src="../../img/product/product12.jpg" /></span>
-              <span>商品名稱</span><span>數量</span><span>商品單價</span
-              ><span>商品總價</span>
-            </div>
-            <div class="total">
-              <span class="total_amount">商品總數量10份</span
-              ><span class="total_price">商品總價格10000元</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
