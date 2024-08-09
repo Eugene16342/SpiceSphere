@@ -173,7 +173,7 @@ span {
   right: 50;
   content: "";
   height: 2px;
-  width: 90%;
+  width: 100%;
   background-color: var(--border_gray);
 }
 #like_recipe .recipe_card img {

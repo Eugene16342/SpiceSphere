@@ -58,49 +58,63 @@
       toggleOrderDetails();
 
       const user = JSON.parse(sessionStorage.getItem("user"));
-      if (user) {
-        $(".greeting").text(`您好，${user.username}`);
-        // 將用戶資料填充到對應的欄位中
-        $("#user_real_name").val(user.username);
-        $("#who").val(user.username);
-        $("#user_phone").val(user.phone);
-        $("#user_email").val(user.email);
-        $("#city").val(user.city);
-        $("#district").val(user.district);
-        $("#road").val(user.road);
-        $("#number").val(user.number);
-        $("#zip_code").val(user.zip);
-      }
+$.ajax({
+  type: "GET",
+  url: `http://localhost:3000/api/getUserInfo/${user.account}`,
+  success: function (user) {
+    $(".greeting").text(`您好，${user.user_name}`);
+    // 將用戶資料填充到對應的欄位中
+    $("#who").val(user.user_name);
+    $("#phone").val(user.phone);
+    $("#mail").val(user.e_mail);
+    $("#city").val(user.city);
+    $("#district").val(user.district);
+    $("#road").val(user.road);
+    $("#number").val(user.number);
+    $("#zip").val(user.zip);
+  },
+  error: function (error) {
+    alert("獲取資料失敗，請稍後再試");
+  },
+});
 
-      $("#info_section").on("click", "#edit_check", function () {
-        console.log("qq");
-        const userInfo = {
-          account: user.account, // 從 sessionStorage 中獲取用戶帳號
-          username: $("#who").val(),
-          phone: $("#phone").val(),
-          email: $("#mail").val(),
-          city: $("#city").val(),
-          district: $("#district").val(),
-          road: $("#road").val(),
-          number: $("#number").val(),
-          zip: $("#zip").val(),
-        };
 
-        // 發送資料到後端
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:3001/api/updateUserInfo",
-          data: JSON.stringify(userInfo),
-          contentType: "application/json",
-          success: function (response) {
-            alert("資料已更新");
-          },
-          error: function (error) {
-            alert("更新失敗，請稍後再試");
-          },
-        });
-      });
+$("#info_section").on("click", "#edit_check", function () {
+  const userInfo = {
+    account: user.account, // 從 session 中獲取用戶帳號
+    username: $("#who").val(),
+    phone: $("#phone").val(),
+    mail: $("#mail").val(),
+    city: $("#city").val(),
+    district: $("#district").val(),
+    road: $("#road").val(),
+    number: $("#number").val(),
+    zip: $("#zip").val(),
+  };
 
+  // 發送資料到後端
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:3000/api/updateUserInfo",
+    data: JSON.stringify(userInfo),
+    contentType: "application/json",
+    success: function (response) {
+      alert("資料已更新");
+      location.reload(); // 刷新頁面
+    },
+    error: function (error) {
+      alert("更新失敗，請稍後再試");
+    },
+  });
+});
+
+// 登出按鈕點擊事件
+$(".logout").click(function () {
+  // 清除 sessionStorage 中的 user 資訊
+  sessionStorage.removeItem("user");
+  // 導向 /login 頁面
+  window.location.href = "/login";
+});
       // 獲取用戶收藏的食譜
       $.ajax({
         url: "http://localhost:3000/api/user_favorites",
@@ -124,7 +138,7 @@
                 </a>
               </span>
               <span class="recipe_describe">${recipe.part_describe}</span>
-              <span class="btn del_btn">刪除按鈕</span>
+              <span class="btn del_btn">刪除該食譜</span>
             </div>
           `;
             likeRecipeContainer.append(recipeCard);

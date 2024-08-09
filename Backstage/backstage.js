@@ -89,13 +89,6 @@ app.post("/api/login", (req, res) => {
       req.session.user = {
         account: results[0].user_account,
         username: results[0].user_name,
-        email: results[0].e_mail,
-        phone: results[0].phone,
-        city: results[0].city,
-        district: results[0].district,
-        road: results[0].road,
-        number: results[0].number,
-        zip: results[0].zip,
       };
       console.log("Session user:", req.session.user); // 確認 session 是否正確儲存
       res.json({ message: "登入成功", user: req.session.user }); // 返回用戶資料
@@ -106,11 +99,11 @@ app.post("/api/login", (req, res) => {
 });
 
 /////////////////////// 檢查是否已經登入
-app.use((req, res, next) => {
-  res.locals.username = req.session.username || null;
-  console.log("Res locals username:", res.locals.username); // 確認 res.locals 是否正確傳遞
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.username = req.session.username || null;
+//   console.log("Res locals username:", res.locals.username); // 確認 res.locals 是否正確傳遞
+//   next();
+// });
 
 ///////////////////////////////////////////食譜搜索頁
 app.get("/api/recipes", (req, res) => {
@@ -286,14 +279,14 @@ app.post("/api/updateUserInfo", (req, res) => {
   db.query(
     query,
     [
-      userInfo.realName,
-      userInfo.email,
+      userInfo.username,
+      userInfo.mail,
       userInfo.phone,
       userInfo.city,
       userInfo.district,
       userInfo.road,
       userInfo.number,
-      userInfo.zipCode,
+      userInfo.zip,
       userInfo.account,
     ],
     (err, result) => {
@@ -306,7 +299,21 @@ app.post("/api/updateUserInfo", (req, res) => {
     }
   );
 });
+app.get("/api/getUserInfo/:account", (req, res) => {
+  const account = req.params.account; // 從路由參數中獲取帳號
 
+  const query = "SELECT * FROM member WHERE user_account = ?";
+  db.query(query, [account], (err, results) => {
+    if (err) {
+      console.error("Error querying database", err);
+      res.status(500).json({ message: "獲取資料失敗" });
+    } else if (results.length > 0) {
+      res.json(results[0]); // 返回用戶資料
+    } else {
+      res.status(404).json({ message: "用戶不存在" });
+    }
+  });
+});
 ////////////////獲取用戶的收藏食譜
 app.get("/api/user_favorites", (req, res) => {
   const { user_uid } = req.query;
