@@ -103,6 +103,12 @@
     $('#search_btn').on('click', filterRecipes)
     $('.filter_btn input[type="checkbox"]').on('change', filterRecipes)
 
+    $('#search_btn').click(function() {
+    $('html, body').animate({
+      scrollTop: $('#move_to_here').offset().top
+    }, 'slow');
+  });
+
     function updateNavBarCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const cartCount = cart.length;
@@ -113,6 +119,8 @@
     $('#brackets').show();
   }
 }
+
+
 
       // 初始化 nav_bar 購物車數量
       updateNavBarCartCount();
@@ -179,6 +187,7 @@
       </div>
     </div>
 
+    <a id="move_to_here"></a>
     <div id="recipe_pic_section">
       <% items.forEach(function(recipe) { %>
         <div class="recipe_card" data-ingredients="<%= recipe.ingredients %>" data-isKitchen="<%= recipe.isKitchen %>"
@@ -198,6 +207,7 @@
         </div>
         <% }); %>
     </div>
+    <div id="no_results" style="display: none;">找不到符合條件的食譜，試試別種關鍵字吧!</div>
 
     <%- include('footer') %>
 </body>

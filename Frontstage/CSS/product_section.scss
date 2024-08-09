@@ -217,9 +217,11 @@ a {
   }
 
   #main_section_product_cards {
+    position: relative;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 30px;
     #no_results{
       display: none;
       font-weight: 900;
@@ -288,31 +290,51 @@ a {
   }
 }
 
-#page {
-  width: 200px;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  margin-bottom: 20px;
-  .page_num {
+#pageChange{
+  position: absolute;
+  bottom: -30px;
+  left:0;
+  right: 0;
+  ul{
     display: flex;
+    justify-content: center; 
+    li{
+      list-style: none;
+      button{
+        margin: 0 5px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  font-size: 14px;
+  justify-content: center;
+  line-height: 25px;
+  max-width: 480px;
+  min-width: 40px;
+  overflow: hidden;
+  padding: 0 5px;
+  text-align: center;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+    box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+    color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  &:hover,
+  &:focus-visible,
+  &:active {
+    background-color: wheat;
   }
-  span {
-    font-weight: 600;
-    font-size: 16px;
-    width: 20px;
-    height: 30px;
-    background-color: var(--text_withe);
-    border: 1px solid var(--border_gray);
-    display: flex; /* 新增 */
-    justify-content: center; /* 新增 */
-    align-items: center; /* 新增 */
-    margin: 0 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    &:hover {
-      background-color: var(--main_orange);
-      color: var(--text_withe);
+  &:disabled {
+    cursor: default;
+    background: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.3);
+  }
+      }
     }
   }
 }

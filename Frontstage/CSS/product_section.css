@@ -214,9 +214,11 @@ a {
   margin: 10px;
 }
 #main_section #main_section_product_cards {
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 #main_section #main_section_product_cards #no_results {
   display: none;
@@ -285,33 +287,50 @@ a {
           user-select: none;
 }
 
-#page {
-  width: 200px;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  margin-bottom: 20px;
+#pageChange {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  right: 0;
 }
-#page .page_num {
+#pageChange ul {
   display: flex;
+  justify-content: center;
 }
-#page span {
-  font-weight: 600;
-  font-size: 16px;
-  width: 20px;
-  height: 30px;
-  background-color: var(--text_withe);
-  border: 1px solid var(--border_gray);
-  display: flex; /* 新增 */
-  justify-content: center; /* 新增 */
-  align-items: center; /* 新增 */
-  margin: 0 3px;
+#pageChange ul li {
+  list-style: none;
+}
+#pageChange ul li button {
+  margin: 0 5px;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  box-sizing: border-box;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  display: inline-flex;
+  font-weight: 600;
+  font-size: 14px;
+  justify-content: center;
+  line-height: 25px;
+  max-width: 480px;
+  min-width: 40px;
+  overflow: hidden;
+  padding: 0 5px;
+  text-align: center;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
 }
-#page span:hover {
-  background-color: var(--main_orange);
-  color: var(--text_withe);
+#pageChange ul li button:hover, #pageChange ul li button:focus-visible, #pageChange ul li button:active {
+  background-color: wheat;
+}
+#pageChange ul li button:disabled {
+  cursor: default;
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (max-width: 1380px) {

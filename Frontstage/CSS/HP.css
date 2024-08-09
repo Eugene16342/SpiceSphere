@@ -28,7 +28,7 @@ body::-webkit-scrollbar-track {
   --text_withe: rgb(255, 255, 255);
   --text_black: rgb(53, 53, 53);
   --border_gray: rgb(128, 128, 128);
-  --bg_opacity_black: rgba(0, 0, 0, 0.6);
+  --bg_opacity_black: rgba(0, 0, 0, 0.3);
 }
 
 a {
@@ -55,6 +55,18 @@ a {
   transition: transform 0.5s ease-in-out;
   width: 100%;
   height: 100%;
+  position: relative;
+}
+.slide_section .carousel .slide_container::before {
+  position: absolute;
+  width: 300%;
+  height: 100%;
+  background-color: var(--bg_opacity_black);
+  content: "";
+  z-index: 3;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .slide_section .carousel .slide_container .big_slide {
   min-width: 100%;
@@ -71,13 +83,12 @@ a {
           user-select: none;
 }
 .slide_section .carousel .slide_container .big_slide .slide_text {
-  background-color: var(--bg_opacity_black);
-  padding: 5px 10px;
   position: absolute;
   top: 50%;
   left: 50%;
   color: var(--text_withe);
   transform: translate(-50%, -50%);
+  z-index: 5;
 }
 .slide_section .carousel .slide_container .big_slide .slide_text:hover p {
   opacity: 1;
@@ -181,19 +192,6 @@ a {
   display: inline-block;
   margin: 0 40px;
 }
-.link_card div a::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: opacity 0.5s ease-in-out;
-}
-.link_card div a:hover::before {
-  opacity: 0;
-}
 .link_card div a h4 {
   position: absolute;
   top: 35%;
@@ -202,11 +200,6 @@ a {
   color: var(--text_withe);
   font-size: 30px;
   font-family: "Courier New", Courier, monospace;
-  visibility: hidden;
-  transition: visibility 0.5s ease-in-out;
-}
-.link_card div a:hover h4 {
-  visibility: visible;
 }
 .link_card div a img {
   box-sizing: border-box;
@@ -618,7 +611,6 @@ a {
             user-select: none;
   }
   .slide_section .carousel .slide_container .big_slide .slide_text {
-    background-color: var(--bg_opacity_black);
     padding: 5px 10px;
     position: absolute;
     top: 50%;

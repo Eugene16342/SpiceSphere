@@ -107,7 +107,7 @@ $(document).ready(function() {
     const user = JSON.parse(sessionStorage.getItem('user')); // 解析 JSON 字符串
     if (!user) {
       // 如果沒有登入，導向登入頁面
-      window.location.href = '/login_page';
+      window.location.href = '/login';
     } else {
       // 檢查收件地址和付款方式是否填寫
       const who = $('#who').val().trim();

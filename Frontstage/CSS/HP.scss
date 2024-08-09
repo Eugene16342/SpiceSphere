@@ -32,7 +32,7 @@ body {
   --text_withe: rgb(255, 255, 255);
   --text_black: rgb(53, 53, 53);
   --border_gray: rgb(128, 128, 128);
-  --bg_opacity_black: rgba(0, 0, 0, 0.6);
+  --bg_opacity_black: rgba(0, 0, 0, 0.3);
 }
 
 a {
@@ -58,6 +58,16 @@ a {
           transition: transform 0.5s ease-in-out;
           width: 100%;
           height: 100%;
+          position: relative;
+          &::before{
+            position: absolute;
+            width: 300%;
+            height: 100%;
+            background-color: var(--bg_opacity_black);
+            content: "";
+            z-index: 3;
+            user-select: none;
+          }
           .big_slide {
               min-width: 100%;
               height: 100%;
@@ -69,13 +79,12 @@ a {
                   user-select: none;
               }
               .slide_text {
-                background-color: var(--bg_opacity_black);
-                padding: 5px 10px;
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 color: var(--text_withe);
                 transform: translate(-50%, -50%);
+                z-index: 5;
                 &:hover p {
                   opacity: 1;
                   max-height: 200px;
@@ -185,19 +194,6 @@ a {
       position: relative;
       display: inline-block;
       margin: 0 40px;
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: opacity 0.5s ease-in-out;
-      }
-      &:hover::before {
-        opacity: 0;
-      }
       h4 {
         position: absolute;
         top: 35%;
@@ -206,11 +202,6 @@ a {
         color: var(--text_withe);
         font-size: 30px;
         font-family: "Courier New", Courier, monospace;
-        visibility: hidden;
-        transition: visibility 0.5s ease-in-out;
-      }
-      &:hover h4 {
-        visibility: visible;
       }
       img {
         box-sizing: border-box;
@@ -660,7 +651,6 @@ a {
                     user-select: none;
                 }
                 .slide_text {
-                  background-color: var(--bg_opacity_black);
                   padding: 5px 10px;
                   position: absolute;
                   top: 50%;
