@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-08-04 15:25:09
+-- 產生時間： 2024-08-09 04:32:27
 -- 伺服器版本： 10.4.32-MariaDB
--- PHP 版本： 8.2.12
+-- PHP 版本： 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `spicesphere_sql`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `user_account` varchar(20) NOT NULL,
+  `recipe_uid` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `favorites`
+--
+
+INSERT INTO `favorites` (`user_account`, `recipe_uid`) VALUES
+('test004', 5),
+('test004', 15),
+('test004', 42),
+('test004', 25);
 
 -- --------------------------------------------------------
 
@@ -41,11 +62,11 @@ INSERT INTO `ingredients_for_recipe` (`recipe_uid`, `ingredient_name`, `ingredie
 (1, '小黃瓜', '兩條'),
 (1, '杏鮑菇', '兩根'),
 (1, '沙拉醬', '2大匙'),
-(1, '番茄', '一顆'),
 (1, '蝦仁', '150克'),
 (1, '雞肉', '20克'),
 (1, '香菇', '少許'),
 (2, '吐司', '一片'),
+(2, '番茄', '一顆'),
 (2, '糖', '一小匙'),
 (2, '納豆', '一盒'),
 (2, '美乃滋', '10克'),
@@ -308,21 +329,95 @@ CREATE TABLE `member` (
   `user_name` varchar(10) NOT NULL,
   `user_account` varchar(20) NOT NULL,
   `user_password` varchar(20) NOT NULL DEFAULT 'password',
-  `e_mail` varchar(100) NOT NULL
+  `e_mail` varchar(100) NOT NULL,
+  `phone` varchar(11) DEFAULT NULL,
+  `city` varchar(30) DEFAULT NULL,
+  `district` varchar(30) DEFAULT NULL,
+  `road` varchar(30) DEFAULT NULL,
+  `number` varchar(30) DEFAULT NULL,
+  `zip` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `member`
 --
 
-INSERT INTO `member` (`user_uid`, `user_name`, `user_account`, `user_password`, `e_mail`) VALUES
-(1, '趙活', 'fakeUser0001', 'password', 'fakeEmail01@gmail.com'),
-(2, '唐中翎', 'fakeUser0002', 'password', 'fakeEmail02@gmail.com'),
-(4, '路人俠', 'test123', '123456', 'test@gmail.com'),
-(6, '路人俠', 'test1234', '123456', 'test123@yahoo.com.tw'),
-(7, '123', '123', '123', '123'),
-(10, '123123', '789789', '789789', 'wow23875708@gmail.com'),
-(11, '123123123', '123123123123', '123', '123123123');
+INSERT INTO `member` (`user_uid`, `user_name`, `user_account`, `user_password`, `e_mail`, `phone`, `city`, `district`, `road`, `number`, `zip`) VALUES
+(1, '趙活', 'test001', 'password', 'fakeEmail01@gmail.com', '123', '213', '213', NULL, NULL, NULL),
+(2, '唐中翎', 'test002', 'password', 'fakeEmail02@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '蘇迎香', 'test003', 'password', '123123', NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'wqewqe', 'test004', 'password', 'test123@gmail.com', '1234354564', '一二三市', '五六區', '馬路', '1號', 12345),
+(5, '聽海生', 'test005', 'password', '123456', NULL, NULL, NULL, NULL, NULL, NULL),
+(6, '路人俠', 'test006', 'password', 'test123@yahoo.com.tw', NULL, NULL, NULL, NULL, NULL, NULL),
+(7, '南宮深', 'test007', 'password', '123', NULL, NULL, NULL, NULL, NULL, NULL),
+(8, '南宮遠', 'test008', 'password', 'wow23875708@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` varchar(255) NOT NULL,
+  `user` varchar(255) DEFAULT NULL,
+  `who` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `mail` varchar(255) DEFAULT NULL,
+  `zip` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `road` varchar(255) DEFAULT NULL,
+  `number` varchar(255) DEFAULT NULL,
+  `payment` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user`, `who`, `phone`, `mail`, `zip`, `city`, `district`, `road`, `number`, `payment`) VALUES
+('ORD-4UMVEJ2E6', 'test004', '2332432', '32424', '324234', '234324', '324324', '3243', '2423432', '4324', 'credit'),
+('ORD-863RXDSVD', 'test001', '13213', '213213', '2121', '213', '213', '13', '213', '213', 'cash'),
+('ORD-E61VKOH9H', 'test005', '123', '123', '213', '123', '123', '213', '213', '213', 'credit'),
+('ORD-M6ULB4GS3', 'test005', 'test', '222', '22', '22', '2', '2', '2', '2', 'on'),
+('ORD-PSY23GJPR', NULL, 'test', '567', '33', '22', '44', '12', '32', '23', 'on'),
+('ORD-UMH78PASA', '{\"account\":\"test005\",\"username\":\"聽海生\",\"email\":\"123456\"}', '123', '123', '123', '123', '123', '123', '123', '123', 'on');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `order_item_id` int(11) NOT NULL,
+  `order_id` varchar(255) DEFAULT NULL,
+  `product_uid` varchar(255) DEFAULT NULL,
+  `product_title` varchar(255) DEFAULT NULL,
+  `product_price` decimal(10,2) DEFAULT NULL,
+  `product_quantity` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `order_items`
+--
+
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_uid`, `product_title`, `product_price`, `product_quantity`) VALUES
+(1, 'ORD-UMH78PASA', '2', '完熟納豆', 500.00, 5),
+(2, 'ORD-UMH78PASA', '3', '真空白米', 500.00, 6),
+(3, 'ORD-UMH78PASA', '17', '趙大師乳酪絲', 760.00, 6),
+(4, 'ORD-UMH78PASA', '25', '郁竹矽膠柄鏟', 1899.00, 3),
+(5, 'ORD-PSY23GJPR', '7', '完美屋咖哩調理包', 500.00, 2),
+(6, 'ORD-PSY23GJPR', '46', '趙大師咖哩調理包', 755.00, 5),
+(7, 'ORD-PSY23GJPR', '19', '趙大師披薩捲', 1020.00, 2),
+(8, 'ORD-M6ULB4GS3', '33', '葉師傅矽膠夾', 899.00, 5),
+(9, 'ORD-M6ULB4GS3', '39', '淺家醜醜鐵碗', 189.00, 5),
+(10, 'ORD-M6ULB4GS3', '41', '淺家不鏽鋼湯匙', 189.00, 9),
+(11, 'ORD-E61VKOH9H', '48', '唐錚香茅粉', 400.00, 4),
+(12, 'ORD-863RXDSVD', '7', '完美屋咖哩調理包', 500.00, 5),
+(13, 'ORD-863RXDSVD', '16', '趙大師千層麵', 560.00, 5),
+(14, 'ORD-4UMVEJ2E6', '5', '完美屋香鬆', 75.00, 8);
 
 -- --------------------------------------------------------
 
@@ -350,8 +445,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_uid`, `product_title`, `product_rating`, `part_describe`, `full_describe`, `size`, `price`, `inventory`, `sales_amount`, `like_amount`, `click`, `related`) VALUES
-(1, '凱薩沙拉醬', 5, '翻轉你對鑄鐵鍋的全部想像. 全新進化、市面上唯一內部平滑的鑄鐵平底鍋。', '黑平鍋以創新工藝重新定義鑄鐵鍋與平底鍋。無化學塗層，沒有不沾鍋塗層脫落失去效能的問題，無需開鍋、不用上油養鍋、不沾效果永不減弱，是無論新手或老鳥都適合的料理工具', '200克@500克', 298, 1200, 234, 771, 1834, 2),
-(2, '完熟納豆', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯反正我去結束了好奇我可，接⋯但幹希望大的很不。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '3盒裝@6盒裝@12盒裝', 500, 800, 123, 97, 561, 1),
+(1, '凱薩沙拉醬', 3, '翻轉你對鑄鐵鍋的全部想像. 全新進化、市面上唯一內部平滑的鑄鐵平底鍋。', '黑平鍋以創新工藝重新定義鑄鐵鍋與平底鍋。無化學塗層，沒有不沾鍋塗層脫落失去效能的問題，無需開鍋、不用上油養鍋、不沾效果永不減弱，是無論新手或老鳥都適合的料理工具', '200克@500克', 298, 1200, 234, 771, 1834, 2),
+(2, '完熟納豆', 2, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯反正我去結束了好奇我可，接⋯但幹希望大的很不。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '3盒裝@6盒裝@12盒裝', 500, 800, 123, 97, 561, 1),
 (3, '真空白米', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '3公斤@5公斤盒裝@10公斤', 500, 1587, 761, 397, 1561, 1),
 (4, '鑄鐵平底鍋', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '21公分@30公分', 7500, 863, 661, 557, 361, 5),
 (5, '完美屋香鬆', 5, '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女。', '一點努力同學的，累今天看第一次，也在有想好像也太喜歡少女⋯，啊人有：喜歡的⋯蔥花湯飲料。通通都喜歡廢話算。好看的左右對象上一裡面的，寫打工都是麼好，一個無法然是。', '20克@50克', 75, 7771, 5661, 3557, 10361, 2),
@@ -409,7 +504,8 @@ CREATE TABLE `product_commemt` (
   `comment_uid` int(11) NOT NULL,
   `user_uid` int(11) NOT NULL,
   `product_uid` int(11) NOT NULL,
-  `product_rating` tinyint(4) NOT NULL COMMENT '為商品評分1~5 0.5為單位',
+  `product_rating` tinyint(4) NOT NULL,
+  `comment_time` date NOT NULL DEFAULT current_timestamp(),
   `product_comment` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -417,8 +513,17 @@ CREATE TABLE `product_commemt` (
 -- 傾印資料表的資料 `product_commemt`
 --
 
-INSERT INTO `product_commemt` (`comment_uid`, `user_uid`, `product_uid`, `product_rating`, `product_comment`) VALUES
-(1, 1, 1, 5, '好看又好用，自從買了他每次考試都考一百分呢');
+INSERT INTO `product_commemt` (`comment_uid`, `user_uid`, `product_uid`, `product_rating`, `comment_time`, `product_comment`) VALUES
+(1, 1, 1, 5, '2024-08-07', '好看又好用，自從買了他每次考試都考一百分呢'),
+(2, 6, 1, 3, '2024-08-07', '三日不吃 便覺語言無味 面目可憎'),
+(3, 1, 2, 5, '2024-08-07', '新奇好吃又好玩'),
+(4, 1, 4, 3, '2024-08-07', '新奇好吃又好玩'),
+(5, 2, 1, 5, '2024-08-07', '我每頓飯沒有他不行了'),
+(6, 3, 1, 5, '2024-08-07', '從沒吃過這等美味，此物只應天上有'),
+(7, 4, 1, 4, '2024-08-07', '相見恨晚'),
+(8, 8, 1, 1, '2024-08-07', '上面的人都太浮誇了吧，這東西吃起來又油又膩，是不是廠商買的評論阿，這東西超難吃，我能救一個是一個'),
+(9, 6, 4, 5, '2024-08-07', '早上好異鍋豐，現在我有鑄鐵鍋，我很喜歡鑄鐵鍋，但是，速度與激情9，比鑄鐵鍋，速度與激情，速度與激情9，我最喜歡。'),
+(10, 8, 4, 5, '2024-08-07', '物美價廉，非常好用，我家十個廚房用的都是這口鍋');
 
 -- --------------------------------------------------------
 
@@ -603,7 +708,7 @@ CREATE TABLE `when` (
 
 INSERT INTO `when` (`time_uid`, `time_name`) VALUES
 (1, '早餐'),
-(2, '午餐'),
+(2, '中餐'),
 (3, '晚餐');
 
 --
@@ -624,6 +729,19 @@ ALTER TABLE `ingredients_for_recipe`
 ALTER TABLE `member`
   ADD PRIMARY KEY (`user_uid`),
   ADD UNIQUE KEY `user_account` (`user_account`);
+
+--
+-- 資料表索引 `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`);
+
+--
+-- 資料表索引 `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`order_item_id`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- 資料表索引 `product`
@@ -696,6 +814,12 @@ ALTER TABLE `member`
   MODIFY `user_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
@@ -705,7 +829,7 @@ ALTER TABLE `product`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_commemt`
 --
 ALTER TABLE `product_commemt`
-  MODIFY `comment_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `comment_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `recipe`
@@ -746,6 +870,12 @@ ALTER TABLE `when`
 --
 ALTER TABLE `ingredients_for_recipe`
   ADD CONSTRAINT `ingredients_for_recipe` FOREIGN KEY (`recipe_uid`) REFERENCES `recipe` (`recipe_uid`);
+
+--
+-- 資料表的限制式 `order_items`
+--
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 --
 -- 資料表的限制式 `product`
