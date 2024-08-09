@@ -131,6 +131,12 @@ a {
      -moz-user-select: none;
           user-select: none;
 }
+#login_bg .login_section .back {
+  margin-top: 10px;
+}
+#login_bg .login_section .back:hover {
+  color: var(--main_orange);
+}
 #login_bg .login_section #forget {
   cursor: pointer;
 }

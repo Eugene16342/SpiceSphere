@@ -137,6 +137,12 @@ a {
       font-size: 14px;
       user-select: none;
     }
+    .back{
+      margin-top: 10px;
+      &:hover{
+        color: var(--main_orange);
+      }
+    }
 
     #forget {
       &:hover {

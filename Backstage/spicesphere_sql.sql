@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2024-08-09 04:32:27
+-- 產生時間： 2024-08-09 10:13:40
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.0.30
 
@@ -40,7 +40,8 @@ INSERT INTO `favorites` (`user_account`, `recipe_uid`) VALUES
 ('test004', 5),
 ('test004', 15),
 ('test004', 42),
-('test004', 25);
+('test004', 25),
+('test005', 5);
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,7 @@ CREATE TABLE `ingredients_for_recipe` (
 --
 
 INSERT INTO `ingredients_for_recipe` (`recipe_uid`, `ingredient_name`, `ingredient_quantity`) VALUES
-(1, '小黃瓜', '兩條'),
+(1, '@小黃瓜', '兩條'),
 (1, '杏鮑菇', '兩根'),
 (1, '沙拉醬', '2大匙'),
 (1, '蝦仁', '150克'),
@@ -346,7 +347,7 @@ INSERT INTO `member` (`user_uid`, `user_name`, `user_account`, `user_password`, 
 (1, '趙活', 'test001', 'password', 'fakeEmail01@gmail.com', '123', '213', '213', NULL, NULL, NULL),
 (2, '唐中翎', 'test002', 'password', 'fakeEmail02@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL),
 (3, '蘇迎香', 'test003', 'password', '123123', NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'wqewqe', 'test004', 'password', 'test123@gmail.com', '1234354564', '一二三市', '五六區', '馬路', '1號', 12345),
+(4, '觀雲客', 'test004', 'password', 'test123@gmail.com', '1234354564', '一二三市', '五六區', '馬路', '1號', 12345),
 (5, '聽海生', 'test005', 'password', '123456', NULL, NULL, NULL, NULL, NULL, NULL),
 (6, '路人俠', 'test006', 'password', 'test123@yahoo.com.tw', NULL, NULL, NULL, NULL, NULL, NULL),
 (7, '南宮深', 'test007', 'password', '123', NULL, NULL, NULL, NULL, NULL, NULL),
@@ -369,20 +370,19 @@ CREATE TABLE `orders` (
   `district` varchar(255) DEFAULT NULL,
   `road` varchar(255) DEFAULT NULL,
   `number` varchar(255) DEFAULT NULL,
-  `payment` varchar(255) DEFAULT NULL
+  `payment` varchar(255) DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT '準備中'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 傾印資料表的資料 `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `user`, `who`, `phone`, `mail`, `zip`, `city`, `district`, `road`, `number`, `payment`) VALUES
-('ORD-4UMVEJ2E6', 'test004', '2332432', '32424', '324234', '234324', '324324', '3243', '2423432', '4324', 'credit'),
-('ORD-863RXDSVD', 'test001', '13213', '213213', '2121', '213', '213', '13', '213', '213', 'cash'),
-('ORD-E61VKOH9H', 'test005', '123', '123', '213', '123', '123', '213', '213', '213', 'credit'),
-('ORD-M6ULB4GS3', 'test005', 'test', '222', '22', '22', '2', '2', '2', '2', 'on'),
-('ORD-PSY23GJPR', NULL, 'test', '567', '33', '22', '44', '12', '32', '23', 'on'),
-('ORD-UMH78PASA', '{\"account\":\"test005\",\"username\":\"聽海生\",\"email\":\"123456\"}', '123', '123', '123', '123', '123', '123', '123', '123', 'on');
+INSERT INTO `orders` (`order_id`, `user`, `who`, `phone`, `mail`, `zip`, `city`, `district`, `road`, `number`, `payment`, `status`) VALUES
+('ORD-4UMVEJ2E6', 'test004', '2332432', '32424', '324234', '234324', '324324', '3243', '2423432', '4324', 'credit', '準備中'),
+('ORD-863RXDSVD', 'test001', '13213', '213213', '2121', '213', '213', '13', '213', '213', 'cash', '準備中'),
+('ORD-E61VKOH9H', 'test005', '123', '123', '213', '123', '123', '213', '213', '213', 'credit', '準備中'),
+('ORD-M6ULB4GS3', 'test005', 'test', '222', '22', '22', '2', '2', '2', '2', 'on', '準備中');
 
 -- --------------------------------------------------------
 
@@ -404,13 +404,6 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_uid`, `product_title`, `product_price`, `product_quantity`) VALUES
-(1, 'ORD-UMH78PASA', '2', '完熟納豆', 500.00, 5),
-(2, 'ORD-UMH78PASA', '3', '真空白米', 500.00, 6),
-(3, 'ORD-UMH78PASA', '17', '趙大師乳酪絲', 760.00, 6),
-(4, 'ORD-UMH78PASA', '25', '郁竹矽膠柄鏟', 1899.00, 3),
-(5, 'ORD-PSY23GJPR', '7', '完美屋咖哩調理包', 500.00, 2),
-(6, 'ORD-PSY23GJPR', '46', '趙大師咖哩調理包', 755.00, 5),
-(7, 'ORD-PSY23GJPR', '19', '趙大師披薩捲', 1020.00, 2),
 (8, 'ORD-M6ULB4GS3', '33', '葉師傅矽膠夾', 899.00, 5),
 (9, 'ORD-M6ULB4GS3', '39', '淺家醜醜鐵碗', 189.00, 5),
 (10, 'ORD-M6ULB4GS3', '41', '淺家不鏽鋼湯匙', 189.00, 9),
@@ -523,7 +516,17 @@ INSERT INTO `product_commemt` (`comment_uid`, `user_uid`, `product_uid`, `produc
 (7, 4, 1, 4, '2024-08-07', '相見恨晚'),
 (8, 8, 1, 1, '2024-08-07', '上面的人都太浮誇了吧，這東西吃起來又油又膩，是不是廠商買的評論阿，這東西超難吃，我能救一個是一個'),
 (9, 6, 4, 5, '2024-08-07', '早上好異鍋豐，現在我有鑄鐵鍋，我很喜歡鑄鐵鍋，但是，速度與激情9，比鑄鐵鍋，速度與激情，速度與激情9，我最喜歡。'),
-(10, 8, 4, 5, '2024-08-07', '物美價廉，非常好用，我家十個廚房用的都是這口鍋');
+(10, 8, 4, 5, '2024-08-07', '物美價廉，非常好用，我家十個廚房用的都是這口鍋'),
+(11, 5, 1, 5, '2024-08-09', 'qq'),
+(12, 5, 1, 2, '2024-08-09', 'qwewqe'),
+(13, 5, 1, 5, '2024-08-09', 'dd'),
+(14, 3, 3, 5, '2024-08-09', '好吃'),
+(15, 3, 3, 4, '2024-08-09', '超好吃'),
+(16, 3, 3, 5, '2024-08-09', '不能只有我吃到'),
+(17, 3, 3, 5, '2024-08-09', ''),
+(18, 3, 23, 5, '2024-08-09', '好吃捏'),
+(19, 3, 23, 5, '2024-08-09', ''),
+(20, 3, 23, 4, '2024-08-09', '');
 
 -- --------------------------------------------------------
 
@@ -667,6 +670,27 @@ CREATE TABLE `sales_history` (
 
 INSERT INTO `sales_history` (`sales_history`, `user_uid`, `product_uid`, `quantity`, `date`) VALUES
 (1, 1, 1, 1, '2024-07-07');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `staff`
+--
+
+CREATE TABLE `staff` (
+  `staff_uid` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `staff_name` varchar(10) NOT NULL,
+  `department` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `staff`
+--
+
+INSERT INTO `staff` (`staff_uid`, `password`, `staff_name`, `department`) VALUES
+('11307001', 'password', '葉雲舟', '1'),
+('11307002', 'password', '葉雲裳', '2');
 
 -- --------------------------------------------------------
 
@@ -829,7 +853,7 @@ ALTER TABLE `product`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_commemt`
 --
 ALTER TABLE `product_commemt`
-  MODIFY `comment_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `comment_uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `recipe`
