@@ -14,18 +14,21 @@ const session = require("express-session");
 const cors = require("cors");
 
 app.use(
-  cors({
-    origin: "http://localhost:3001", // 前端的地址
-    credentials: true, // 允許攜帶 cookie
-  })
-);
-
-app.use(
   session({
     secret: "SpiceSphere20240827",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // 如果您的網站使用 HTTPS，請將此選項設為 true
+    cookie: {
+      secure: false, // 如果您的網站使用 HTTPS，請將此選項設為 true
+      sameSite: "Lax", // 設置 SameSite 屬性為 None
+    },
+  })
+);
+
+app.use(
+  cors({
+    origin: "http://localhost:3001", // 前端的地址
+    credentials: true, // 允許攜帶 cookie
   })
 );
 
@@ -83,28 +86,41 @@ app.post("/api/login", (req, res) => {
     "SELECT * FROM member WHERE user_account = ? AND user_password = ?";
   db.query(query, [account, password], (err, results) => {
     if (err) {
-      console.error("Error querying database", err);
-      res.status(500).json({ message: "登入失敗" });
-    } else if (results.length > 0) {
-      req.session.user = {
-        account: results[0].user_account,
-        username: results[0].user_name,
-      };
-      console.log("Session user:", req.session.user); // 確認 session 是否正確儲存
-      res.json({ message: "登入成功", user: req.session.user }); // 返回用戶資料
+      console.error(err);
+      return res.status(500).json({ message: "伺服器錯誤" });
+    }
+
+    if (results.length > 0) {
+      // 登入成功，將用戶資訊存入 session
+      req.session.user = results[0];
+      console.log("登入成功，用戶資訊已存入 Session:", req.session.user);
+      res.json({ message: "登入成功" });
     } else {
+      // 登入失敗
       res.status(401).json({ message: "帳號或密碼錯誤" });
     }
   });
 });
 
 /////////////////////// 檢查是否已經登入
-// app.use((req, res, next) => {
-//   res.locals.username = req.session.username || null;
-//   console.log("Res locals username:", res.locals.username); // 確認 res.locals 是否正確傳遞
-//   next();
-// });
-
+app.get("/api/checkSession", (req, res) => {
+  console.log("檢查 Session 狀態:", req.session);
+  if (req.session.user) {
+    res.json({ loggedIn: true, user: req.session.user });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+////登出
+app.post("/api/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: "登出失敗，請稍後再試" });
+    }
+    res.clearCookie("connect.sid"); // 清除 cookie
+    res.json({ message: "登出成功" });
+  });
+});
 ///////////////////////////////////////////食譜搜索頁
 app.get("/api/recipes", (req, res) => {
   let sql =

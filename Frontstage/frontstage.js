@@ -11,22 +11,6 @@ app.listen(3001, function () {
   console.log("port 3001!");
 });
 
-app.use(
-  session({
-    secret: "SpiceSphere20240827",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // 如果您的網站使用 HTTPS，請將此選項設為 true
-  })
-);
-
-////////////////////導覽列
-app.get("/nav_bar", (req, res) => {
-  const user = req.session.user;
-  console.log(user); // 檢查 user 變數
-  res.render("nav_bar", { user });
-});
-
 //////////////////////////////登入頁
 app.get("/login", (req, res) => {
   res.render("login");
@@ -34,13 +18,11 @@ app.get("/login", (req, res) => {
 
 // 用戶資訊頁面路由
 app.get("/user_page", (req, res) => {
-  const user = req.session.user;
-  res.render("user_page", { user });
+  res.render("user_page");
 });
 //////////////主頁
 app.get("/home_page", (req, res) => {
-  const user = req.session.user;
-  res.render("home_page", { user });
+  res.render("home_page");
 });
 
 // 導覽列搜尋跳轉

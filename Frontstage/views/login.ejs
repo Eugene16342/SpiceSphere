@@ -138,8 +138,6 @@ $('#login').on('click', function() {
   .then(data => {
     alert(data.message);
     if (data.message === '登入成功') {
-      // 將用戶的所有資料存放在 sessionStorage 中
-      localStorage.setItem('user', JSON.stringify(data.user));
       window.location.href = '/home_page'; // 登入成功後重新加載主頁
     }
   })
