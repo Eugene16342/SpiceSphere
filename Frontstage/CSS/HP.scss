@@ -46,95 +46,93 @@ a {
   height: 80vh;
   width: 100%;
   margin-top: 50px;
-    .carousel {
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-      height: 100%;
+  .carousel {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    .slide_container {
+      display: flex;
+      transform: translateX(0);
+      transition: transform 0.5s ease-in-out;
       width: 100%;
-      overflow: hidden;
+      height: 100%;
       position: relative;
-      .slide_container {
-          display: flex;
-          transform: translateX(0);
-          transition: transform 0.5s ease-in-out;
+      &::before {
+        position: absolute;
+        width: 300%;
+        height: 100%;
+        background-color: var(--bg_opacity_black);
+        content: "";
+        z-index: 3;
+        user-select: none;
+      }
+      .big_slide {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+        img {
           width: 100%;
           height: 100%;
-          position: relative;
-          &::before{
-            position: absolute;
-            width: 300%;
-            height: 100%;
-            background-color: var(--bg_opacity_black);
-            content: "";
-            z-index: 3;
-            user-select: none;
-          }
-          .big_slide {
-              min-width: 100%;
-              height: 100%;
-              position: relative;
-              img {
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                  user-select: none;
-              }
-              .slide_text {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                color: var(--text_withe);
-                transform: translate(-50%, -50%);
-                z-index: 5;
-                &:hover p {
-                  opacity: 1;
-                  max-height: 200px;
-                }
-                h1 {
-                  font-size: 50px;
-                  text-align: center;
-                }
-                P {
-                  visibility: visible;
-                  font-size: 24px;
-                  opacity: 0;
-                  transition: 0.8s ease-in-out;
-                  max-height: 0; 
-                  text-align: center;
-                  overflow: hidden;
-                }
-              }
-          }
-      }
-      .buttons_container {
-        justify-content: space-between; 
-        .btn {
+          object-fit: cover;
+          user-select: none;
+        }
+        .slide_text {
           position: absolute;
-          background-color:rgba(0, 0, 0, 0.0);
-            color: var(--text_withe);
-            border: none;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: pointer;
-            top: 0;
-            height: 100%;
-            outline: none;
-            &:hover,
-            &:focus {
-              background-color: var(--bg_opacity_black);
-            }
+          top: 50%;
+          left: 50%;
+          color: var(--text_withe);
+          transform: translate(-50%, -50%);
+          z-index: 5;
+          &:hover p {
+            opacity: 1;
+            max-height: 200px;
+          }
+          h1 {
+            font-size: 50px;
+            text-align: center;
+          }
+          P {
+            visibility: visible;
+            font-size: 24px;
+            opacity: 0;
+            transition: 0.8s ease-in-out;
+            max-height: 0;
+            text-align: center;
+            overflow: hidden;
+          }
         }
-        #left {
-          left: 0;
-        }
-    
-        #right {
-          right: 0;
-        }
+      }
     }
-    }
+    .buttons_container {
+      justify-content: space-between;
+      .btn {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0);
+        color: var(--text_withe);
+        border: none;
+        padding: 0;
+        box-sizing: border-box;
+        cursor: pointer;
+        top: 0;
+        height: 100%;
+        outline: none;
+        &:hover,
+        &:focus {
+          background-color: var(--bg_opacity_black);
+        }
+      }
+      #left {
+        left: 0;
+      }
 
+      #right {
+        right: 0;
+      }
+    }
   }
-
+}
 
 /* Section B */
 .sectionB {
@@ -240,113 +238,109 @@ a {
     height: 80vh;
     width: 100%;
     .carousel {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      .slide_container {
+        display: flex;
+        transform: translateX(0);
+        transition: transform 0.5s ease-in-out;
+        width: 300%;
         height: 100%;
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        .slide_container {
+        .slide {
+          height: 100%;
+          width: 100%;
+          margin: auto;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+
+          .card {
             display: flex;
-            transform: translateX(0);
-            transition: transform 0.5s ease-in-out;
-            width: 300%;
-            height: 100%;
-            .slide {
-                height: 100%;
-                width: 100%;
-                margin:auto;
-                position: relative;
-                display: flex;
-                flex-direction: column;
+            gap: 20px;
+            width: 60%;
+            margin: 8px auto;
 
-                .card {
-                    display: flex;
-                    gap: 20px;
-                    width: 60%;
-                    margin: 8px auto;
-
-
-                    &:nth-child(odd) {
-                        flex-direction: row;
-                        .card_text {
-                            text-align: left;
-                            align-items: flex-start;
-                        }
-                    }
-
-                    &:nth-child(even) {
-                        flex-direction: row-reverse;
-                        .card_text {
-                            text-align: start;
-                            align-items: flex-end;
-                        }
-                    }
-
-                    img {
-                        width: 400px;
-                        height: 250px;
-                        object-fit: cover;
-                        user-select: none;
-                        border-radius: 4px;
-
-                    }
-
-                    .card_text {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        width: 60%;
-
-                        div {
-                            font-size: 30px;
-                            font-weight: 900;
-                        }
-
-                        span {
-                            color: var(--main_orange);
-                        }
-
-                        p {
-                            font-weight: 600;
-                            font-size: 16px;
-                        }
-                    }
-                }
+            &:nth-child(odd) {
+              flex-direction: row;
+              .card_text {
+                text-align: left;
+                align-items: flex-start;
+              }
             }
+
+            &:nth-child(even) {
+              flex-direction: row-reverse;
+              .card_text {
+                text-align: start;
+                align-items: flex-end;
+              }
+            }
+
+            img {
+              width: 400px;
+              height: 250px;
+              object-fit: cover;
+              user-select: none;
+              border-radius: 4px;
+            }
+
+            .card_text {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              width: 60%;
+
+              div {
+                font-size: 30px;
+                font-weight: 900;
+              }
+
+              span {
+                color: var(--main_orange);
+              }
+
+              p {
+                font-weight: 600;
+                font-size: 16px;
+              }
+            }
+          }
+        }
+      }
+
+      .buttons_container {
+        justify-content: space-between;
+        .btn {
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0);
+          color: var(--border_gray);
+          border: none;
+          padding: 0;
+          box-sizing: border-box;
+          top: 0;
+          height: 100%;
+          outline: none;
+
+          svg {
+            cursor: pointer;
+            &:hover {
+              color: var(--main_orange);
+            }
+          }
         }
 
-        .buttons_container {
-            justify-content: space-between;
-            .btn {
-                position: absolute;
-                background-color: rgba(0, 0, 0, 0);
-                color: var(--border_gray);
-                border: none;
-                padding: 0;
-                box-sizing: border-box;
-                top: 0;
-                height: 100%;
-                outline: none;
-
-                svg {
-                    cursor: pointer;
-                    &:hover {
-                        color: var(--main_orange);
-                    }
-                }
-            }
-
-            #recipe_left_btn {
-                left: 0;
-            }
-
-            #recipe_right_btn {
-                right: 0;
-            }
+        #recipe_left_btn {
+          left: 0;
         }
+
+        #recipe_right_btn {
+          right: 0;
+        }
+      }
     }
-}
-
-
+  }
 }
 
 /* section D  */
@@ -392,7 +386,7 @@ a {
     h3 {
       font-size: 1.2em;
       margin: 10px 0;
-        }
+    }
     p {
       font-size: 0.9em;
       color: rgb(53, 53, 53);
@@ -412,163 +406,158 @@ a {
 @media screen and (max-width: 1300px) {
   .slide_section {
     height: 70vh;
-      .carousel {
-        .slide_container {
-
-            .big_slide {
-                .slide_text {
-                  h1 {
-                    font-size: 40px;
-                    text-align: center;
-                  }
-                  P {
-                    font-size: 20px;
-                  }
-                }
+    .carousel {
+      .slide_container {
+        .big_slide {
+          .slide_text {
+            h1 {
+              font-size: 40px;
+              text-align: center;
             }
+            P {
+              font-size: 20px;
+            }
+          }
         }
+      }
+      .buttons_container {
+        justify-content: space-between;
+        .btn {
+          position: absolute;
+          background-color: var(--bg_opacity_black);
+          color: var(--text_withe);
+          border: none;
+          padding: 0;
+          box-sizing: border-box;
+          cursor: pointer;
+          top: 0;
+          height: 100%;
+          outline: none;
+          &:hover,
+          &:focus {
+            background-color: var(--text_black);
+          }
+        }
+        #left {
+          left: 0;
+        }
+
+        #right {
+          right: 0;
+        }
+      }
+    }
+  }
+
+  .recipe_recommend_section {
+    .card_container {
+      position: relative;
+      height: 80vh;
+      width: 100%;
+      .carousel {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        .slide_container {
+          display: flex;
+          transform: translateX(0);
+          transition: transform 0.5s ease-in-out;
+          width: 300%;
+          height: 100%;
+          .slide {
+            height: 100%;
+            width: 100%;
+            margin: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            .card {
+              display: flex;
+              gap: 20px;
+              width: 100%;
+              margin: 8px 0;
+
+              &:nth-child(odd) {
+                flex-direction: row;
+                .card_text {
+                  text-align: left;
+                  align-items: flex-start;
+                }
+              }
+
+              &:nth-child(even) {
+                flex-direction: row-reverse;
+                .card_text {
+                  text-align: start;
+                  align-items: flex-end;
+                }
+              }
+
+              img {
+                width: 400px;
+                height: 250px;
+                object-fit: cover;
+                user-select: none;
+              }
+
+              .card_text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 40%;
+
+                div {
+                  font-size: 30px;
+                  font-weight: 900;
+                }
+
+                span {
+                  color: var(--main_orange);
+                }
+
+                p {
+                  font-weight: 600;
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+        }
+
         .buttons_container {
           justify-content: space-between;
           .btn {
             position: absolute;
-              background-color:var(--bg_opacity_black);
-              color: var(--text_withe);
-              border: none;
-              padding: 0;
-              box-sizing: border-box;
+            background-color: var(--text_withe);
+            color: var(--border_gray);
+            border: none;
+            padding: 0;
+            box-sizing: border-box;
+            top: 0;
+            height: 100%;
+            outline: none;
+
+            svg {
               cursor: pointer;
-              top: 0;
-              height: 100%;
-              outline: none;
-              &:hover,
-              &:focus {
-                background-color: var(--text_black);
+              &:hover {
+                color: var(--main_orange);
               }
+            }
           }
-          #left {
+
+          #recipe_left_btn {
             left: 0;
           }
-      
-          #right {
+
+          #recipe_right_btn {
             right: 0;
           }
-      }
-      }
-  
-    }
-
-    .recipe_recommend_section {
-      .card_container {
-        position: relative;
-        height: 80vh;
-        width: 100%;
-        .carousel {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            .slide_container {
-                display: flex;
-                transform: translateX(0);
-                transition: transform 0.5s ease-in-out;
-                width: 300%;
-                height: 100%;
-                .slide {
-                    height: 100%;
-                    width: 100%;
-                    margin:auto;
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-    
-                    .card {
-                        display: flex;
-                        gap: 20px;
-                        width: 100%;
-                        margin: 8px 0;
-    
-                        &:nth-child(odd) {
-                            flex-direction: row;
-                            .card_text {
-                                text-align: left;
-                                align-items: flex-start;
-                            }
-                        }
-    
-                        &:nth-child(even) {
-                            flex-direction: row-reverse;
-                            .card_text {
-                                text-align: start;
-                                align-items: flex-end;
-                            }
-                        }
-    
-                        img {
-                            width: 400px;
-                            height: 250px;
-                            object-fit: cover;
-                            user-select: none;
-                        }
-    
-                        .card_text {
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            width: 40%;
-    
-                            div {
-                                font-size: 30px;
-                                font-weight: 900;
-                            }
-    
-                            span {
-                                color: var(--main_orange);
-                            }
-    
-                            p {
-                                font-weight: 600;
-                                font-size: 16px;
-                            }
-                        }
-                    }
-                }
-            }
-    
-            .buttons_container {
-                justify-content: space-between;
-                .btn {
-                    position: absolute;
-                    background-color: var(--text_withe);
-                    color: var(--border_gray);
-                    border: none;
-                    padding: 0;
-                    box-sizing: border-box;
-                    top: 0;
-                    height: 100%;
-                    outline: none;
-    
-                    svg {
-                        cursor: pointer;
-                        &:hover {
-                            color: var(--main_orange);
-                        }
-                    }
-                }
-    
-                #recipe_left_btn {
-                    left: 0;
-                }
-    
-                #recipe_right_btn {
-                    right: 0;
-                }
-            }
         }
+      }
     }
-    
-    
-    }
-    
+  }
 
   .dContainer2 {
     display: flex;
@@ -617,8 +606,6 @@ a {
       }
     }
   }
-
-  
 }
 
 @media screen and (max-width: 900px) {
@@ -628,217 +615,213 @@ a {
     width: 100%;
     margin-top: 50px;
     margin-bottom: 10px;
-      .carousel {
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    .carousel {
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      .slide_container {
+        display: flex;
+        transform: translateX(0);
+        transition: transform 0.5s ease-in-out;
+        width: 100%;
         height: 100%;
+        .big_slide {
+          min-width: 100%;
+          height: 100%;
+          position: relative;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            user-select: none;
+          }
+          .slide_text {
+            padding: 5px 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            color: var(--text_withe);
+            transform: translate(-50%, -50%);
+            &:hover p {
+              opacity: 1;
+              max-height: 200px;
+            }
+            h1 {
+              font-size: 24px;
+              text-align: center;
+            }
+            P {
+              visibility: visible;
+              font-size: 14px;
+              opacity: 0;
+              transition: 0.8s ease-in-out;
+              max-height: 0;
+              overflow: hidden;
+            }
+          }
+        }
+      }
+      .buttons_container {
+        justify-content: space-between;
+
+        .btn {
+          position: absolute;
+          background-color: var(--bg_opacity_black);
+          color: var(--text_withe);
+          border: none;
+          padding: 0;
+          box-sizing: border-box;
+          cursor: pointer;
+          top: 0;
+          height: 100%;
+          outline: none;
+          width: 5%;
+          align-self: center;
+          &:hover,
+          &:focus {
+            background-color: var(--text_black);
+          }
+          svg {
+            width: 30px;
+            height: 30px;
+          }
+        }
+        #left {
+          left: 0;
+        }
+
+        #right {
+          right: 0;
+        }
+      }
+    }
+  }
+
+  .recipe_recommend_section {
+    img {
+      height: 150px;
+    }
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--text_black);
+      font-size: 40px;
+      font-family: "Courier New", Courier, monospace;
+    }
+    .card_container {
+      position: relative;
+      height: 50%;
+      width: 100%;
+      .carousel {
+        height: 50%;
         width: 100%;
         overflow: hidden;
         position: relative;
         .slide_container {
-            display: flex;
-            transform: translateX(0);
-            transition: transform 0.5s ease-in-out;
-            width: 100%;
+          display: flex;
+          transform: translateX(0);
+          transition: transform 0.5s ease-in-out;
+          width: 300%;
+          height: 50%;
+          .slide {
             height: 100%;
-            .big_slide {
-                min-width: 100%;
-                height: 100%;
-                position: relative;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    user-select: none;
+            width: 100%;
+            margin: none;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            .card {
+              display: flex;
+              gap: 20px;
+              width: 100%;
+              margin: 8px 0;
+
+              &:nth-child(odd) {
+                flex-direction: row;
+                .card_text {
+                  text-align: left;
+                  align-items: flex-start;
                 }
-                .slide_text {
-                  padding: 5px 10px;
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  color: var(--text_withe);
-                  transform: translate(-50%, -50%);
-                  &:hover p {
-                    opacity: 1;
-                    max-height: 200px;
-                  }
-                  h1 {
-                    font-size: 24px;
-                    text-align: center;
-                  }
-                  P {
-                    visibility: visible;
-                    font-size: 14px;
-                    opacity: 0;
-                    transition: 0.8s ease-in-out;
-                    max-height: 0; 
-                    overflow: hidden;
-                  }
+              }
+
+              &:nth-child(even) {
+                display: none;
+                flex-direction: row-reverse;
+                .card_text {
+                  text-align: start;
+                  align-items: flex-end;
                 }
+              }
+
+              img {
+                width: 200px;
+                height: 125px;
+                object-fit: cover;
+                user-select: none;
+                margin: auto;
+              }
+
+              .card_text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 60%;
+
+                div {
+                  font-size: 30px;
+                  font-weight: 900;
+                }
+
+                span {
+                  color: var(--main_orange);
+                }
+
+                p {
+                  font-weight: 600;
+                  font-size: 16px;
+                }
+              }
             }
+          }
         }
+
         .buttons_container {
           justify-content: space-between;
-    
           .btn {
             position: absolute;
-              background-color:var(--bg_opacity_black);
-              color: var(--text_withe);
-              border: none;
-              padding: 0;
-              box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0);
+            color: var(--border_gray);
+            border: none;
+            padding: 0;
+            box-sizing: border-box;
+            top: 0;
+            height: 100%;
+            outline: none;
+
+            svg {
               cursor: pointer;
-              top: 0;
-              height: 100%;
-              outline: none;
-              width: 5%;
-              align-self: center;
-              &:hover,
-              &:focus {
-                background-color: var(--text_black);
+              &:hover {
+                color: var(--main_orange);
               }
-              svg{
-                width: 30px;
-                height: 30px;
-              }
+            }
           }
-          #left {
+
+          #recipe_left_btn {
             left: 0;
           }
-      
-          #right {
+
+          #recipe_right_btn {
             right: 0;
           }
-      }
-      }
-  
-    }
-
-    .recipe_recommend_section {
-      img {
-        height: 150px;
-      }
-      h1 {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: var(--text_black);
-        font-size: 40px;
-        font-family: "Courier New", Courier, monospace;
-      }
-      .card_container {
-        position: relative;
-        height: 50%;
-        width: 100%;
-        .carousel {
-            height: 50%;
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            .slide_container {
-                display: flex;
-                transform: translateX(0);
-                transition: transform 0.5s ease-in-out;
-                width: 300%;
-                height: 50%;
-                .slide {
-                    height: 100%;
-                    width: 100%;
-                    margin:none;
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-    
-                    .card {
-                        display: flex;
-                        gap: 20px;
-                        width: 100%;
-                        margin: 8px 0;
-    
-                        &:nth-child(odd) {
-                            flex-direction: row;
-                            .card_text {
-                                text-align: left;
-                                align-items: flex-start;
-                            }
-                        }
-    
-                        &:nth-child(even) {
-                          display: none;
-                            flex-direction: row-reverse;
-                            .card_text {
-                                text-align: start;
-                                align-items: flex-end;
-                            }
-                        }
-    
-                        img {
-                            width: 200px;
-                            height: 125px;
-                            object-fit: cover;
-                            user-select: none;
-                            margin: auto;
-
-                        }
-    
-                        .card_text {
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            width: 60%;
-    
-                            div {
-                                font-size: 30px;
-                                font-weight: 900;
-                            }
-    
-                            span {
-                                color: var(--main_orange);
-                            }
-    
-                            p {
-                                font-weight: 600;
-                                font-size: 16px;
-                            }
-                        }
-                    }
-                }
-            }
-    
-            .buttons_container {
-                justify-content: space-between;
-                .btn {
-                    position: absolute;
-                    background-color:rgba(0, 0, 0, 0.0);
-                    color: var(--border_gray);
-                    border: none;
-                    padding: 0;
-                    box-sizing: border-box;
-                    top: 0;
-                    height: 100%;
-                    outline: none;
-    
-                    svg {
-                        cursor: pointer;
-                        &:hover {
-                            color: var(--main_orange);
-                        }
-                    }
-                }
-    
-                #recipe_left_btn {
-                    left: 0;
-                }
-    
-                #recipe_right_btn {
-                    right: 0;
-                }
-            }
         }
+      }
     }
-    
-    
-    }
+  }
 
   .dContainer2 {
     display: flex;

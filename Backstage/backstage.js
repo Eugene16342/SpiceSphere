@@ -231,15 +231,20 @@ app.post("/api/addComment", (req, res) => {
       const user_uid = result1[0].user_uid;
 
       // 然後插入新留言
-      const sql2 = "INSERT INTO product_commemt (product_uid, user_uid, product_rating, product_comment) VALUES (?, ?, ?, ?)";
-      db.query(sql2, [product_uid, user_uid, product_rating, product_comment], (err2, result2) => {
-        if (err2) {
-          console.error("Error inserting comment", err2);
-          res.status(500).json({ message: "新增留言失敗" });
-        } else {
-          res.json({ message: "新增留言成功" });
+      const sql2 =
+        "INSERT INTO product_commemt (product_uid, user_uid, product_rating, product_comment) VALUES (?, ?, ?, ?)";
+      db.query(
+        sql2,
+        [product_uid, user_uid, product_rating, product_comment],
+        (err2, result2) => {
+          if (err2) {
+            console.error("Error inserting comment", err2);
+            res.status(500).json({ message: "新增留言失敗" });
+          } else {
+            res.json({ message: "新增留言成功" });
+          }
         }
-      });
+      );
     }
   });
 });
@@ -371,21 +376,24 @@ app.get("/api/getUserOrders/:account", (req, res) => {
       console.error("Error querying database", err);
       res.status(500).json({ message: "獲取訂單資料失敗" });
     } else {
-      const orderIds = orders.map(order => order.order_id);
+      const orderIds = orders.map((order) => order.order_id);
       if (orderIds.length === 0) {
         return res.json([]);
       }
 
-      const queryOrderDetails = "SELECT * FROM order_items WHERE order_id IN (?)";
+      const queryOrderDetails =
+        "SELECT * FROM order_items WHERE order_id IN (?)";
       db.query(queryOrderDetails, [orderIds], (err, orderDetails) => {
         if (err) {
           console.error("Error querying database", err);
           res.status(500).json({ message: "獲取訂單詳細資料失敗" });
         } else {
-          const ordersWithDetails = orders.map(order => {
+          const ordersWithDetails = orders.map((order) => {
             return {
               ...order,
-              items: orderDetails.filter(item => item.order_id === order.order_id)
+              items: orderDetails.filter(
+                (item) => item.order_id === order.order_id
+              ),
             };
           });
           res.json(ordersWithDetails);

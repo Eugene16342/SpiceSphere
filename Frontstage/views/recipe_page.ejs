@@ -24,7 +24,7 @@
       // 初始化 nav_bar 購物車數量
       updateNavBarCartCount();
 
-      const user = JSON.parse(sessionStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("user"));
       const recipe_uid = "<%= items[0].recipe_uid %>"; // 從後端渲染的數據中獲取 recipe_uid
       $.ajax({
         url: "http://localhost:3000/api/favorite",
