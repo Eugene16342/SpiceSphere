@@ -15,7 +15,7 @@ a {
 nav {
   display: flex;
   justify-content: space-between;
-  background-color: tomato;
+  background-color: rgb(243, 121, 36);
   color: white;
   font-weight: 900;
   -webkit-user-select: none;
@@ -223,7 +223,7 @@ button:disabled,
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: tomato;
+  background-color: rgb(243, 121, 36);
   text-align: center;
   color: white;
   font-weight: 900;

@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
 }
-a{
+a {
   text-decoration: none;
   color: white;
 }
@@ -14,7 +14,7 @@ a{
 nav {
   display: flex;
   justify-content: space-between;
-  background-color: tomato;
+  background-color: rgb(243, 121, 36);
   color: white;
   font-weight: 900;
   user-select: none;
@@ -233,7 +233,7 @@ button,
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: tomato;
+  background-color: rgb(243, 121, 36);
   text-align: center;
   color: white;
   font-weight: 900;
