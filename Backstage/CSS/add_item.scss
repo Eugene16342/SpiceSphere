@@ -140,6 +140,39 @@ select {
   }
 }
 
+.comment_section{
+  width: 80%;
+  margin: auto;
+  margin-bottom: 50px;
+  .title{
+    margin-bottom: 10px;
+    font-size: 30px;
+  }
+  #comment_container{
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+    .comment{
+      margin-bottom: 20px;
+      position: relative;
+      &::after{
+        content: "";
+        width: 80%;
+        height: 2px;
+        background-color: tomato;
+        position: absolute;
+        bottom: -5px;
+      }
+      .account{
+        color:  rgb(243, 121, 36);;
+      }
+      .rating{
+       color: rgb(243, 121, 36);
+      }
+    }
+  }
+}
+
 #submmit {
   display: flex;
   justify-content: center;

@@ -736,15 +736,43 @@ app.post("/recipe/edit/:id", uploadForEdit.single("file"), (req, res) => {
 /////////////////////////////////////////////////編輯商品頁面
 app.get("/product/edit/:id", (req, res) => {
   let sql1 = "SELECT * FROM product WHERE product_uid = ?";
-  db.query(sql1, [req.params.id], (err, result) => {
+  let sql2 = `
+    SELECT pc.*, m.user_account, DATE_FORMAT(pc.comment_time, '%Y-%m-%d') AS formatted_date 
+    FROM product_commemt pc 
+    JOIN member m ON pc.user_uid = m.user_uid 
+    WHERE pc.product_uid = ?`;
+
+  db.query(sql1, [req.params.id], (err, productResult) => {
     if (err) {
-      // 處理錯誤
       console.log(err);
     } else {
-      res.render("edit_product", { items: result[0] });
+      db.query(sql2, [req.params.id], (err, commentResult) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("edit_product", { 
+            items: productResult[0], 
+            comments: commentResult 
+          });
+        }
+      });
     }
   });
 });
+
+/////刪除商品評論
+app.delete("/product/comments/:comment_id", (req, res) => {
+  let sql = "DELETE FROM product_commemt WHERE comment_uid = ?";
+  db.query(sql, [req.params.comment_id], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("刪除失敗");
+    } else {
+      res.status(200).send("刪除成功");
+    }
+  });
+});
+
 //////////////////////////////////////////////////編輯商品功能
 const uploadProudctEdit = multer({
   storage: multer.diskStorage({

@@ -135,6 +135,39 @@ select {
   margin: 5px 2px;
 }
 
+.comment_section {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 50px;
+}
+.comment_section .title {
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+.comment_section #comment_container {
+  max-height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.comment_section #comment_container .comment {
+  margin-bottom: 20px;
+  position: relative;
+}
+.comment_section #comment_container .comment::after {
+  content: "";
+  width: 80%;
+  height: 2px;
+  background-color: tomato;
+  position: absolute;
+  bottom: -5px;
+}
+.comment_section #comment_container .comment .account {
+  color: rgb(243, 121, 36);
+}
+.comment_section #comment_container .comment .rating {
+  color: rgb(243, 121, 36);
+}
+
 #submmit {
   display: flex;
   justify-content: center;

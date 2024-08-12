@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>添加新項目</title>
+    <title>編輯項目</title>
   </head>
   <link rel="stylesheet" href="/backstage.css" />
   <link rel="stylesheet" href="/add_item.css" />
@@ -83,6 +83,23 @@
     },
   });
 });
+
+$(".delete_comment").click(function() {
+  const commentId = $(this).closest(".comment").data("comment-id");
+  console.log("Deleting comment with ID:", commentId);
+  $.ajax({
+    url: `/product/comments/${commentId}`,
+    type: "DELETE",
+    success: function(data) {
+      alert(data);
+      location.reload();
+    },
+    error: function(xhr, status, error) {
+      console.error("Error:", error);
+    }
+  });
+});
+
     });
   </script>
 
@@ -183,10 +200,41 @@
             </select>
           </div>
         </div>
+
+        
+        </div>
       </div>
+
+      
       <div id="submmit">
         <button>編輯商品</button>
       </div>
+
+      
+      <div class="comment_section">
+        <div class="title">留言控制</div>
+        <div id="comment_container">
+          <% comments.forEach(comment => { %>
+            <div data-comment-id="<%= comment.comment_uid %>" class="comment">
+              <span class="account"><%= comment.user_account %></span>
+              <span><%= comment.formatted_date %></span>
+              <span class="rating">
+                <% for(let i = 1; i <= 5; i++) { %>
+                  <% if(i <= comment.product_rating) { %>
+                    <span>★</span>
+                  <% } else { %>
+                    <span>☆</span>
+                  <% } %>
+                <% } %>
+              </span>
+              <button class="delete_comment">刪除該留言</button>
+              <div><%= comment.product_comment %></div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+
     </div>
     <%- include('footer') %>
   </body>
