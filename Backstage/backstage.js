@@ -982,6 +982,12 @@ app.get("/search", (req, res) => {
       res.render(template, { items: result });
     }
   );
+
+  /////////訂單一覽
+  // app.get("/order", (req, res) => {
+
+  //     res.render("order", { items: result });
+  //   });
 });
 app.use(express.static("../"));
 app.use(express.static("jquery"));
