@@ -114,11 +114,18 @@
       const urlParams = new URLSearchParams(window.location.search);
       const category = urlParams.get("category");
 
-      // 如果 URL 參數中有 category，則勾選對應的 checkbox 並重新篩選
-      if (category) {
-        $(`#${category}`).prop("checked", true);
-        filterCards(); // 重新篩選
-      }
+      function displayCards() {
+  $(".card").hide();
+  let startIndex = (currentPage - 1) * cardsPerPage;
+  let endIndex = startIndex + cardsPerPage;
+
+  if (filteredCards.length === 0) {
+    $("#no_results").show();
+  } else {
+    $("#no_results").hide();
+    filteredCards.slice(startIndex, endIndex).show();
+  }
+}
     };
 
     $(document).ready(function () {
@@ -140,6 +147,7 @@
       // 初始化 nav_bar 購物車數量
       updateNavBarCartCount();
     });
+    
   </script>
 
   <body>
