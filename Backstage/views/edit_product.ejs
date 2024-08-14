@@ -87,13 +87,14 @@
 
 
 
-  // 判斷該留言是否已被提交，改變文字顯示內容
-  $(".submmit_comment").each(function() {
-    const isSubmmit = $(this).data("is-submmit");
-    const button = $(this).find(".submmit_comment");
-    button.text(isSubmmit ? "已提交" : "提交");
-    button.addClass(isSubmmit ? "cancel_comment" : "submit_comment");
-  });
+// 判斷該留言是否已被提交，改變文字顯示內容
+$("#comment_container .comment").each(function() {
+  const isSubmmit = $(this).data("is-submmit");
+  const button = $(this).find(".comment");
+  button.text(isSubmmit ? "已提交" : "提交");
+  button.addClass(isSubmmit ? "cancel_comment" : "submit_comment");
+});
+
 
   // 提交商品評論
   $(document).on("click", ".submit_comment", function() {
@@ -248,7 +249,7 @@
         <div class="title">留言控制</div>
         <div id="comment_container">
           <% comments.forEach(comment => { %>
-            <div data-comment-id="<%= comment.comment_uid %>" class="comment">
+            <div data-comment-id="<%= comment.comment_uid %>" data-is-submmit="<%= comment.is_submmit %>" class="comment">
               <span class="account"><%= comment.user_account %></span>
               <span><%= comment.formatted_date %></span>
               <span class="rating">
@@ -260,7 +261,7 @@
                   <% } %>
                 <% } %>
               </span>
-              <button class="submmit_comment">提交</button>
+              <button class="comment">提交</button>
               <div><%= comment.product_comment %></div>
             </div>
           <% }) %>
