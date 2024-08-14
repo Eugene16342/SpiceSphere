@@ -84,21 +84,54 @@
   });
 });
 
-$(".delete_comment").click(function() {
-  const commentId = $(this).closest(".comment").data("comment-id");
-  console.log("Deleting comment with ID:", commentId);
-  $.ajax({
-    url: `/product/comments/${commentId}`,
-    type: "DELETE",
-    success: function(data) {
-      alert(data);
-      location.reload();
-    },
-    error: function(xhr, status, error) {
-      console.error("Error:", error);
-    }
+
+
+
+  // 判斷該留言是否已被提交，改變文字顯示內容
+  $(".submmit_comment").each(function() {
+    const isSubmmit = $(this).data("is-submmit");
+    const button = $(this).find(".submmit_comment");
+    button.text(isSubmmit ? "已提交" : "提交");
+    button.addClass(isSubmmit ? "cancel_comment" : "submit_comment");
   });
-});
+
+  // 提交商品評論
+  $(document).on("click", ".submit_comment", function() {
+    const commentId = $(this).closest(".comment").data("comment-id");
+    const button = $(this);
+    $.ajax({
+      url: `/product/comments/submit/${commentId}`,
+      type: "POST",
+      success: function(data) {
+        alert(data);
+        button.text("已提交");
+        button.removeClass("submit_comment").addClass("cancel_comment");
+        button.closest(".comment").data("is-submmit", 1);
+      },
+      error: function(xhr, status, error) {
+        console.error("Error:", error);
+      }
+    });
+  });
+
+  // 取消提交商品評論
+  $(document).on("click", ".cancel_comment", function() {
+    const commentId = $(this).closest(".comment").data("comment-id");
+    const button = $(this);
+    $.ajax({
+      url: `/product/comments/cancel/${commentId}`,
+      type: "POST",
+      success: function(data) {
+        alert(data);
+        button.text("提交");
+        button.removeClass("cancel_comment").addClass("submit_comment");
+        button.closest(".comment").data("is-submmit", 0);
+      },
+      error: function(xhr, status, error) {
+        console.error("Error:", error);
+      }
+    });
+  });
 
     });
   </script>
@@ -227,7 +260,7 @@ $(".delete_comment").click(function() {
                   <% } %>
                 <% } %>
               </span>
-              <button class="delete_comment">提交</button>
+              <button class="submmit_comment">提交</button>
               <div><%= comment.product_comment %></div>
             </div>
           <% }) %>

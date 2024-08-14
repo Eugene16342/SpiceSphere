@@ -52,14 +52,6 @@
         displayCards();
       }
 
-      function displayCards() {
-        $(".card").hide();
-        let startIndex = (currentPage - 1) * cardsPerPage;
-        let endIndex = startIndex + cardsPerPage;
-        filteredCards.slice(startIndex, endIndex).show();
-        pageChangeBtn();
-      }
-
       function pageChangeBtn() {
         let pageCount = Math.ceil(filteredCards.length / cardsPerPage);
         let str = "";
@@ -125,7 +117,9 @@
     $("#no_results").hide();
     filteredCards.slice(startIndex, endIndex).show();
   }
+  pageChangeBtn();
 }
+
     };
 
     $(document).ready(function () {

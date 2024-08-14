@@ -760,18 +760,36 @@ app.get("/product/edit/:id", (req, res) => {
   });
 });
 
-/////刪除商品評論
-app.delete("/product/comments/:comment_id", (req, res) => {
-  let sql = "DELETE FROM product_commemt WHERE comment_uid = ?";
+
+
+
+/////提交商品評論
+app.post("/product/comments/submit/:comment_id", (req, res) => {
+  let sql = "UPDATE product_commemt SET is_submmit = 1 WHERE comment_uid = ?";
   db.query(sql, [req.params.comment_id], (err, result) => {
     if (err) {
       console.log(err);
-      res.status(500).send("刪除失敗");
+      res.status(500).send("提交刪除請求失敗");
     } else {
-      res.status(200).send("刪除成功");
+      res.status(200).send("提交刪除請求成功");
     }
   });
 });
+
+///撤銷提交
+app.post("/product/comments/cancel/:comment_id", (req, res) => {
+  let sql = "UPDATE product_commemt SET is_submmit = 0 WHERE comment_uid = ?";
+  db.query(sql, [req.params.comment_id], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("撤銷刪除請求失敗");
+    } else {
+      res.status(200).send("撤銷刪除請求成功");
+    }
+  });
+});
+
+
 
 //////////////////////////////////////////////////編輯商品功能
 const uploadProudctEdit = multer({

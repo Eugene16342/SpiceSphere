@@ -30,11 +30,11 @@ app.post("/turning", (req, res) => {
   const select = req.body.select;
   let url;
   if (select === "recipe") {
-    url = "recipe_section";
+    url = "http://localhost:3001/recipe_section";
   } else if (select === "product") {
-    url = "product_section";
+    url = "http://localhost:3001/product_section";
   } else {
-    url = "/";
+    url = "http://localhost:3001/";
   }
   res.json({ reUrl: url });
 });
