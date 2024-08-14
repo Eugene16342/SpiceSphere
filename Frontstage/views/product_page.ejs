@@ -342,19 +342,21 @@ $(document).ready(function () {
         <div class="no_comments">尚未有人分享使用心得喔!</div>
       <% } else { %>
         <% comments.forEach(function(comment) { %>
-          <div class="all_comment_card">
-            <span class="comment_name"><%= comment.user_name %></span>
-            <span class="comment_time"><%= new Date(comment.comment_time).toISOString().split('T')[0] %></span>
-            <span class="comment_rating">
-              <% for (let i = 0; i < comment.product_rating; i++) { %>
-                <span>★</span> <!-- 實心星星 -->
-              <% } %>
-              <% for (let i = comment.product_rating; i < 5; i++) { %>
-                <span>☆</span> <!-- 空心星星 -->
-              <% } %>
-            </span>
-            <div class="user_comment"><%= comment.product_comment %></div>
-          </div>
+          <% if (comment.is_submmit === 0) { %>
+            <div class="all_comment_card">
+              <span class="comment_name"><%= comment.user_name %></span>
+              <span class="comment_time"><%= new Date(comment.comment_time).toISOString().split('T')[0] %></span>
+              <span class="comment_rating">
+                <% for (let i = 0; i < comment.product_rating; i++) { %>
+                  <span>★</span> <!-- 實心星星 -->
+                <% } %>
+                <% for (let i = comment.product_rating; i < 5; i++) { %>
+                  <span>☆</span> <!-- 空心星星 -->
+                <% } %>
+              </span>
+              <div class="user_comment"><%= comment.product_comment %></div>
+            </div>
+          <% } %>
         <% }); %>
       <% } %>
     </div>
