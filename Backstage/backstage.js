@@ -776,6 +776,20 @@ app.post("/product/comments/submit/:comment_id", (req, res) => {
   });
 });
 
+// // 批量提交留言
+// app.post("/product/comments/submit", (req, res) => {
+//   const commentIds = req.body.commentIds;
+//   let sql = "UPDATE product_commemt SET is_submmit = 1 WHERE comment_uid IN (?)";
+//   db.query(sql, [commentIds], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).send("提交失敗");
+//     } else {
+//       res.status(200).send("提交成功");
+//     }
+//   });
+// });
+
 ///撤銷提交
 app.post("/product/comments/cancel/:comment_id", (req, res) => {
   let sql = "UPDATE product_commemt SET is_submmit = 0 WHERE comment_uid = ?";
@@ -789,6 +803,110 @@ app.post("/product/comments/cancel/:comment_id", (req, res) => {
   });
 });
 
+// //批量撤銷提交
+// app.post("/product/comments/cancel/:comment_id", (req, res) => {
+//   let sql = "UPDATE product_commemt SET is_submmit = 0 WHERE comment_uid IN (?)";
+//   db.query(sql, [req.params.comment_id], (err, result) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).send("撤銷刪除請求失敗");
+//     } else {
+//       res.status(200).send("撤銷刪除請求成功");
+//     }
+//   });
+// });
+
+//留言審查頁面
+app.get("/comment", (req, res) => {
+  let sql = `
+    SELECT c.*, m.user_account,p.product_title 
+    FROM product_commemt c
+    JOIN member m ON c.user_uid = m.user_uid
+    JOIN product p ON c.product_uid = p.product_uid
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+     // 格式化日期
+     result.forEach(item => {
+      let date = new Date(item.comment_time);
+      item.formatted_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    });
+    res.render("comment", { items: result });
+  });
+});
+
+//最近留言
+app.get("/comment_recent", (req, res) => {
+  let sql = `
+    SELECT c.*, m.user_account,p.product_title 
+    FROM product_commemt c
+    JOIN member m ON c.user_uid = m.user_uid
+    JOIN product p ON c.product_uid = p.product_uid WHERE c.comment_time >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+     // 格式化日期
+     result.forEach(item => {
+      let date = new Date(item.comment_time);
+      item.formatted_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    });
+    res.render("comment", { items: result });
+  });
+});
+
+
+//被提交的留言
+app.get("/comment_submitted", (req, res) => {
+  let sql = `
+    SELECT c.*, m.user_account,p.product_title 
+    FROM product_commemt c
+    JOIN member m ON c.user_uid = m.user_uid
+    JOIN product p ON c.product_uid = p.product_uid
+     WHERE c.is_submmit = 1
+  `;
+
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+     // 格式化日期
+     result.forEach(item => {
+      let date = new Date(item.comment_time);
+      item.formatted_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    });
+    res.render("comment", { items: result });
+  });
+});
+
+// 刪除留言
+app.post("/comment/delete/:id", (req, res) => {
+  const commentId = req.params.id;
+  let sql = `DELETE FROM product_commemt WHERE comment_uid = ?`;
+
+  db.query(sql, [commentId], (err, result) => {
+    if (err) {
+      console.error("Error:", err);
+      res.status(500).send("刪除失敗");
+    } else {
+      res.send("刪除成功");
+    }
+  });
+});
+
+// // 批量刪除留言
+// app.post("/comments/delete", (req, res) => {
+//   const commentIds = req.body.commentIds;
+//   let sql = `DELETE FROM product_commemt WHERE comment_uid IN (?)`;
+
+//   db.query(sql, [commentIds], (err, result) => {
+//     if (err) {
+//       console.error("Error:", err);
+//       res.status(500).send("刪除失敗");
+//     } else {
+//       res.send("刪除成功");
+//     }
+//   });
+// });
 
 
 //////////////////////////////////////////////////編輯商品功能
