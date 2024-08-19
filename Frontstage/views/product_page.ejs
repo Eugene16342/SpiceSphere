@@ -341,7 +341,7 @@ $(document).ready(function () {
       <% if (comments.length === 0) { %>
         <div class="no_comments">尚未有人分享使用心得喔!</div>
       <% } else { %>
-        <% comments.forEach(function(comment) { %>
+        <% comments.reverse().forEach(function(comment) { %>
           <% if (comment.is_submmit === 0) { %>
             <div class="all_comment_card">
               <span class="comment_name"><%= comment.user_name %></span>
